@@ -1844,7 +1844,7 @@ export class DesktopAppStore {
       return reloaded
         ? state
         : this.withError(
-            "Some open threads could not reload; they pick up the pi-gui tools change when reopened.",
+            "Some open threads could not reload; they pick up the Theta tools change when reopened.",
           );
     });
   }
@@ -3202,7 +3202,7 @@ export class DesktopAppStore {
           commandName: pending.command.name,
           extensionPath: pending.command.sourceInfo.path,
           status: "supported",
-          message: "Observed working in pi-gui.",
+          message: "Observed working in Theta.",
           capability: "gui-safe",
           updatedAt: timestamp,
         },
@@ -3236,7 +3236,7 @@ export class DesktopAppStore {
     const key = sessionKey(sessionRef);
     const pending = this.pendingRuntimeCommandsBySession.get(key);
     if (pending) {
-      const message = `/${pending.command.name} requires terminal-only ${formatCapabilityLabel(issue.capability)} and is not supported in pi-gui yet. Use pi in the terminal for this command.`;
+      const message = `/${pending.command.name} requires terminal-only ${formatCapabilityLabel(issue.capability)} and is not supported in Theta yet. Use pi in the terminal for this command.`;
       pending.blockedMessage = message;
       recordLearnedCommandCompatibility(
         this.extensionCommandCompatibilityByWorkspace,

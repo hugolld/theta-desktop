@@ -186,34 +186,52 @@ A run against an impossible baseline failed on both numbers, so the check can fa
 
 ### R2 App name in the running app
 
-- [ ] Depends on R1 for the baseline files.
-- [ ] Edit these files:
+Status: green, 2026-11-22. Implemented and verified on the real Electron app. Awaiting the
+owner's review of the visible result before the commit. Evidence lives under
+`.artifacts/rename/R2/` (gitignored) and `.artifacts/verify-pi-gui/run-msfHQq/`.
+
+- [x] Depends on R1 for the baseline files.
+- [x] Edit these files (actual lines after the edits; the plan's first table missed six
+      files that triage found, and the five specs that assert the changed strings):
 
       | File                                                            | Lines                |
       | --------------------------------------------------------------- | -------------------- |
       | `apps/desktop/index.html`                                       | 6, the title         |
-      | `apps/desktop/electron/main.ts`                                 | 363, 368, 377, 789, 805, 814, 823, 933, 1515 |
+      | `apps/desktop/electron/main.ts`                                 | 363, 368 strings; 377, 789, 805, 814, 823, 1517 titles; 935 `app.setName` |
       | `apps/desktop/electron/ipc/request-validation.ts`               | 546                  |
-      | `apps/desktop/electron/application/app-store.ts`                | 3239                 |
+      | `apps/desktop/electron/application/app-store.ts`                | 1847, 3205, 3239     |
+      | `apps/desktop/electron/platform/worktrees/worktree-manager.ts`  | 201                  |
       | `apps/desktop/src/app/desktop-recovery.tsx`                     | 33, 84, 105          |
       | `apps/desktop/src/app/App.tsx`                                  | 1161                 |
       | `apps/desktop/src/i18n/messages/en.ts`                          | 9 strings            |
       | `apps/desktop/src/i18n/messages/zh-CN.ts`                       | 9 strings            |
+      | `apps/desktop/src/features/extensions/extension-display.ts`     | 10, the tools label  |
+      | `apps/desktop/src/features/scheduled-tasks/scheduled-tasks-view.tsx` | 134            |
+      | `apps/desktop/src/features/threads/hooks/use-workspace-menu.tsx` | 145                 |
       | `packages/pi-sdk-driver/src/unsupported-host-ui.ts`             | 38, 45               |
       | `packages/pi-sdk-driver/src/custom-provider-store.ts`           | 56                   |
       | `packages/pi-sdk-driver/src/session-supervisor.ts`              | 2398                 |
-      | `apps/desktop/tests/unit/renderer-error-boundary.spec.ts`       | 33                   |
-      | `apps/desktop/tests/core/extension-command-compatibility.spec.ts` | 93, 115, 181       |
       | `apps/desktop/tests/core/app-identity.spec.ts`                  | New file             |
+      | `apps/desktop/tests/unit/renderer-error-boundary.spec.ts`       | 33                   |
+      | `apps/desktop/tests/unit/worktree-manager.spec.ts`              | 292, 313             |
+      | `apps/desktop/tests/core/extension-command-compatibility.spec.ts` | 93, 115, 181       |
+      | `apps/desktop/tests/core/extensions.spec.ts`                    | 650, 672, 730        |
+      | `packages/pi-sdk-driver/test/custom-provider-store.test.mts`    | 86                   |
 
-- [ ] Build one change. The running app says **Theta**, and it opens `<appData>/Theta`.
-      `app.setName("pi")` becomes `app.setName("Theta")` at `main.ts:933`.
-- [ ] Triage each remaining hit of
+- [x] Build one change. The running app says **Theta**, and it opens `<appData>/Theta`.
+      `app.setName("pi")` becomes `app.setName("Theta")` at `main.ts:935`.
+- [x] Triage each remaining hit of
       `rg -P -n '(?<!@)\bpi-gui\b' apps/desktop/src apps/desktop/electron packages -g '!*.spec.ts' -g '!*.test.mts' -g '!dist' -g '!node_modules'`.
-      Fix a string that a user can see in this unit. Leave model-facing prompt text and log
-      prefixes for R10. Leave the keep-list names.
-- [ ] You see **Theta** in the window title, in the app menu, and in the Settings text about
-      language, appearance, and notifications.
+      Fixed every string that a user can see. Classification of the rest, one bucket per
+      later unit: model-facing tool descriptions in `orchestration-runtime.ts`,
+      `scheduled-task-runtime.ts`, and the builtin extension descriptions in `main.ts` go
+      to R10. Log prefixes `[pi-gui]` in `app-store.ts`, `runtime-supervisor.ts`, and
+      `npm-package-fallback.ts`, the internal error in `window-owner.ts:180`, the
+      `pi-gui-review-` temp prefix, and package `description` fields go to R10. Stored
+      names go to R9 or R7; see the note below. Update URLs in `update-checker.ts` go to
+      R4. The `verify-pi-gui` mock fixtures go to R5.
+- [x] The app shows **Theta** in the window title, in the app menu, and in the Settings
+      text about language, appearance, and notifications.
 
 The dev launch runs the Electron binary. Only a packaged bundle proves the Dock name, so
 the Dock check is in R3.
@@ -239,21 +257,48 @@ can run on one Mac. Migration code would stay in `main.ts` for one launch.
 The old folder stays. Its deletion needs your approval. On Linux the folder is
 `~/.config/pi`. On Windows it is `%APPDATA%\pi`.
 
+The operator steps ran as written. The copy was byte-identical (`diff -rq` silent). The
+normal launch, with no test environment, opened
+`/Users/hugodong/Library/Application Support/Theta` and restored the owner's stored
+values. The old folder had 0 files newer than the marker; the new one had 16.
+
 Verification:
 
-- [ ] Unit. `pnpm check` passes. `renderer-error-boundary.spec.ts` asserts the new recovery
-      text.
-- [ ] Live 1. The new `apps/desktop/tests/core/app-identity.spec.ts` passes on the real
-      Electron window. It asserts that `page.title()` is `Theta`. On macOS it also asserts
-      that the app-menu label, which `main.ts:838` builds from `app.name`, is `Theta`.
-- [ ] Live 2. `pnpm --filter @pi-gui/desktop run test:prod:profile-snapshot` runs on a copy
-      of the source folder. Its JSON equals `profile-trunk.json`.
-- [ ] Live 3. Operator steps 1 to 6 pass.
-- [ ] Live 4. `.agents/skills/verify-pi-gui/scripts/prove.sh --smoke` passes with zero
-      assertion failures. Its Settings screenshots show the new strings.
-- [ ] Perf. `pnpm --filter @pi-gui/desktop run test:perf:startup`. Fail numbers from R1.
-- [ ] Review. You see the new title, the app menu, and the Settings text before this unit
-      lands.
+- [x] Unit. `pnpm check` passes (`check.log`). Desktop unit 424 passed, 1 skipped.
+      pi-sdk-driver 206 passed, 0 failed.
+- [x] Live 1. `apps/desktop/tests/core/app-identity.spec.ts` plus the changed specs:
+      core lane 13 of 13 passed on the real Electron window (`core.log`). The new spec
+      asserts the title, `app.getName()`, and, on macOS, the app-menu label that
+      `main.ts:838` builds from `app.name`.
+- [x] Live 2. The profile snapshot ran on both copies (`profile-r2.json`,
+      `profile-r2-nondefault.json`, logs `profile-a.log`, `profile-b.log`). `profile`
+      equals `profile-trunk.json` for both. `identity` now reads appName `Theta`,
+      userData `.../Application Support/Theta`, document title `Theta`. The non-default
+      copy restored `dark`, `workspace` grouping, and background completion off.
+- [x] Live 3. Operator steps 1 to 6 pass (`normal-launch.json`, `normal-launch.png`).
+      Restored settings equal the owner's stored values; localStorage holds
+      `pi-gui.last-theme: default:dark` (the stored-key rename is R9, not R2).
+- [x] Live 4. `prove.sh --smoke` passed (`smoke.log`), one test, no assertion failures,
+      normal visible launch with the owner's real auth. Evidence
+      `.artifacts/verify-pi-gui/run-msfHQq/`: the Settings screenshots show "The Theta
+      palette.", the language and notification strings with Theta.
+- [x] Perf. Startup probe against the R1 trunk baseline (`startup-r2.json`):
+      startupMs median 828.7 ms (trunk 827.9), min 809.5 ms (limit 919.8), max 908.2.
+      readyMs median 957.7 ms (trunk 975.3). pingMs 0.050 ms (trunk 0.047, limit 0.094).
+      The baseline check passed.
+- [ ] Review. You see the new title, the app menu, and the Settings text before this
+      unit's commit is pushed. The evidence above stands in for a live viewing; a launch
+      of the built app shows all three.
+
+Note for R9. The stored names are six localStorage keys, not four:
+`pi-gui:locale`, `pi-gui.last-theme`, `pi-gui.review-tree-visible`
+(`src/features/workbench/diff-panel.tsx:756`), `pi-gui:thread-switcher-order:v1`,
+`pi-gui.workbench-width` (`src/features/workbench/use-workbench-width.ts:6`, asserted in
+`tests/core/workbench-tabs.spec.ts:558`), and `pi-gui.sidebar-width`
+(`src/features/threads/sidebar.tsx:170`). R9 also owns the generated names: git refs
+`refs/pi-gui/snapshots/`, custom transcript types `pi-gui.card` and `pi-gui.pin`,
+`<pi-gui-file-attachments>` blocks, extension ids such as `pi-gui-thread-orchestration`,
+`PI_GUI_LEASE_SURFACE`, and the notification helper name.
 
 ### R3 Bundle and installer identity
 

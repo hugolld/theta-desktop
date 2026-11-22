@@ -543,6 +543,6 @@ export function expectUpdateScheduledTaskInput(value: unknown): UpdateScheduledT
 export function expectExtensionActionRequest(raw: unknown): ExtensionActionRequest {
   const input = expectRecord(raw, "extension action request");
   const action = parseExtensionAction(input.action);
-  if (!action) throw new Error("pi-gui does not support this button's action");
+  if (!action) throw new Error("Theta does not support this button's action");
   return { target: expectSessionTarget(input.target), action };
 }

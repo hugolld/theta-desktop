@@ -2395,7 +2395,7 @@ export class SessionSupervisor {
       getTheme: () => undefined,
       setTheme: () => ({
         success: false,
-        error: "Theme switching not supported in pi-gui host UI",
+        error: "Theme switching not supported in Theta host UI",
       }),
       getToolsExpanded: () => false,
       setToolsExpanded: () => {},

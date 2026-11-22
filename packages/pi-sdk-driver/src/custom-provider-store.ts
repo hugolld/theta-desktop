@@ -53,7 +53,7 @@ export class CustomProviderStore {
         (!isRecord(existing) || !isPiGuiCustomProviderConfig(input.providerId, existing))
       ) {
         throw new Error(
-          `Provider ID "${input.providerId}" already exists in models.json and is not managed by pi-gui.`,
+          `Provider ID "${input.providerId}" already exists in models.json and is not managed by Theta.`,
         );
       }
       providers[input.providerId] = toProviderConfig(input);
