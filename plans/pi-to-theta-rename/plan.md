@@ -616,10 +616,20 @@ Verification:
 
 - `apps/website`. It is upstream's site for pi-gui.com, and it still builds. It needs a
   decision on a Theta site, a domain, and copy.
-- A Theta icon. `apps/desktop/resources/icon.icns` and `icon.png` are upstream's artwork.
-  The Dock shows that artwork under the new name until you supply Theta artwork.
+- ~~A Theta icon.~~ Done outside the plan units on 2026-11-22 on the owner's instruction:
+  generated Theta artwork (dark rounded square, geometric Θ) now replaces upstream's
+  `icon.icns` and `icon.png` in `apps/desktop/resources/`. Proven in the packaged bundle:
+  `Contents/Resources/icon.icns` hash matches the resource, `CFBundleIconFile` is
+  `icon.icns`, and a sips extraction of the bundle icon shows the Θ.
 - A Theta Homebrew tap and the release pipeline for Theta. They belong to M8.
-- The version of the first Theta release, and the `author` field of the packages.
+- ~~The version of the first Theta release~~ Picked outside the plan units on
+  2026-11-22: **2.0.0** in all three `package.json` files. Rationale: a stable release is
+  visible to `releases/latest` (prereleases are not), and it breaks clean from upstream's
+  1.x line. The `author` field of the packages stays open.
+- The old data folder `~/Library/Application Support/pi` was moved to
+  `~/.Trash/pi-pre-theta-2026-11-22` on the owner's instruction on 2026-11-22, after a
+  safety check (no worktrees, attachments, or turn checkpoints inside; only caches and
+  `ui-state.json`/`scheduled-tasks.json`; no process held it).
 
 ## Not proven at plan time
 
