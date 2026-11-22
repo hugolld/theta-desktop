@@ -22,7 +22,9 @@ const BANNED_STRINGS = [
 ];
 
 // Historical records and upstream's own surfaces keep their old names on purpose.
-// AGENTS.md and CLAUDE.md quote the banned strings in their names rule.
+// AGENTS.md and CLAUDE.md quote the banned strings in their names rule. The guard's
+// own source and test carry the strings by definition — the rule data lives in the
+// source, and the test plants fixtures to prove detection works.
 const SKIPPED_PREFIXES = ["docs/", "plans/", "apps/website/"];
 const SKIPPED_FILES = new Set([
   "LICENSE",
@@ -31,6 +33,8 @@ const SKIPPED_FILES = new Set([
   "pnpm-lock.yaml",
   "AGENTS.md",
   "CLAUDE.md",
+  "scripts/check-names.mjs",
+  "scripts/check-names.test.mjs",
 ]);
 
 // README's leading blockquote is the fork note: it names upstream on purpose. The
