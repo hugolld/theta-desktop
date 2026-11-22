@@ -219,6 +219,48 @@ test("attribution, the plan, symlinks, binaries, and lockfiles are left alone", 
   }
 });
 
+const ENV_FIXTURES = {
+  "tests/lane.sh":
+    "THETA_OLD=0\nexport PI_APP_TEST_LANE=core PI_APP_TEST_MODE=background PI_APP_REAL_AUTH=0\n",
+  "src/provider.ts":
+    "const provider = process.env.PI_GUI_PROVIDER;\nconst model = process.env.PI_GUI_MODEL;\n",
+  "src/vite-env.ts": "const enabled = import.meta.env.VITE_PI_APP_DEV_RELOAD_MARKERS;\n",
+  "src/sentinels.ts":
+    'const a = "__PI_APP_TEST_SESSION_VISIBILITY__";\nconst b = "__PI_GUI_UNSUPPORTED_HOST_UI__:";\n',
+  "src/keeps.ts": "const agentDir = PI_CODING_AGENT_DIR;\nconst surface = PI_GUI_LEASE_SURFACE;\n",
+};
+
+const ENV_RENAMED = {
+  "tests/lane.sh":
+    "THETA_OLD=0\nexport THETA_APP_TEST_LANE=core THETA_APP_TEST_MODE=background THETA_APP_REAL_AUTH=0\n",
+  "src/provider.ts":
+    "const provider = process.env.THETA_GUI_PROVIDER;\nconst model = process.env.THETA_GUI_MODEL;\n",
+  "src/vite-env.ts": "const enabled = import.meta.env.VITE_THETA_APP_DEV_RELOAD_MARKERS;\n",
+  "src/sentinels.ts":
+    'const a = "__THETA_APP_TEST_SESSION_VISIBILITY__";\nconst b = "__THETA_GUI_UNSUPPORTED_HOST_UI__:";\n',
+  "src/keeps.ts": "const agentDir = PI_CODING_AGENT_DIR;\nconst surface = PI_GUI_LEASE_SURFACE;\n",
+};
+
+test("R8 renames the exact environment names and keeps the pi agent and lease names", async () => {
+  const root = makeFixtureRepo();
+  try {
+    for (const [file, content] of Object.entries(ENV_FIXTURES)) {
+      track(root, file, content);
+    }
+    const plan = await planRename(root);
+    assert.deepEqual(plan.violations, []);
+    await applyRename(plan);
+    for (const [file, content] of Object.entries(ENV_RENAMED)) {
+      assert.equal(read(root, file), content, `${file} did not rename as intended`);
+    }
+    const again = await planRename(root);
+    assert.deepEqual(again.files, []);
+    assert.deepEqual(again.violations, []);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("the CLI writes only with --write, and a second write reports nothing to do", () => {
   const root = makeFixtureRepo();
   try {
