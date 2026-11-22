@@ -41,8 +41,8 @@ proof_dir="${3:-$release_dir/linux-package-proof}"
 mkdir -p "$proof_dir"
 proof_dir="$(cd "$proof_dir" && pwd)"
 
-appimage="$release_dir/pi-gui-$version-x86_64.AppImage"
-deb="$release_dir/pi-gui_${version}_amd64.deb"
+appimage="$release_dir/Theta-$version-x86_64.AppImage"
+deb="$release_dir/Theta_${version}_amd64.deb"
 debian_version="$(normalize_debian_version "$version")"
 required_dependencies=(
   "libgtk-3-0 | libgtk-3-0t64"
@@ -71,7 +71,7 @@ smoke_session=""
 # Prints the smoke session's live processes, plus any installed-app process that left it.
 smoke_processes() {
   ps -e -o pid=,sid=,stat=,args= | awk -v session="$smoke_session" '
-    $3 !~ /^Z/ && ($2 == session || $4 ~ /^\/(opt\/pi-gui\/|usr\/bin\/pi-gui$)/) { print $1 }
+    $3 !~ /^Z/ && ($2 == session || $4 ~ /^\/(opt\/Theta\/|usr\/bin\/theta-desktop$)/) { print $1 }
   '
 }
 
@@ -110,7 +110,7 @@ stop_smoke_processes() {
   if wait_for_smoke_exit 10 || wait_for_smoke_exit 10 KILL; then
     return 0
   fi
-  echo "pi-gui smoke processes survived SIGKILL:" >&2
+  echo "theta-desktop smoke processes survived SIGKILL:" >&2
   show_smoke_processes >&2
   return 1
 }
@@ -118,7 +118,7 @@ stop_smoke_processes() {
 cleanup() {
   stop_smoke_processes || true
   if $package_installed; then
-    sudo env DEBIAN_FRONTEND=noninteractive apt-get purge -y pi-gui \
+    sudo env DEBIAN_FRONTEND=noninteractive apt-get purge -y theta-desktop \
       >"$proof_dir/emergency-remove.log" 2>&1 || true
   fi
   rm -rf "$temporary_root"
@@ -149,7 +149,7 @@ verify_appimage() {
   )
 
   local extracted="$extract_root/squashfs-root"
-  for executable in "$extracted/AppRun" "$extracted/pi-gui"; do
+  for executable in "$extracted/AppRun" "$extracted/theta-desktop"; do
     if [[ ! -x "$executable" ]]; then
       echo "AppImage is missing executable payload: $executable" >&2
       exit 1
@@ -160,7 +160,7 @@ verify_appimage() {
     exit 1
   fi
 
-  readelf -h "$extracted/pi-gui" | tee "$proof_dir/appimage-app-elf-header.txt"
+  readelf -h "$extracted/theta-desktop" | tee "$proof_dir/appimage-app-elf-header.txt"
   grep -F "Advanced Micro Devices X86-64" "$proof_dir/appimage-app-elf-header.txt"
 }
 
@@ -169,13 +169,13 @@ verify_deb_archive() {
   dpkg-deb --contents "$deb" | tee "$proof_dir/dpkg-contents.txt"
   dpkg-deb --field "$deb" | tee "$proof_dir/dpkg-control-fields.txt"
 
-  assert_control_field Package "pi-gui"
+  assert_control_field Package "theta-desktop"
   assert_control_field Version "$debian_version"
   assert_control_field Architecture "amd64"
   assert_control_field Section "devel"
   assert_control_field Priority "optional"
-  assert_control_field Maintainer "Matthew Lam <minghinmatthew.lam@gmail.com>"
-  assert_control_field Homepage "https://github.com/minghinmatthewlam/pi-gui"
+  assert_control_field Maintainer "hugolld <hugo.lilong.dong@outlook.com>"
+  assert_control_field Homepage "https://github.com/hugolld/theta-desktop"
 
   local description
   description="$(dpkg-deb --field "$deb" Description | head -n 1)"
@@ -199,15 +199,15 @@ verify_deb_archive() {
   done
 
   local contents="$proof_dir/dpkg-contents.txt"
-  assert_contents "$contents" '\./opt/pi-gui/pi-gui$' "application executable"
-  assert_contents "$contents" '\./opt/pi-gui/chrome-sandbox$' "Chrome sandbox"
-  assert_contents "$contents" '\./opt/pi-gui/resources/app\.asar$' "app.asar"
-  assert_contents "$contents" '\./opt/pi-gui/resources/apparmor-profile$' "AppArmor profile"
-  assert_contents "$contents" '\./usr/share/applications/pi-gui\.desktop$' "desktop entry"
-  assert_contents "$contents" '\./usr/share/icons/hicolor/[0-9]+x[0-9]+/apps/pi-gui\.png$' "desktop icon"
+  assert_contents "$contents" '\./opt/Theta/theta-desktop$' "application executable"
+  assert_contents "$contents" '\./opt/Theta/chrome-sandbox$' "Chrome sandbox"
+  assert_contents "$contents" '\./opt/Theta/resources/app\.asar$' "app.asar"
+  assert_contents "$contents" '\./opt/Theta/resources/apparmor-profile$' "AppArmor profile"
+  assert_contents "$contents" '\./usr/share/applications/theta-desktop\.desktop$' "desktop entry"
+  assert_contents "$contents" '\./usr/share/icons/hicolor/[0-9]+x[0-9]+/apps/theta-desktop\.png$' "desktop icon"
   assert_contents \
     "$contents" \
-    '\./opt/pi-gui/resources/app\.asar\.unpacked/node_modules/(\.pnpm/[^/]+/node_modules/)?node-pty/(build/Release|prebuilds/linux-x64)/pty\.node$' \
+    '\./opt/Theta/resources/app\.asar\.unpacked/node_modules/(\.pnpm/[^/]+/node_modules/)?node-pty/(build/Release|prebuilds/linux-x64)/pty\.node$' \
     "native node-pty module"
 
   local control_dir="$temporary_root/control"
@@ -224,23 +224,23 @@ verify_deb_archive() {
       exit 1
     fi
   done
-  grep -F "update-alternatives --install '/usr/bin/pi-gui' 'pi-gui' '/opt/pi-gui/pi-gui' 100" "$postinst"
-  grep -F "chmod 4755 '/opt/pi-gui/chrome-sandbox'" "$postinst"
-  grep -F "chmod 0755 '/opt/pi-gui/chrome-sandbox'" "$postinst"
-  grep -F "APPARMOR_PROFILE_TARGET='/etc/apparmor.d/pi-gui'" "$postinst"
-  grep -F "update-alternatives --remove 'pi-gui' '/opt/pi-gui/pi-gui'" "$postrm"
-  if grep -F "update-alternatives --remove 'pi-gui' '/usr/bin/pi-gui'" "$postrm"; then
+  grep -F "update-alternatives --install '/usr/bin/theta-desktop' 'theta-desktop' '/opt/Theta/theta-desktop' 100" "$postinst"
+  grep -F "chmod 4755 '/opt/Theta/chrome-sandbox'" "$postinst"
+  grep -F "chmod 0755 '/opt/Theta/chrome-sandbox'" "$postinst"
+  grep -F "APPARMOR_PROFILE_TARGET='/etc/apparmor.d/theta-desktop'" "$postinst"
+  grep -F "update-alternatives --remove 'theta-desktop' '/opt/Theta/theta-desktop'" "$postrm"
+  if grep -F "update-alternatives --remove 'theta-desktop' '/usr/bin/theta-desktop'" "$postrm"; then
     echo "Debian postrm uses the alternatives link instead of the registered target." >&2
     exit 1
   fi
 
   local extracted="$temporary_root/deb-root"
   dpkg-deb --extract "$deb" "$extracted"
-  readelf -h "$extracted/opt/pi-gui/pi-gui" | tee "$proof_dir/deb-app-elf-header.txt"
+  readelf -h "$extracted/opt/Theta/theta-desktop" | tee "$proof_dir/deb-app-elf-header.txt"
   grep -F "Advanced Micro Devices X86-64" "$proof_dir/deb-app-elf-header.txt"
 
   mapfile -t native_modules < <(
-    find -L "$extracted/opt/pi-gui/resources/app.asar.unpacked/node_modules" \
+    find -L "$extracted/opt/Theta/resources/app.asar.unpacked/node_modules" \
       -type f \
       \( \
         -path '*/node-pty/build/Release/pty.node' -o \
@@ -263,13 +263,13 @@ verify_deb_archive() {
 }
 
 verify_install_upgrade_launch_remove() {
-  if dpkg-query --show --showformat='${Status}\n' pi-gui 2>/dev/null | grep -F "install ok installed"; then
-    echo "Refusing to replace an existing pi-gui installation on the CI runner." >&2
+  if dpkg-query --show --showformat='${Status}\n' theta-desktop 2>/dev/null | grep -F "install ok installed"; then
+    echo "Refusing to replace an existing theta-desktop installation on the CI runner." >&2
     exit 1
   fi
 
   local old_root="$temporary_root/old-package"
-  local old_deb="$temporary_root/pi-gui_0.0.0_amd64.deb"
+  local old_deb="$temporary_root/Theta_0.0.0_amd64.deb"
   dpkg-deb --raw-extract "$deb" "$old_root"
   sed -i 's/^Version: .*/Version: 0.0.0/' "$old_root/DEBIAN/control"
   dpkg-deb --build --root-owner-group "$old_root" "$old_deb" \
@@ -284,31 +284,31 @@ verify_install_upgrade_launch_remove() {
     2>&1 | tee "$proof_dir/upgrade-to-release.log"
   assert_installed_version "$debian_version"
 
-  dpkg-query --listfiles pi-gui | tee "$proof_dir/installed-files.txt"
-  desktop-file-validate /usr/share/applications/pi-gui.desktop \
+  dpkg-query --listfiles theta-desktop | tee "$proof_dir/installed-files.txt"
+  desktop-file-validate /usr/share/applications/theta-desktop.desktop \
     2>&1 | tee "$proof_dir/desktop-file-validation.txt"
 
   for installed_path in \
-    /opt/pi-gui/pi-gui \
-    /opt/pi-gui/chrome-sandbox \
-    /opt/pi-gui/resources/app.asar \
-    /usr/share/applications/pi-gui.desktop; do
+    /opt/Theta/theta-desktop \
+    /opt/Theta/chrome-sandbox \
+    /opt/Theta/resources/app.asar \
+    /usr/share/applications/theta-desktop.desktop; do
     if [[ ! -e "$installed_path" ]]; then
       echo "Installed Debian package is missing: $installed_path" >&2
       exit 1
     fi
   done
-  if ! compgen -G '/usr/share/icons/hicolor/*x*/apps/pi-gui.png' >/dev/null; then
+  if ! compgen -G '/usr/share/icons/hicolor/*x*/apps/theta-desktop.png' >/dev/null; then
     echo "Installed Debian package is missing its desktop icon." >&2
     exit 1
   fi
-  if [[ "$(readlink -f /usr/bin/pi-gui)" != "/opt/pi-gui/pi-gui" ]]; then
-    echo "/usr/bin/pi-gui does not resolve to the installed executable." >&2
+  if [[ "$(readlink -f /usr/bin/theta-desktop)" != "/opt/Theta/theta-desktop" ]]; then
+    echo "/usr/bin/theta-desktop does not resolve to the installed executable." >&2
     exit 1
   fi
 
   local sandbox_owner_mode
-  sandbox_owner_mode="$(stat -c '%u:%g %a' /opt/pi-gui/chrome-sandbox)"
+  sandbox_owner_mode="$(stat -c '%u:%g %a' /opt/Theta/chrome-sandbox)"
   printf '%s\n' "$sandbox_owner_mode" | tee "$proof_dir/chrome-sandbox-owner-mode.txt"
   case "$sandbox_owner_mode" in
     "0:0 755" | "0:0 4755") ;;
@@ -320,16 +320,16 @@ verify_install_upgrade_launch_remove() {
 
   local installed_node_pty
   installed_node_pty="$(
-    find -L /opt/pi-gui/resources/app.asar.unpacked/node_modules \
+    find -L /opt/Theta/resources/app.asar.unpacked/node_modules \
       -type d -path '*/node-pty' -print -quit
   )"
   if [[ -z "$installed_node_pty" ]]; then
     echo "Installed Debian package is missing the node-pty module directory." >&2
     exit 1
   fi
-  ELECTRON_RUN_AS_NODE=1 /opt/pi-gui/pi-gui -e '
+  ELECTRON_RUN_AS_NODE=1 /opt/Theta/theta-desktop -e '
     const nodePty = require(process.argv[1]);
-    const terminal = nodePty.spawn("/bin/sh", ["-c", "printf pi-gui-node-pty-ok"], {
+    const terminal = nodePty.spawn("/bin/sh", ["-c", "printf theta-node-pty-ok"], {
       name: "xterm-color",
       cols: 80,
       rows: 24,
@@ -343,11 +343,11 @@ verify_install_upgrade_launch_remove() {
       process.exit(exitCode);
     });
   ' "$installed_node_pty" | tee "$proof_dir/native-node-pty-runtime.txt"
-  grep -F "pi-gui-node-pty-ok" "$proof_dir/native-node-pty-runtime.txt"
+  grep -F "theta-node-pty-ok" "$proof_dir/native-node-pty-runtime.txt"
 
   local smoke_home="$temporary_root/smoke-home"
   mkdir -p "$smoke_home/.config" "$smoke_home/.cache"
-  # timeout returns once xvfb-run exits, while pi-gui can still be quitting. Run the
+  # timeout returns once xvfb-run exits, while theta-desktop can still be quitting. Run the
   # smoke in its own session so everything it started can be stopped before purge.
   set +e
   # shellcheck disable=SC2016 # The session leader records its own PID.
@@ -357,7 +357,7 @@ verify_install_upgrade_launch_remove() {
     setsid --wait bash -c 'printf "%s\n" "$$" >"$1" && shift && exec "$@"' bash \
     "$temporary_root/smoke-session" \
     timeout --signal=TERM --kill-after=5s 15s \
-    xvfb-run -a /usr/bin/pi-gui --disable-gpu \
+    xvfb-run -a /usr/bin/theta-desktop --disable-gpu \
     >"$proof_dir/app-launch.log" 2>&1
   local launch_status=$?
   set -e
@@ -365,36 +365,36 @@ verify_install_upgrade_launch_remove() {
   stop_smoke_processes | tee "$proof_dir/app-shutdown.txt"
   if [[ "$launch_status" -ne 124 ]]; then
     cat "$proof_dir/app-launch.log" >&2
-    echo "Installed pi-gui did not remain running under Xvfb (status $launch_status)." >&2
+    echo "Installed theta-desktop did not remain running under Xvfb (status $launch_status)." >&2
     exit 1
   fi
   if grep -E "SUID sandbox helper binary was found|No usable sandbox" "$proof_dir/app-launch.log"; then
-    echo "Installed pi-gui reported a Chrome sandbox failure." >&2
+    echo "Installed theta-desktop reported a Chrome sandbox failure." >&2
     exit 1
   fi
 
-  sudo env DEBIAN_FRONTEND=noninteractive apt-get purge -y pi-gui \
+  sudo env DEBIAN_FRONTEND=noninteractive apt-get purge -y theta-desktop \
     2>&1 | tee "$proof_dir/remove.log"
   package_installed=false
 
   for removed_path in \
-    /opt/pi-gui \
-    /usr/bin/pi-gui \
-    /etc/alternatives/pi-gui \
-    /usr/share/applications/pi-gui.desktop \
-    /etc/apparmor.d/pi-gui; do
+    /opt/Theta \
+    /usr/bin/theta-desktop \
+    /etc/alternatives/theta-desktop \
+    /usr/share/applications/theta-desktop.desktop \
+    /etc/apparmor.d/theta-desktop; do
     if [[ -e "$removed_path" || -L "$removed_path" ]]; then
       echo "Debian package removal left behind: $removed_path" >&2
       sudo find "$removed_path" -maxdepth 3 -ls >&2 || true
       exit 1
     fi
   done
-  if compgen -G '/usr/share/icons/hicolor/*x*/apps/pi-gui.png' >/dev/null; then
-    echo "Debian package removal left behind a pi-gui desktop icon." >&2
+  if compgen -G '/usr/share/icons/hicolor/*x*/apps/theta-desktop.png' >/dev/null; then
+    echo "Debian package removal left behind a theta-desktop desktop icon." >&2
     exit 1
   fi
-  if dpkg-query --show pi-gui >/dev/null 2>&1; then
-    echo "pi-gui remains registered after package purge." >&2
+  if dpkg-query --show theta-desktop >/dev/null 2>&1; then
+    echo "theta-desktop remains registered after package purge." >&2
     exit 1
   fi
 }
@@ -423,10 +423,10 @@ assert_contents() {
 assert_installed_version() {
   local expected="$1"
   local actual
-  actual="$(dpkg-query --show --showformat='${Version}' pi-gui)"
+  actual="$(dpkg-query --show --showformat='${Version}' theta-desktop)"
   printf '%s\n' "$actual" | tee -a "$proof_dir/installed-versions.txt"
   if [[ "$actual" != "$expected" ]]; then
-    echo "Installed pi-gui version mismatch: expected $expected, got $actual." >&2
+    echo "Installed theta-desktop version mismatch: expected $expected, got $actual." >&2
     exit 1
   fi
 }

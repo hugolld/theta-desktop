@@ -24,7 +24,7 @@ test("relaunches a packaged release-zip build with a new auto-titled thread and 
   const workspacePath = await makeWorkspace("release-zip-reopen-workspace");
   const appBundlePath = await extractPackagedReleaseZipAppBundle(
     undefined,
-    "pi-gui release zip reopen.app",
+    "Theta release zip reopen.app",
   );
   const executablePath = await resolveAppBundleExecutable(appBundlePath);
   const promptText = "Review the release-zip reopen persistence behavior";
@@ -97,7 +97,7 @@ test("relaunches a packaged release-zip build with multiple new threads and rest
   const workspacePath = await makeWorkspace("release-zip-transcript-workspace");
   const appBundlePath = await extractPackagedReleaseZipAppBundle(
     undefined,
-    "pi-gui release zip transcript.app",
+    "Theta release zip transcript.app",
   );
   const executablePath = await resolveAppBundleExecutable(appBundlePath);
   const firstPrompt = "Trace the first packaged transcript";

@@ -26,7 +26,7 @@ cask "${caskToken}" do
 
   depends_on arch: :arm64
 
-  app "pi-gui.app"
+  app "Theta.app"
 end
 `;
 }

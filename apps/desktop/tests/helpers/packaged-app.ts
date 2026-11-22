@@ -22,7 +22,7 @@ export async function resolvePackagedAppBundle(releaseDir = packagedReleaseDir):
   }
 
   const appBundle =
-    appBundles.find((candidate) => basename(candidate) === "pi-gui.app") ?? appBundles[0];
+    appBundles.find((candidate) => basename(candidate) === "Theta.app") ?? appBundles[0];
   if (!appBundle) {
     throw new Error(
       `No .app bundle found under ${releaseDir}. Run pnpm --filter @pi-gui/desktop run package:dir first.`,
@@ -71,7 +71,7 @@ export async function resolvePackagedReleaseZip(releaseDir = packagedReleaseDir)
 
 export async function extractPackagedReleaseZipAppBundle(
   releaseDir = packagedReleaseDir,
-  appName = "pi-gui 2.app",
+  appName = "Theta 2.app",
 ): Promise<string> {
   const zipPath = await resolvePackagedReleaseZip(releaseDir);
   return extractAppBundleFromReleaseZip(zipPath, appName);
@@ -79,7 +79,7 @@ export async function extractPackagedReleaseZipAppBundle(
 
 export async function extractAppBundleFromReleaseZip(
   zipPath: string,
-  appName = "pi-gui 2.app",
+  appName = "Theta 2.app",
 ): Promise<string> {
   const extractionDir = await mkdtemp(join(tmpdir(), "pi-gui-release-zip-"));
   await execFileAsync("ditto", ["-x", "-k", zipPath, extractionDir]);

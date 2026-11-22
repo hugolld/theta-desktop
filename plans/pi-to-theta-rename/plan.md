@@ -302,51 +302,76 @@ Note for R9. The stored names are six localStorage keys, not four:
 
 ### R3 Bundle and installer identity
 
-- [ ] Depends on no code. Land it after R2, so that the first packaged app is complete.
-- [ ] Edit these files:
+Status: green, 2026-11-22. Implemented and verified on this Mac. The owner confirmed the
+installer values: copyright adds Theta, Linux maintainer is the owner's git identity,
+vendor is `theta`. The first table missed the `refresh-macos-update-metadata.mjs` dmg
+base and the homebrew artifact references; both are in this unit.
+
+Confirmed values: appId `io.github.hugolld.theta-desktop`, productName `Theta`,
+copyright `Copyright 2026 Matthew Lam and Theta contributors`, Linux executable and deb
+package `theta-desktop`, maintainer `hugolld <hugo.lilong.dong@outlook.com>`, vendor
+`theta`, Windows executable `theta-desktop`, helper
+`theta-notification-status-helper`. The deb installs to `/opt/Theta` (the sanitized
+product name) with the executable `theta-desktop` inside; the desktop entry, icons, and
+apparmor profile follow the executable name.
+
+- [x] Depends on no code. Land it after R2, so that the first packaged app is complete.
+- [x] Edit these files:
 
       | File                                                  | Change                                             |
       | ----------------------------------------------------- | -------------------------------------------------- |
       | `apps/desktop/electron-builder.yml`                   | `appId`, `productName`, `copyright`, `linux.executableName`, `linux.maintainer`, `linux.vendor`, `deb.packageName`, `win.executableName`, both helper paths |
       | `apps/desktop/package.json`                           | `homepage`                                         |
-      | `apps/desktop/scripts/build-notification-status-helper.mjs` | Output name, line 14                         |
-      | `apps/desktop/electron/platform/notification-permission.ts` | Helper name, line 17. Must match the binary |
-      | `apps/desktop/scripts/verify-release-config.mjs`      | Assertions at lines 170, 172, 192                  |
-      | `apps/desktop/scripts/assert-packaged-runtime-deps.mjs` | Bundle paths                                    |
-      | `apps/desktop/scripts/release-artifacts.mjs`          | Artifact names                                     |
-      | `apps/desktop/scripts/release-artifacts.test.mjs`     | 17 references                                      |
-      | `apps/desktop/scripts/finalize-macos-release.sh`      | Artifact names                                     |
-      | `apps/desktop/scripts/verify-linux-release.sh`        | 55 references, with the deb `Homepage` check at 178 |
-      | `apps/desktop/scripts/verify-windows-release.ps1`     | 8 references                                       |
-      | `.github/workflows/release.yml`                       | Bundle paths, for example line 242                 |
-      | `apps/desktop/tests/helpers/packaged-app.ts`          | Bundle names at lines 25, 74, 82                   |
-      | `apps/desktop/tests/production/release-zip-reopen-new-thread.spec.ts` | Bundle names at lines 27, 100          |
-      | `apps/desktop/tests/production/finder-env-open-folder.spec.ts` | Bundle name at line 47                   |
-      | `apps/desktop/tests/production/applications-relaunch.spec.ts` | Bundle name at line 44                   |
+      | `apps/desktop/scripts/build-notification-status-helper.mjs` | Output name                                  |
+      | `apps/desktop/electron/platform/notification-permission.ts` | Helper name. Must match the binary           |
+      | `apps/desktop/scripts/verify-release-config.mjs`      | Homepage, executable name, maintainer, deb package assertions; the Linux verifier marker |
+      | `apps/desktop/scripts/assert-packaged-runtime-deps.mjs` | Bundle paths and helper name                    |
+      | `apps/desktop/scripts/release-artifacts.mjs`          | `PRODUCT_NAME = "Theta"`                           |
+      | `apps/desktop/scripts/release-artifacts.test.mjs`     | Artifact name assertions                           |
+      | `apps/desktop/scripts/refresh-macos-update-metadata.mjs` | DMG/zip base name                               |
+      | `apps/desktop/scripts/finalize-macos-release.sh`      | Artifact and bundle paths                          |
+      | `apps/desktop/scripts/verify-linux-release.sh`        | 57 references: artifacts, `/opt/Theta`, executable, control fields |
+      | `apps/desktop/scripts/verify-windows-release.ps1`     | Executable and artifact names                      |
+      | `.github/workflows/release.yml`                       | `win-unpacked` executable and DMG asset names      |
+      | `apps/desktop/tests/helpers/packaged-app.ts`          | Bundle name lookups                                |
+      | `apps/desktop/tests/production/release-zip-reopen-new-thread.spec.ts` | Bundle names |
+      | `apps/desktop/tests/production/finder-env-open-folder.spec.ts` | Bundle name                |
+      | `apps/desktop/tests/production/applications-relaunch.spec.ts` | Bundle name                 |
+      | `scripts/homebrew-tap-utils.mjs`                      | `app "Theta.app"`                                  |
+      | `scripts/verify-homebrew-flow.mjs`                    | DMG and bundle paths                               |
 
-- [ ] Build one change. The bundle, the helper binary, the executables, and the installers
+      Untouched on purpose: cask token defaults, the cask `name`/`homepage`, the
+      `minghinmatthewlam/homebrew-tap` checkout, and the `publish` block. They move in
+      R4 with the release target. Temp-dir prefixes stay for R10. `@pi-gui/*` scope
+      names stay for R6.
+
+- [x] Build one change. The bundle, the helper binary, the executables, and the installers
       carry Theta names and the new bundle ID.
-- [ ] You see `apps/desktop/release/mac-arm64/Theta.app` and
-      `Theta-<version>-arm64.dmg`.
+- [x] `apps/desktop/release/mac-arm64/Theta.app` and `Theta-1.0.1-arm64.dmg` exist.
 
 Verification:
 
-- [ ] Unit. `pnpm verify:release-config`, `pnpm test:release-helpers`, and `pnpm check`
-      pass. The first two commands check the renamed scripts on this Mac.
-- [ ] Live 1. `pnpm --filter @pi-gui/desktop run package:dir`. Then
-      `/usr/libexec/PlistBuddy -c 'Print :CFBundleName' -c 'Print :CFBundleIdentifier' apps/desktop/release/mac-arm64/Theta.app/Contents/Info.plist`
-      prints `Theta` and the new bundle ID. `Contents/MacOS` holds the new helper binary.
-- [ ] Live 2. `pnpm --filter @pi-gui/desktop run test:prod:packaged-smoke` passes on the
-      packaged app.
-- [ ] Live 3. `pnpm --filter @pi-gui/desktop run package`.
-      `ls apps/desktop/release` shows `Theta-<version>-arm64.dmg`.
+- [x] Unit. `pnpm verify:release-config` prints "Release package and workflow
+      configuration are valid." `pnpm test:release-helpers` passes 27 of 27.
+      `pnpm test:homebrew-tap` passes. `pnpm check` passes (desktop unit 424 passed,
+      1 skipped).
+- [x] Live 1. `pnpm --filter @pi-gui/desktop run package:dir` succeeds. PlistBuddy prints
+      `CFBundleName Theta` and `CFBundleIdentifier io.github.hugolld.theta-desktop`;
+      `Contents/MacOS` holds `Theta` and `theta-notification-status-helper`.
+      `CFBundleName` is what the Dock shows, so the packaged Dock name is Theta.
+- [x] Live 2. `test:prod:packaged-smoke` passes on the packaged Theta bundle (1 test).
+      `verify:packaged-runtime-deps` also passes against the Theta app.asar.
+- [x] Live 3. `pnpm --filter @pi-gui/desktop run package` builds
+      `release/Theta-1.0.1-arm64.dmg` and `.zip` with blockmaps. Notarization is skipped
+      locally (no App Store Connect credentials); the release workflow runs it on CI.
 - [ ] Perf. Not applicable. This unit changes no file that the running app loads.
 - [ ] After the push that you approve, the `desktop-package-linux` and
-      `desktop-package-windows` jobs pass on the fork.
+      `desktop-package-windows` jobs pass on the fork. Linux lands as
+      `/opt/Theta/theta-desktop` with the deb package `theta-desktop`.
 
 If the full Xcode selection blocks `swiftc` on this host, set
 `DEVELOPER_DIR=/Library/Developer/CommandLineTools` for the helper build. Confirm with
-`xcrun --find swiftc` first.
+`xcrun --find swiftc` first. Not needed: `swiftc` already resolves there.
 
 ### R4 Update and release targets
 

@@ -41,7 +41,7 @@ test("launches an installed app copy from /Applications and relaunches with pers
   const workspacePath = await makeWorkspace("applications-relaunch-workspace");
   const threadTitle = "Applications relaunch smoke";
   const extractedAppBundle = await extractPackagedReleaseZipAppBundle();
-  const installedAppBundle = join("/Applications", `pi-gui self-test ${Date.now()}.app`);
+  const installedAppBundle = join("/Applications", `Theta self-test ${Date.now()}.app`);
   await copyAppBundle(extractedAppBundle, installedAppBundle);
 
   const expectedExecutablePath = await resolveAppBundleExecutable(installedAppBundle);

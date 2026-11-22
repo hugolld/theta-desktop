@@ -44,7 +44,7 @@ test("launches a packaged app under a Finder-style PATH and opens the first fold
 
   const workspacePath = await makeWorkspace("finder-env-open-folder-workspace");
   const extractedAppBundle = await extractPackagedReleaseZipAppBundle();
-  const installedAppBundle = join("/Applications", `pi-gui finder env ${Date.now()}.app`);
+  const installedAppBundle = join("/Applications", `Theta finder env ${Date.now()}.app`);
   await copyAppBundle(extractedAppBundle, installedAppBundle);
   const executablePath = await resolveAppBundleExecutable(installedAppBundle);
 

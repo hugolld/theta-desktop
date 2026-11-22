@@ -54,7 +54,7 @@ async function packageDmg(version, outputDir) {
     },
   );
 
-  return path.join(outputDir, `pi-gui-${version}-arm64.dmg`);
+  return path.join(outputDir, `Theta-${version}-arm64.dmg`);
 }
 
 async function plistVersion(appPath) {
@@ -161,8 +161,8 @@ async function main() {
   };
   const qualifiedToken = `${values["tap-name"]}/${values["cask-token"]}`;
   const caskPath = resolveCaskPath(tapDir, values["cask-token"]);
-  const appBundlePath = path.join(appDir, "pi-gui.app");
-  const executablePath = path.join(appBundlePath, "Contents", "MacOS", "pi-gui");
+  const appBundlePath = path.join(appDir, "Theta.app");
+  const executablePath = path.join(appBundlePath, "Contents", "MacOS", "Theta");
 
   await mkdir(appDir, { recursive: true });
   await mkdir(cacheDir, { recursive: true });
