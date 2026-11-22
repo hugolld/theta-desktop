@@ -56,6 +56,6 @@ function isSelectedSession(
 }
 
 function sessionVisibilityOverride(): SessionVisibilityOverride {
-  return (globalThis as { __PI_APP_TEST_SESSION_VISIBILITY__?: SessionVisibilityOverride })
-    .__PI_APP_TEST_SESSION_VISIBILITY__;
+  return (globalThis as { __THETA_APP_TEST_SESSION_VISIBILITY__?: SessionVisibilityOverride })
+    .__THETA_APP_TEST_SESSION_VISIBILITY__;
 }

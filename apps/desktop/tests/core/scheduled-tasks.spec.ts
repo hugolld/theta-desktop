@@ -186,12 +186,12 @@ test("a scheduled run can use the scheduled-task tools while it is still running
         }) => Promise<{ content: readonly { text?: string }[] }>;
         const hooks = (
           globalThis as {
-            __PI_APP_TEST_HOOKS?: {
+            __THETA_APP_TEST_HOOKS?: {
               runScheduledTaskRuntimeTool?: ToolHook;
               fireDueScheduledTasks?: (nowIso?: string) => Promise<unknown>;
             };
           }
-        ).__PI_APP_TEST_HOOKS;
+        ).__THETA_APP_TEST_HOOKS;
         const runTool = hooks?.runScheduledTaskRuntimeTool;
         const fire = hooks?.fireDueScheduledTasks;
         if (!runTool || !fire) {

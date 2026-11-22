@@ -1,6 +1,6 @@
 import type { ExtensionCompatibilityIssue } from "@theta-desktop/session-driver";
 
-const UNSUPPORTED_HOST_UI_PREFIX = "__PI_GUI_UNSUPPORTED_HOST_UI__:";
+const UNSUPPORTED_HOST_UI_PREFIX = "__THETA_GUI_UNSUPPORTED_HOST_UI__:";
 
 export function createUnsupportedHostUiIssue(capability: string): ExtensionCompatibilityIssue {
   return {

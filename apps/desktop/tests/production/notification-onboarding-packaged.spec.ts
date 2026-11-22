@@ -24,10 +24,10 @@ test("requests notification permission in the packaged app when active work move
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_HELPER_STATUS_FILE: helperStatusFilePath,
-      PI_APP_TEST_NOTIFICATION_PERMISSION_HELPER_FOLLOWS_REQUEST: "1",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_HELPER_STATUS_FILE: helperStatusFilePath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_HELPER_FOLLOWS_REQUEST: "1",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
     },
   });
 

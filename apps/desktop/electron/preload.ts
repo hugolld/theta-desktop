@@ -77,7 +77,7 @@ import type {
   UpdateScheduledTaskInput,
 } from "../contracts/desktop-state";
 
-const devReloadMarkersEnabled = process.env.PI_APP_DEV_RELOAD_MARKERS === "1";
+const devReloadMarkersEnabled = process.env.THETA_APP_DEV_RELOAD_MARKERS === "1";
 
 function resolveDevReloadMarkers() {
   if (!devReloadMarkersEnabled) {

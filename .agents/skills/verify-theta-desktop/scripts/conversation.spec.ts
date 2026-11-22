@@ -9,11 +9,11 @@ import {
 
 test("real conversation: stream, switch, tool, stop, archive, restart", async () => {
   test.setTimeout(360_000);
-  const evidence = process.env.PI_GUI_PROOF_DIR!;
-  const source = process.env.PI_APP_REAL_AUTH_SOURCE_DIR;
-  const provider = process.env.PI_GUI_PROVIDER;
-  const model = process.env.PI_GUI_MODEL;
-  if (process.env.PI_APP_REAL_AUTH !== "1" || !source || !provider || !model) {
+  const evidence = process.env.THETA_GUI_PROOF_DIR!;
+  const source = process.env.THETA_APP_REAL_AUTH_SOURCE_DIR;
+  const provider = process.env.THETA_GUI_PROVIDER;
+  const model = process.env.THETA_GUI_MODEL;
+  if (process.env.THETA_APP_REAL_AUTH !== "1" || !source || !provider || !model) {
     throw new Error(
       "BLOCKED: conversation proof requires explicit real-auth source, provider and model; it never skips to a pass",
     );
@@ -94,7 +94,7 @@ test("real conversation: stream, switch, tool, stop, archive, restart", async ()
       agentDir,
       initialWorkspaces: [workspace],
       scrubProviderEnv: true,
-      envOverrides: { PI_APP_TEST_MODE: undefined },
+      envOverrides: { THETA_APP_TEST_MODE: undefined },
     });
     runs.push({ pid: harness.electronApp.process().pid!, closed: false });
     await harness.focusWindow();
@@ -127,8 +127,8 @@ test("real conversation: stream, switch, tool, stop, archive, restart", async ()
       userData: app.getPath("userData"),
       visible: BrowserWindow.getAllWindows()[0]?.isVisible(),
       focused: BrowserWindow.getAllWindows()[0]?.isFocused(),
-      testMode: process.env.PI_APP_TEST_MODE ?? null,
-      testHooks: "__PI_APP_TEST_HOOKS" in globalThis,
+      testMode: process.env.THETA_APP_TEST_MODE ?? null,
+      testHooks: "__THETA_APP_TEST_HOOKS" in globalThis,
     }));
     const documentFocused = await page.evaluate(() => document.hasFocus());
     await writeFile(

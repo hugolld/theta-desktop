@@ -41,12 +41,12 @@ pi integration or orphans stored values. In particular:
 - The `pi` agent itself and its paths: `pi`, `@earendil-works/pi-coding-agent`,
   `~/.pi/agent`, `.pi/settings.json`, `PI_CODING_AGENT_DIR`.
 - `packages/pi-sdk-driver`: the adapter over the pi SDK.
-- `PI_APP_*` and `PI_GUI_*` environment variables (deep rename, pending).
 - Stored keys such as `pi-gui.last-theme` and the `refs/pi-gui/snapshots/` git refs in user
   repositories.
 
 Brand names that this fork did change: the display name (Theta), the app and data folder
 name, the bundle ID, installer and executable names, the update source, the workspace
 package scope (now `@theta-desktop/*`), the preload bridge global (`piApp` is now
-`thetaApp`), the `PiDesktop*` type names, and the `pi-gui:` IPC channel, frame-message,
-and `pi-gui-image` scheme strings.
+`thetaApp`), the `PiDesktop*` type names, the `pi-gui:` IPC channel, frame-message, and
+`pi-gui-image` scheme strings, and the `PI_APP_*`/`PI_GUI_*` environment variable names
+(now `THETA_APP_*`/`THETA_GUI_*`; the pi agent's own `PI_CODING_AGENT_DIR` keeps its name).

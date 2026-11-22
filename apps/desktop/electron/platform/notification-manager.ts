@@ -318,7 +318,7 @@ export class NotificationManager {
   ): Promise<void> {
     this.dismissForSession(sessionRef);
     await this.logNotification(sessionRef, title, body);
-    if (process.env.PI_APP_TEST_MODE) {
+    if (process.env.THETA_APP_TEST_MODE) {
       return;
     }
     const notification = new Notification({
@@ -343,7 +343,7 @@ export class NotificationManager {
     title: string,
     body: string,
   ): Promise<void> {
-    const logPath = process.env.PI_APP_NOTIFICATION_LOG_PATH?.trim();
+    const logPath = process.env.THETA_APP_NOTIFICATION_LOG_PATH?.trim();
     if (!logPath) {
       return;
     }

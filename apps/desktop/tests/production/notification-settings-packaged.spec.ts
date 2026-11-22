@@ -28,9 +28,9 @@ test("shows not enabled yet in the packaged app and enables after Ask macOS upda
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_HELPER_STATUS_FILE: helperStatusFilePath,
-      PI_APP_TEST_NOTIFICATION_PERMISSION_HELPER_FOLLOWS_REQUEST: "1",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_HELPER_STATUS_FILE: helperStatusFilePath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_HELPER_FOLLOWS_REQUEST: "1",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
     },
   });
 
@@ -75,8 +75,8 @@ test("keeps showing not enabled yet when Ask macOS does not change packaged macO
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_HELPER_STATUS: "default",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_HELPER_STATUS: "default",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
     },
   });
 
@@ -121,8 +121,8 @@ test("refreshes packaged notification status after returning from System Setting
     initialWorkspaces: [workspacePath],
     testMode: "foreground",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_HELPER_STATUS_FILE: helperStatusFilePath,
-      PI_APP_TEST_NOTIFICATION_SETTINGS_LOG_PATH: settingsLogPath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_HELPER_STATUS_FILE: helperStatusFilePath,
+      THETA_APP_TEST_NOTIFICATION_SETTINGS_LOG_PATH: settingsLogPath,
     },
   });
 

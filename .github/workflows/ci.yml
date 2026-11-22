@@ -142,7 +142,7 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: ${{ github.workspace }}/apps/desktop/test-results/core-report.json
-          PI_APP_TEST_WORKERS: "2"
+          THETA_APP_TEST_WORKERS: "2"
         # Openbox answers X11 maximize requests, which some window specs depend on.
         run: >-
           xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24"

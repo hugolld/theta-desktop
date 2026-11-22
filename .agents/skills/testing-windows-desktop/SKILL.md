@@ -9,7 +9,7 @@ description: End-to-end test the pi-gui Electron desktop app on Windows. Use whe
 
 - Ensure pnpm is available: `corepack enable` then `corepack prepare pnpm@<version from package.json> --activate`.
 - Install: `pnpm install` (repo root).
-- Launch the app for GUI testing: `pnpm --filter @theta-desktop/desktop dev`. Optionally set `PI_APP_USER_DATA_DIR` to an isolated temp dir.
+- Launch the app for GUI testing: `pnpm --filter @theta-desktop/desktop dev`. Optionally set `THETA_APP_USER_DATA_DIR` to an isolated temp dir.
 - A working launch prints `starting electron app...` and the renderer dev server (`http://localhost:5173`) and must NOT print `spawn pnpm ENOENT`.
 
 ## What renders where

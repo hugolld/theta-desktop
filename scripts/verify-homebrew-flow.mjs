@@ -87,9 +87,9 @@ async function verifyExecutableLaunch(executablePath, tempRoot) {
     cwd: path.dirname(executablePath),
     env: {
       ...process.env,
-      PI_APP_OPEN_DEVTOOLS: "0",
-      PI_APP_TEST_MODE: "background",
-      PI_APP_USER_DATA_DIR: userDataDir,
+      THETA_APP_OPEN_DEVTOOLS: "0",
+      THETA_APP_TEST_MODE: "background",
+      THETA_APP_USER_DATA_DIR: userDataDir,
       PI_CODING_AGENT_DIR: agentDir,
     },
     stdio: "ignore",

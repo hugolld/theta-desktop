@@ -30,9 +30,9 @@ test("requests notification permission when the user switches away from a runnin
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
     },
   });
 
@@ -70,9 +70,9 @@ test("requests notification permission when the user leaves the threads surface"
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
     },
   });
 
@@ -99,9 +99,9 @@ test("requests notification permission after a backgrounded session later flips 
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
     },
   });
 
@@ -131,9 +131,9 @@ test("does not request notification permission when all notification categories 
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
     },
   });
 
@@ -172,9 +172,9 @@ test("does not request notification permission twice after macOS decides during 
       initialWorkspaces: [workspacePath],
       testMode: "background",
       envOverrides: {
-        PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
-        PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: status,
-        PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
+        THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
+        THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: status,
+        THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
       },
     });
 
@@ -211,9 +211,9 @@ test("does not request notification permission again after macOS already decided
       initialWorkspaces: [workspacePath],
       testMode: "background",
       envOverrides: {
-        PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: status,
-        PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
-        PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
+        THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: status,
+        THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+        THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
       },
     });
 
@@ -241,9 +241,9 @@ test("does not request notification permission on launch before any work is back
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_LOG_PATH: requestLogPath,
     },
   });
 

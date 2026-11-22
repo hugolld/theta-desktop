@@ -450,7 +450,7 @@ async function attachTinyAndClear(
 
 async function captureComposerProof(window: Page, fileName: string): Promise<void> {
   const captureDir =
-    process.env.PI_APP_CAPTURE_ARTIFACTS ??
+    process.env.THETA_APP_CAPTURE_ARTIFACTS ??
     (existsSync("/opt/cursor/artifacts") ? "/opt/cursor/artifacts" : undefined);
   if (!captureDir) {
     return;

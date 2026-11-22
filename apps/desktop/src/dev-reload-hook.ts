@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-if (import.meta.env.VITE_PI_APP_DEV_RELOAD_MARKERS === "1") {
+if (import.meta.env.VITE_THETA_APP_DEV_RELOAD_MARKERS === "1") {
   window.__piDevReloadRenderer = {
     renderer: RENDERER_DEV_RELOAD_MARKER,
     "session-driver": SESSION_DRIVER_DEV_RELOAD_MARKER,

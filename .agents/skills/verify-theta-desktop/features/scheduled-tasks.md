@@ -21,13 +21,13 @@ Users create local on-device schedules from the Scheduled sidebar, a thread menu
 
 Preconditions: isolated profile and fixture folder. Core coverage is credential-free; do not fake `auth.json` / `~/.pi`.
 
-- **Run:** `PI_APP_TEST_LANE=core PI_APP_REAL_AUTH=0 pnpm --filter @theta-desktop/desktop run test:e2e:runner -- apps/desktop/tests/core/scheduled-tasks.spec.ts apps/desktop/tests/core/scheduled-task-runtime-tools.spec.ts`. The core spec calls `list_scheduled_tasks` during a fired run; the unit spec covers list and Pause mid-run. Delete mid-run is not covered. No `prove.sh` lane drives scheduled tasks.
+- **Run:** `THETA_APP_TEST_LANE=core THETA_APP_REAL_AUTH=0 pnpm --filter @theta-desktop/desktop run test:e2e:runner -- apps/desktop/tests/core/scheduled-tasks.spec.ts apps/desktop/tests/core/scheduled-task-runtime-tools.spec.ts`. The core spec calls `list_scheduled_tasks` during a fired run; the unit spec covers list and Pause mid-run. Delete mid-run is not covered. No `prove.sh` lane drives scheduled tasks.
 - **List/create:** click Scheduled, Set up manually, fill title and instruction, Create. Active should show the row and next-run copy. Pause, then restart the same profile.
 - **Interview:** Create with pi. Composer must contain the interview prompt and the transcript must have no assistant row.
 - **Fire:** bind a due once/interval task to the selected thread, call the test-mode fire hook, require `sent-by-scheduled-task`.
 - **Tool:** `runScheduledTaskRuntimeTool` with `create_scheduled_task`, then `list_scheduled_tasks`. The snapshot must contain the new task id. No Electron spec calls `update_scheduled_task`; unit `apps/desktop/tests/unit/app-store-scheduled-tasks.spec.ts` covers it (schedule merges) and claim-before-delivery, via (from the repo root) `pnpm exec playwright test -c apps/desktop/playwright.config.ts apps/desktop/tests/unit/app-store-scheduled-tasks.spec.ts`. The test hook bypasses the Theta tools switch.
 
-This is fixture-backed Electron proof, not real-provider interview execution. A live tool-call interview belongs only behind `PI_APP_REAL_AUTH=1`.
+This is fixture-backed Electron proof, not real-provider interview execution. A live tool-call interview belongs only behind `THETA_APP_REAL_AUTH=1`.
 
 ## Gotchas
 

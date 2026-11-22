@@ -1,9 +1,9 @@
 /**
  * Snapshot of what the app restores from a data folder. Opt-in. It copies the folder at
- * PI_APP_PROFILE_SOURCE_DIR, launches the app on the copy as a normal launch, and writes
+ * THETA_APP_PROFILE_SOURCE_DIR, launches the app on the copy as a normal launch, and writes
  * the restored state, localStorage, and the root settings files as one JSON file.
  *
- *   PI_APP_PROFILE_SOURCE_DIR=/absolute/path/to/data-folder \
+ *   THETA_APP_PROFILE_SOURCE_DIR=/absolute/path/to/data-folder \
  *     pnpm --filter @theta-desktop/desktop run test:prod:profile-snapshot
  *
  * The source folder is read once and never modified. PROFILE_OUT=<file> copies the
@@ -94,7 +94,7 @@ async function readRootJsonFiles(dataDir: string): Promise<Record<string, unknow
 
 test("restores a copied data folder", async ({}, info) => {
   test.setTimeout(120_000);
-  const sourceDir = requiredEnv("PI_APP_PROFILE_SOURCE_DIR");
+  const sourceDir = requiredEnv("THETA_APP_PROFILE_SOURCE_DIR");
 
   const root = await realpath(await mkdtemp(join(tmpdir(), "profile-snapshot-")));
   const dataDir = join(root, "data");
@@ -105,7 +105,7 @@ test("restores a copied data folder", async ({}, info) => {
   const harness = await launchDesktop(dataDir, {
     agentDir,
     // A normal launch: no test hooks and no test window mode.
-    envOverrides: { PI_APP_TEST_MODE: undefined },
+    envOverrides: { THETA_APP_TEST_MODE: undefined },
   });
   let state: RestoredState;
   let storage: Record<string, string>;

@@ -80,10 +80,10 @@ test("marketing producers support staged proof and pass credentials only explici
     path.join(root, "apps/desktop/scripts/product-media/capture.media.ts"),
     "utf8",
   );
-  assert.match(source, /PI_GUI_MARKETING_STAGE_DIR/);
-  assert.match(source, /PI_GUI_MARKETING_PROVIDER/);
-  assert.match(source, /PI_GUI_MARKETING_MODEL/);
-  assert.match(source, /PI_APP_REAL_AUTH_SOURCE_DIR/);
+  assert.match(source, /THETA_GUI_MARKETING_STAGE_DIR/);
+  assert.match(source, /THETA_GUI_MARKETING_PROVIDER/);
+  assert.match(source, /THETA_GUI_MARKETING_MODEL/);
+  assert.match(source, /THETA_APP_REAL_AUTH_SOURCE_DIR/);
   assert.match(source, /scrubProviderEnv: true/);
   assert.match(source, /\{ \[provider\]: auth\[provider\] \}/);
   // The only removal is the private credential copy; media and evidence are never deleted.
@@ -95,10 +95,10 @@ test("marketing producers support staged proof and pass credentials only explici
     path.join(root, "apps/desktop/scripts/capture-showcase.mts"),
     "utf8",
   );
-  assert.match(showcaseSource, /PI_GUI_MARKETING_STAGE_DIR/);
-  assert.match(showcaseSource, /PI_GUI_MARKETING_ALLOW_PROVIDER_ENV/);
-  assert.match(showcaseSource, /PI_GUI_MARKETING_PROVIDER/);
-  assert.match(showcaseSource, /PI_GUI_MARKETING_MODEL/);
+  assert.match(showcaseSource, /THETA_GUI_MARKETING_STAGE_DIR/);
+  assert.match(showcaseSource, /THETA_GUI_MARKETING_ALLOW_PROVIDER_ENV/);
+  assert.match(showcaseSource, /THETA_GUI_MARKETING_PROVIDER/);
+  assert.match(showcaseSource, /THETA_GUI_MARKETING_MODEL/);
   assert.match(showcaseSource, /"auth\.json"\), "\{\}\\n"/);
   assert.doesNotMatch(showcaseSource, /realAuthSourceDir/);
   assert.doesNotMatch(showcaseSource, /\brm\(/);

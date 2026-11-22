@@ -15,7 +15,7 @@ test("root e2e delegates to the built, isolated desktop core lane", async () => 
   const desktop = JSON.parse(await readFile(path.join(root, "apps/desktop/package.json"), "utf8"));
   assert.equal(manifest.scripts.e2e, "pnpm --filter @theta-desktop/desktop run test:e2e:core");
   assert.match(desktop.scripts["test:e2e:core"], /^pnpm build && /);
-  assert.match(desktop.scripts["test:e2e:core"], /PI_APP_TEST_MODE=background/);
+  assert.match(desktop.scripts["test:e2e:core"], /THETA_APP_TEST_MODE=background/);
   assert.match(
     desktop.scripts["test:e2e:core"],
     /playwright test -c apps\/desktop\/playwright\.config\.ts apps\/desktop\/tests\/core$/,
@@ -98,7 +98,7 @@ test("the public Electron helper loads through Playwright and the marketing scri
     [require.resolve("@playwright/test/cli"), "test", "-c", desktopConfig, smokeSpec, "--list"],
     {
       cwd: root,
-      env: { ...process.env, PI_APP_TEST_MODE: "background" },
+      env: { ...process.env, THETA_APP_TEST_MODE: "background" },
       encoding: "utf8",
       timeout: 30_000,
     },
@@ -132,8 +132,8 @@ test("Core shards cover each discovered test exactly once and default to one wor
         env: {
           ...process.env,
           CI: "true",
-          PI_APP_TEST_MODE: "background",
-          PI_APP_TEST_WORKERS: "",
+          THETA_APP_TEST_MODE: "background",
+          THETA_APP_TEST_WORKERS: "",
           PLAYWRIGHT_JSON_OUTPUT_NAME: "",
           PLAYWRIGHT_JSON_OUTPUT_FILE: "",
         },
@@ -180,7 +180,7 @@ test("every desktop spec has a known lane and lane commands cannot mix suites", 
   for (const lane of ["core", "live", "native"]) {
     assert.ok(scripts[`test:e2e:${lane}`].includes(`apps/desktop/tests/${lane}`));
   }
-  assert.match(scripts["test:e2e:core"], /PI_APP_TEST_LANE=core/);
+  assert.match(scripts["test:e2e:core"], /THETA_APP_TEST_LANE=core/);
   assert.equal(scripts["test:e2e:ci:mac"], "pnpm run test:e2e:core");
   for (const [name, command] of Object.entries(scripts)) {
     const match = name.match(/^test:(core|live|native|prod):/);
@@ -202,11 +202,11 @@ test("every desktop spec has a known lane and lane commands cannot mix suites", 
 test("requested live runs fail before build when auth configuration is missing", () => {
   const script = path.join(root, "apps/desktop/scripts/require-live-auth.mjs");
   for (const env of [
-    { PI_APP_REAL_AUTH: "", PI_APP_REAL_AUTH_SOURCE_DIR: "" },
-    { PI_APP_REAL_AUTH: "1", PI_APP_REAL_AUTH_SOURCE_DIR: "relative/path" },
+    { THETA_APP_REAL_AUTH: "", THETA_APP_REAL_AUTH_SOURCE_DIR: "" },
+    { THETA_APP_REAL_AUTH: "1", THETA_APP_REAL_AUTH_SOURCE_DIR: "relative/path" },
     {
-      PI_APP_REAL_AUTH: "1",
-      PI_APP_REAL_AUTH_SOURCE_DIR: path.join(root, "missing-live-auth-source"),
+      THETA_APP_REAL_AUTH: "1",
+      THETA_APP_REAL_AUTH_SOURCE_DIR: path.join(root, "missing-live-auth-source"),
     },
   ]) {
     const result = spawnSync(process.execPath, [script], {

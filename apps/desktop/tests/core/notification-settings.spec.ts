@@ -18,8 +18,8 @@ test("shows not enabled yet and enables via Ask macOS", async () => {
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
-      PI_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "default",
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_REQUEST_RESULT: "granted",
     },
   });
 
@@ -54,8 +54,8 @@ test("shows turned off and opens System Settings when macOS notifications are de
     initialWorkspaces: [workspacePath],
     testMode: "background",
     envOverrides: {
-      PI_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "denied",
-      PI_APP_TEST_NOTIFICATION_SETTINGS_LOG_PATH: settingsLogPath,
+      THETA_APP_TEST_NOTIFICATION_PERMISSION_STATUS: "denied",
+      THETA_APP_TEST_NOTIFICATION_SETTINGS_LOG_PATH: settingsLogPath,
     },
   });
 

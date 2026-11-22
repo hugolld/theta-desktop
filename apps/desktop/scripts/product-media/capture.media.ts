@@ -19,8 +19,8 @@ import { launchDesktop, startThreadFromSurface } from "../../tests/helpers/elect
 import { replaceFileAtomically } from "../atomic-output.mts";
 
 const repoRoot = path.resolve(__dirname, "../../../..");
-const publishingRoot = process.env.PI_GUI_MARKETING_STAGE_DIR
-  ? path.resolve(process.env.PI_GUI_MARKETING_STAGE_DIR)
+const publishingRoot = process.env.THETA_GUI_MARKETING_STAGE_DIR
+  ? path.resolve(process.env.THETA_GUI_MARKETING_STAGE_DIR)
   : repoRoot;
 const mediaDir = path.join(publishingRoot, "apps", "website", "public", "media");
 const evidenceRoot = path.join(repoRoot, ".artifacts", "marketing", "product-media");
@@ -38,7 +38,7 @@ function requireEnv(name: string): string {
   const value = process.env[name]?.trim();
   if (!value) {
     throw new Error(
-      `${name} is required. Product media records a real agent run: set PI_GUI_MARKETING_PROVIDER, PI_GUI_MARKETING_MODEL and PI_APP_REAL_AUTH_SOURCE_DIR (the pi agent dir holding auth.json).`,
+      `${name} is required. Product media records a real agent run: set THETA_GUI_MARKETING_PROVIDER, THETA_GUI_MARKETING_MODEL and THETA_APP_REAL_AUTH_SOURCE_DIR (the pi agent dir holding auth.json).`,
     );
   }
   return value;
@@ -305,9 +305,9 @@ test("capture product media from a real run", async () => {
   if (process.platform !== "linux") {
     throw new Error("Product media is captured on Linux with Xvfb and x11grab.");
   }
-  const provider = requireEnv("PI_GUI_MARKETING_PROVIDER");
-  const model = requireEnv("PI_GUI_MARKETING_MODEL");
-  const authSource = requireEnv("PI_APP_REAL_AUTH_SOURCE_DIR");
+  const provider = requireEnv("THETA_GUI_MARKETING_PROVIDER");
+  const model = requireEnv("THETA_GUI_MARKETING_MODEL");
+  const authSource = requireEnv("THETA_APP_REAL_AUTH_SOURCE_DIR");
   const auth = JSON.parse(await readFile(path.join(authSource, "auth.json"), "utf8")) as Record<
     string,
     unknown
@@ -370,7 +370,7 @@ test("capture product media from a real run", async () => {
       initialWorkspaces: [cart, notes],
       scrubProviderEnv: true,
       envOverrides: {
-        PI_APP_TEST_MODE: undefined,
+        THETA_APP_TEST_MODE: undefined,
         DISPLAY,
         GDK_SCALE: String(SCALE),
         HOME: home,

@@ -1414,7 +1414,7 @@ function updateChildSupervisionLoop(
 }
 
 function supervisionIntervalMs(): number {
-  const configured = Number(process.env.PI_APP_ORCHESTRATION_SUPERVISION_INTERVAL_MS);
+  const configured = Number(process.env.THETA_APP_ORCHESTRATION_SUPERVISION_INTERVAL_MS);
   if (!Number.isFinite(configured) || configured <= 0) {
     return DEFAULT_SUPERVISION_INTERVAL_MS;
   }

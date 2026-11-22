@@ -600,23 +600,34 @@ Verification:
 
 ### R8 Environment names
 
-- [ ] Depends on R7.
-- [ ] Files today. 37 names that start with `PI_APP_` and 11 names that start with
-      `PI_GUI_`. Command:
-      `rg -o --no-filename 'PI_(APP|GUI)_[A-Z0-9_]+' -g '!node_modules' -g '!.artifacts' -g '!pnpm-lock.yaml' . | sort -u | wc -l`.
-      They sit in the main process, the tests, the scripts, the workflows, and the skills.
-- [ ] Build one change. The 48 names start with `THETA_APP_` or `THETA_GUI_`. The rule table
-      lists the 48 exact names. No rule matches a prefix, because the `pi` agent owns names
-      such as `PI_CODING_AGENT_DIR`.
-- [ ] You see `rg 'PI_(APP|GUI)_' -g '!node_modules' -g '!.artifacts' .` print nothing
-      outside the keep-list.
+- [x] Depends on R7.
+- [x] Files today. The plan's command counted 48 unique names; it misses hidden
+      directories (`rg` skips dot-paths), and the full list, including `.agents/` and
+      `.github/`, holds 50 (`.artifacts/rename/R8-env-names-full.txt`). They sit in the
+      main process, the tests, the scripts, the workflows, and the skills.
+- [x] Build one change. 50 rules in `scripts/rename-pi-names.mjs`, one per name, all
+      starting with `THETA_APP_` or `THETA_GUI_`. Three names are underscore sentinels and
+      one carries the `VITE_` prefix; a bare `\b` rule cannot reach those forms (a word
+      character sits before `PI`), so their rules match the full literal. No other rule
+      matches a prefix, because the `pi` agent owns names such as `PI_CODING_AGENT_DIR`.
+      Applied: 432 matches in 71 files; a second dry run reports 0; lever tests 8/8.
+- [x] You see `rg 'PI_(APP|GUI)_' -g '!node_modules' -g '!.artifacts' .` print nothing
+      outside the keep-list. Residuals after the run: `NOTICE.md` names the old prefixes
+      in its did-change paragraph on purpose, and `session-lease.ts` holds the
+      keep-listed `PI_GUI_LEASE_SURFACE` constant.
 
 Verification:
 
-- [ ] Unit. `pnpm check` passes. It includes `workflow-action-policy.test.mjs`.
-- [ ] Live. `prove.sh --smoke` passes, because its scripts set the renamed variables. One
-      core spec passes with the renamed lane variables.
-- [ ] Perf. Not applicable. A renamed variable does not change a startup step.
+- [x] Unit. `pnpm check` passes (`R8/check-2.log`, 425 unit tests). The first run failed
+      on prettier only — THETA names are longer — and `--write` fixed 6 files. An
+      equivalence proof replayed the lever over each file's HEAD version: mechanical 71,
+      hand-edited 5, unexpected 0 (`R8/equivalence.log`).
+- [x] Live. `prove.sh --smoke` passed (`run-Kbi9cb`). `dev-reload.spec.ts` (which drives
+      `VITE_THETA_APP_DEV_RELOAD_MARKERS`, `THETA_APP_DEV_PORT`, and
+      `THETA_APP_USER_DATA_DIR` end to end) and `notification-settings.spec.ts` passed
+      3/3 under `THETA_APP_TEST_LANE=core THETA_APP_REAL_AUTH=0
+      THETA_APP_TEST_MODE=background` (`R8/specs.log`).
+- [x] Perf. Not applicable. A renamed variable does not change a startup step.
 
 ### R9 Stored names
 

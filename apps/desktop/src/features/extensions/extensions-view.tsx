@@ -10,12 +10,12 @@ import {
   isPiAddonExtension,
   isPiGuiBuiltinExtension,
   PI_ADDONS_LABEL,
-  PI_GUI_TOOLS_LABEL,
+  THETA_GUI_TOOLS_LABEL,
 } from "./extension-display";
 import { displayPath, ResourceDetail } from "./resource-detail";
 import { ResourceEmptyState, ResourceList, type ResourceListGroup } from "./resource-list";
 
-const GROUP_ORDER = ["Workspace", "User", "This session", PI_ADDONS_LABEL, PI_GUI_TOOLS_LABEL];
+const GROUP_ORDER = ["Workspace", "User", "This session", PI_ADDONS_LABEL, THETA_GUI_TOOLS_LABEL];
 
 interface ExtensionsTabProps {
   readonly workspace: WorkspaceRecord;

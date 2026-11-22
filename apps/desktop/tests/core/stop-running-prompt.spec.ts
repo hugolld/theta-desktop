@@ -63,9 +63,11 @@ for (const { finish, prompt } of pendingPrompts) {
           };
           const hooks = (
             globalThis as {
-              __PI_APP_TEST_HOOKS?: { emitSessionEvent(event: SessionDriverEvent): Promise<void> };
+              __THETA_APP_TEST_HOOKS?: {
+                emitSessionEvent(event: SessionDriverEvent): Promise<void>;
+              };
             }
-          ).__PI_APP_TEST_HOOKS;
+          ).__THETA_APP_TEST_HOOKS;
           if (!hooks) throw new Error("Test event hook unavailable");
           let release: (() => void) | undefined;
           const emit = (ref: SessionRef, status: "running" | "idle") =>

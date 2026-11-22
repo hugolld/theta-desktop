@@ -94,9 +94,9 @@ export default function extension(pi) {
         };
         const hooks = (
           globalThis as {
-            __PI_APP_TEST_HOOKS?: { emitSessionEvent(event: SessionDriverEvent): Promise<void> };
+            __THETA_APP_TEST_HOOKS?: { emitSessionEvent(event: SessionDriverEvent): Promise<void> };
           }
-        ).__PI_APP_TEST_HOOKS;
+        ).__THETA_APP_TEST_HOOKS;
         if (!hooks) throw new Error("Test event hook unavailable");
         let releaseRun = () => {};
         const emit = (ref: SessionRef, status: "running" | "idle") =>

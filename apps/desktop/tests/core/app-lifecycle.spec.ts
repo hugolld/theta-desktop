@@ -12,7 +12,7 @@ const STAYS_OPEN_ASSERTION_MS = 750;
 async function launchLifecycleApp(testMode: string | undefined): Promise<DesktopHarness> {
   const userDataDir = await makeUserDataDir("pi-gui-lifecycle-");
   const harness = await launchDesktop(userDataDir, {
-    envOverrides: { PI_APP_TEST_MODE: testMode },
+    envOverrides: { THETA_APP_TEST_MODE: testMode },
   });
   await harness.firstWindow();
   return harness;
@@ -71,7 +71,7 @@ test.describe("macOS last-window lifecycle", () => {
   }
 
   for (const { label, value } of NORMAL_LIFECYCLE_CASES) {
-    test(`retains normal behavior when PI_APP_TEST_MODE is ${label}`, async () => {
+    test(`retains normal behavior when THETA_APP_TEST_MODE is ${label}`, async () => {
       test.setTimeout(30_000);
       const harness = await launchLifecycleApp(value);
       let appClosed = false;

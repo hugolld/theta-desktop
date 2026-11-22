@@ -7,7 +7,7 @@ export function extensionSourceSummary(extension: RuntimeExtensionRecord): strin
   return `${extensionScopeLabel(extension)} · ${extension.sourceInfo.origin}`;
 }
 
-export const PI_GUI_TOOLS_LABEL = "Theta tools";
+export const THETA_GUI_TOOLS_LABEL = "Theta tools";
 export const PI_ADDONS_LABEL = "Built into pi";
 
 /** Extensions pi-gui itself adds to every session; switched on and off app-wide. */
@@ -28,7 +28,7 @@ export function isPiAddonExtension(extension: RuntimeExtensionRecord): boolean {
 }
 
 export function extensionScopeLabel(extension: RuntimeExtensionRecord): string {
-  if (isPiGuiBuiltinExtension(extension)) return PI_GUI_TOOLS_LABEL;
+  if (isPiGuiBuiltinExtension(extension)) return THETA_GUI_TOOLS_LABEL;
   if (isPiAddonExtension(extension)) return PI_ADDONS_LABEL;
   return extension.sourceInfo.scope;
 }
@@ -46,7 +46,7 @@ export function sourceScopeGroupLabel(scope: RuntimeSourceScope): string {
 }
 
 export function extensionGroupLabel(extension: RuntimeExtensionRecord): string {
-  if (isPiGuiBuiltinExtension(extension)) return PI_GUI_TOOLS_LABEL;
+  if (isPiGuiBuiltinExtension(extension)) return THETA_GUI_TOOLS_LABEL;
   if (isPiAddonExtension(extension)) return PI_ADDONS_LABEL;
   return sourceScopeGroupLabel(extension.sourceInfo.scope);
 }

@@ -117,7 +117,7 @@ The root commands own published marketing outputs:
   list, review, terminal and command palette. It runs
   [`scripts/product-media/capture.media.ts`](scripts/product-media/capture.media.ts), which drives
   a real agent run on Linux in its own 2x Xvfb display and records it with ffmpeg. The run
-  needs `PI_GUI_MARKETING_PROVIDER`, `PI_GUI_MARKETING_MODEL` and `PI_APP_REAL_AUTH_SOURCE_DIR` (the
+  needs `THETA_GUI_MARKETING_PROVIDER`, `THETA_GUI_MARKETING_MODEL` and `THETA_APP_REAL_AUTH_SOURCE_DIR` (the
   pi agent directory holding `auth.json`); only the selected provider's saved credentials are
   copied, into a private temporary directory, and that copy is deleted afterwards. If pi refreshes an OAuth
   token during the run, the refreshed token is not written back, so a provider that rotates refresh
@@ -127,13 +127,13 @@ The root commands own published marketing outputs:
   `video/public/captures/`. The parallel-session capture starts two threads with initial prompts and
   requires both sessions to report `running` before recording or publishing the clip. The command
   submits real prompts, so it fails unless
-  `PI_GUI_MARKETING_ALLOW_PROVIDER_ENV=1`, `PI_GUI_MARKETING_PROVIDER`, and
-  `PI_GUI_MARKETING_MODEL` explicitly select the provider environment to use.
+  `THETA_GUI_MARKETING_ALLOW_PROVIDER_ENV=1`, `THETA_GUI_MARKETING_PROVIDER`, and
+  `THETA_GUI_MARKETING_MODEL` explicitly select the provider environment to use.
 - `pnpm marketing:render` consumes those clips and renders `video/out/pi-showcase.mp4`.
 
 [`scripts/marketing-assets.json`](../../scripts/marketing-assets.json) is the producer-to-consumer
 manifest. Preserve existing media and capture evidence. For a proof run, set
-`PI_GUI_MARKETING_STAGE_DIR` to an empty directory so capture commands write the same output tree
+`THETA_GUI_MARKETING_STAGE_DIR` to an empty directory so capture commands write the same output tree
 there without replacing tracked media. The product media capture scrubs ambient provider
 credentials and retains its profile, workspaces and raw recording under
 `.artifacts/marketing/product-media/`.
@@ -168,8 +168,8 @@ For a visible send/stream/tool/restart journey without injected assistant events
 
 ## Focus And Foreground Rules
 
-- `core` and most `live` scripts set `PI_APP_TEST_MODE=background` for you. Agents normally should not set that env var manually.
-- `native` scripts set `PI_APP_TEST_MODE=foreground` for you and may steal focus.
+- `core` and most `live` scripts set `THETA_APP_TEST_MODE=background` for you. Agents normally should not set that env var manually.
+- `native` scripts set `THETA_APP_TEST_MODE=foreground` for you and may steal focus.
 - If a native test fails, rerun it with a clean foreground window before assuming the product is broken.
 - Picker tests rely on macOS Accessibility/UI scripting. If folder or image picker automation cannot type into the dialog, check system Accessibility permissions first.
 - `production` open-panel coverage also relies on macOS Accessibility/UI scripting and should be run with the app kept frontmost.
@@ -211,10 +211,10 @@ pnpm --filter @theta-desktop/desktop run test:prod:open-folder-real
 For real-auth `live` specs, opt in explicitly:
 
 ```bash
-PI_APP_REAL_AUTH=1 PI_APP_REAL_AUTH_SOURCE_DIR=/absolute/path/to/agent \
+THETA_APP_REAL_AUTH=1 THETA_APP_REAL_AUTH_SOURCE_DIR=/absolute/path/to/agent \
   pnpm --filter @theta-desktop/desktop run test:e2e:runner -- apps/desktop/tests/live/submit-run.spec.ts
 
-PI_APP_REAL_AUTH=1 PI_APP_REAL_AUTH_SOURCE_DIR=/absolute/path/to/agent \
+THETA_APP_REAL_AUTH=1 THETA_APP_REAL_AUTH_SOURCE_DIR=/absolute/path/to/agent \
   pnpm --filter @theta-desktop/desktop run test:e2e:runner -- apps/desktop/tests/live/tool-calls.spec.ts
 ```
 

@@ -132,7 +132,7 @@ test("custom endpoint detection preserves focus moved to manual model entry", as
     await expect(dialog.getByLabel("Enable manual-model", { exact: true })).toBeChecked();
     await saveCustomEndpointProof(
       window,
-      process.env.PI_APP_CUSTOM_ENDPOINT_PROOF_DIR,
+      process.env.THETA_APP_CUSTOM_ENDPOINT_PROOF_DIR,
       "delayed-detection-focus.png",
     );
   } finally {
@@ -406,7 +406,7 @@ test("custom endpoint dialog blocks colliding provider IDs and invalid base URLs
 
 test("custom endpoint dialog supports a long-list keyboard flow with sticky actions", async () => {
   test.setTimeout(90_000);
-  const proofDir = process.env.PI_APP_CUSTOM_ENDPOINT_PROOF_DIR?.trim();
+  const proofDir = process.env.THETA_APP_CUSTOM_ENDPOINT_PROOF_DIR?.trim();
   if (proofDir) {
     await mkdir(proofDir, { recursive: true });
   }

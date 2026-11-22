@@ -25,7 +25,7 @@ async function selectedSessionRef(
 
 test("create_child_thread returns after a slow worker starts, before its turn completes", async () => {
   test.setTimeout(60_000);
-  const proofDir = process.env.PI_APP_ORCHESTRATION_PROOF_DIR?.trim();
+  const proofDir = process.env.THETA_APP_ORCHESTRATION_PROOF_DIR?.trim();
   if (proofDir) {
     await mkdir(proofDir, { recursive: true });
   }

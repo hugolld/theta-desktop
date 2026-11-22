@@ -15,7 +15,7 @@ test("launches the packaged app bundle and starts a thread through the real UI",
   const workspacePath = await makeWorkspace("packaged-smoke-workspace");
   const promptText = "Packaged smoke thread";
   const expectedExecutablePath = await resolvePackagedAppExecutable(
-    resolve(__dirname, "../..", process.env.PI_APP_TEST_RELEASE_DIR?.trim() || "release"),
+    resolve(__dirname, "../..", process.env.THETA_APP_TEST_RELEASE_DIR?.trim() || "release"),
   );
   const harness = await launchPackagedDesktop(userDataDir, {
     initialWorkspaces: [workspacePath],

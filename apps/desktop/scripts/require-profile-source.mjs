@@ -2,10 +2,10 @@ import { statSync } from "node:fs";
 import path from "node:path";
 
 // Validate configuration only. The spec copies this folder and never writes to it.
-const source = process.env.PI_APP_PROFILE_SOURCE_DIR?.trim();
+const source = process.env.THETA_APP_PROFILE_SOURCE_DIR?.trim();
 if (!source || !path.isAbsolute(source)) {
   console.error(
-    "Profile snapshot requires PI_APP_PROFILE_SOURCE_DIR=/absolute/path/to/data-folder. No profile snapshot ran.",
+    "Profile snapshot requires THETA_APP_PROFILE_SOURCE_DIR=/absolute/path/to/data-folder. No profile snapshot ran.",
   );
   process.exit(2);
 }

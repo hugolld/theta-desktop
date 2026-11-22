@@ -6,7 +6,7 @@ import {
   CUSTOM_PROVIDER_PLACEHOLDER_API_KEY,
   isValidHttpBaseUrl,
   OPENAI_COMPLETIONS_API,
-  PI_GUI_CUSTOM_PROVIDER_MARKER,
+  THETA_GUI_CUSTOM_PROVIDER_MARKER,
   type CustomProviderEntry,
   type CustomProviderInput,
   type CustomProviderModelInput,
@@ -23,7 +23,7 @@ export {
   CUSTOM_PROVIDER_PLACEHOLDER_API_KEY,
   isValidHttpBaseUrl,
   OPENAI_COMPLETIONS_API,
-  PI_GUI_CUSTOM_PROVIDER_MARKER,
+  THETA_GUI_CUSTOM_PROVIDER_MARKER,
 } from "./custom-provider-types.js";
 
 interface ModelsJson extends Record<string, unknown> {
@@ -115,7 +115,7 @@ function toProviderConfig(input: CustomProviderInput): Record<string, unknown> {
     baseUrl: input.baseUrl,
     api: OPENAI_COMPLETIONS_API,
     apiKey: trimmedKey ? trimmedKey : CUSTOM_PROVIDER_PLACEHOLDER_API_KEY,
-    [PI_GUI_CUSTOM_PROVIDER_MARKER]: true,
+    [THETA_GUI_CUSTOM_PROVIDER_MARKER]: true,
     models: input.models.map((model) => {
       const entry: Record<string, unknown> = { id: model.id };
       if (model.contextWindow !== undefined) {
@@ -176,7 +176,7 @@ function readCustomProviders(data: ModelsJson): readonly CustomProviderEntry[] {
 }
 
 function isPiGuiCustomProviderConfig(providerId: string, config: Record<string, unknown>): boolean {
-  if (config[PI_GUI_CUSTOM_PROVIDER_MARKER] === true) {
+  if (config[THETA_GUI_CUSTOM_PROVIDER_MARKER] === true) {
     return true;
   }
   if (BUILT_IN_PROVIDER_IDS.has(providerId)) {

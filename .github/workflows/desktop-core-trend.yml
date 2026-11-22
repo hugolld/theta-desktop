@@ -32,7 +32,7 @@ jobs:
 
       - name: Run desktop core once
         env:
-          PI_APP_TEST_MODE: background
+          THETA_APP_TEST_MODE: background
           PLAYWRIGHT_JSON_OUTPUT_NAME: ${{ github.workspace }}/apps/desktop/test-results/desktop-core-trend.json
         run: >-
           pnpm --filter @theta-desktop/desktop run test:e2e:core

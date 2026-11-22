@@ -33,11 +33,11 @@ const desktopDir = resolve(__dirname, "..", "..");
 const execFileAsync = promisify(execFile);
 const require = createRequire(__filename);
 const electronExecutablePath = require("electron") as string;
-const REAL_AUTH_ENV_VAR = "PI_APP_REAL_AUTH";
+const REAL_AUTH_ENV_VAR = "THETA_APP_REAL_AUTH";
 // Quit is bounded at a few seconds in main; past this the app is stuck, not slow.
 const APP_EXIT_TIMEOUT_MS = 30_000;
 const APP_OUTPUT_TAIL_LINES = 40;
-const REAL_AUTH_SOURCE_DIR_ENV_VAR = "PI_APP_REAL_AUTH_SOURCE_DIR";
+const REAL_AUTH_SOURCE_DIR_ENV_VAR = "THETA_APP_REAL_AUTH_SOURCE_DIR";
 const REQUIRED_REAL_AUTH_FILES = ["auth.json"] as const;
 const OPTIONAL_REAL_AUTH_FILES = ["settings.json", "models.json"] as const;
 // Provider auth env vars the pi runtime honors that do NOT end in `_API_KEY`
@@ -194,7 +194,7 @@ export async function launchPackagedDesktop(
   const normalized = normalizeLaunchOptions(options);
   const agentDir = await prepareAgentDir(userDataDir, normalized);
   const env = buildDesktopLaunchEnv(userDataDir, agentDir, normalized);
-  const releaseDir = resolvePackagedReleaseDir(process.env.PI_APP_TEST_RELEASE_DIR);
+  const releaseDir = resolvePackagedReleaseDir(process.env.THETA_APP_TEST_RELEASE_DIR);
   const executablePath = await resolvePackagedAppExecutable(releaseDir);
   return launchDesktopExecutable(executablePath, env);
 }
@@ -426,14 +426,14 @@ function buildDesktopLaunchEnv(
   }
   const env = {
     ...baseEnv,
-    PI_APP_USER_DATA_DIR: userDataDir,
-    PI_APP_INITIAL_WORKSPACES: (options.initialWorkspaces ?? []).join(delimiter),
-    PI_APP_TEST_MODE: options.testMode ?? process.env.PI_APP_TEST_MODE ?? "foreground",
+    THETA_APP_USER_DATA_DIR: userDataDir,
+    THETA_APP_INITIAL_WORKSPACES: (options.initialWorkspaces ?? []).join(delimiter),
+    THETA_APP_TEST_MODE: options.testMode ?? process.env.THETA_APP_TEST_MODE ?? "foreground",
     PI_CODING_AGENT_DIR: agentDir,
     ...(options.notificationLogPath
-      ? { PI_APP_NOTIFICATION_LOG_PATH: options.notificationLogPath }
+      ? { THETA_APP_NOTIFICATION_LOG_PATH: options.notificationLogPath }
       : {}),
-    PI_APP_OPEN_DEVTOOLS: "0",
+    THETA_APP_OPEN_DEVTOOLS: "0",
     ...(options.envOverrides ?? {}),
   };
   for (const [key, value] of Object.entries(options.envOverrides ?? {})) {
@@ -465,7 +465,7 @@ async function prepareAgentDir(
   userDataDir: string,
   options: LaunchDesktopOptions,
 ): Promise<string> {
-  if (process.env.PI_APP_TEST_LANE === "core" && options.realAuthSourceDir) {
+  if (process.env.THETA_APP_TEST_LANE === "core" && options.realAuthSourceDir) {
     throw new Error("Core tests must not use real provider credentials; use the live lane.");
   }
   if (options.agentDir && options.realAuthSourceDir) {
@@ -1302,13 +1302,13 @@ export async function runOrchestrationRuntimeTool(
   return harness.electronApp.evaluate(async (_, payload) => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: {
+        __THETA_APP_TEST_HOOKS?: {
           runOrchestrationRuntimeTool?: (
             input: OrchestrationRuntimeToolTestInput,
           ) => Promise<OrchestrationRuntimeToolTestResult>;
         };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.runOrchestrationRuntimeTool) {
       throw new Error("Orchestration runtime-tool hook is unavailable");
     }
@@ -1324,13 +1324,13 @@ export async function runScheduledTaskRuntimeTool(
   return harness.electronApp.evaluate(async (_, payload) => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: {
+        __THETA_APP_TEST_HOOKS?: {
           runScheduledTaskRuntimeTool?: (
             input: OrchestrationRuntimeToolTestInput,
           ) => Promise<OrchestrationRuntimeToolTestResult>;
         };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.runScheduledTaskRuntimeTool) {
       throw new Error("Scheduled-task runtime-tool hook is unavailable");
     }
@@ -1346,11 +1346,11 @@ export async function fireDueScheduledTasks(
   return harness.electronApp.evaluate(async (_, payload) => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: {
+        __THETA_APP_TEST_HOOKS?: {
           fireDueScheduledTasks?: (nowIso?: string) => Promise<DesktopAppState>;
         };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.fireDueScheduledTasks) {
       throw new Error("Scheduled-task fire hook is unavailable");
     }
@@ -1372,9 +1372,11 @@ export async function emitTestSessionEvents(
   await harness.electronApp.evaluate(async (_, payloads) => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: { emitSessionEvent?: (event: SessionDriverEvent) => Promise<void> };
+        __THETA_APP_TEST_HOOKS?: {
+          emitSessionEvent?: (event: SessionDriverEvent) => Promise<void>;
+        };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.emitSessionEvent) {
       throw new Error("Test session-event hook is unavailable");
     }
@@ -1393,9 +1395,9 @@ export async function triggerWindowActivation(harness: DesktopHarness): Promise<
   await harness.electronApp.evaluate(async () => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: { handleWindowActivation?: () => void };
+        __THETA_APP_TEST_HOOKS?: { handleWindowActivation?: () => void };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.handleWindowActivation) {
       throw new Error("Window-activation hook is unavailable");
     }
@@ -1407,9 +1409,9 @@ export async function setDeferredThreadTitleMode(harness: DesktopHarness): Promi
   await harness.electronApp.evaluate(async () => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: { setDeferredThreadTitleMode?: () => void };
+        __THETA_APP_TEST_HOOKS?: { setDeferredThreadTitleMode?: () => void };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.setDeferredThreadTitleMode) {
       throw new Error("Deferred thread-title hook is unavailable");
     }
@@ -1427,9 +1429,9 @@ export async function waitForDeferredThreadTitleRequest(
         harness.electronApp.evaluate(async () => {
           const hooks = (
             globalThis as {
-              __PI_APP_TEST_HOOKS?: { hasDeferredThreadTitle?: () => boolean };
+              __THETA_APP_TEST_HOOKS?: { hasDeferredThreadTitle?: () => boolean };
             }
-          ).__PI_APP_TEST_HOOKS;
+          ).__THETA_APP_TEST_HOOKS;
           if (!hooks?.hasDeferredThreadTitle) {
             throw new Error("Deferred thread-title hook is unavailable");
           }
@@ -1475,9 +1477,9 @@ export async function resolveDeferredThreadTitle(
   await harness.electronApp.evaluate(async (_, nextTitle) => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: { resolveDeferredThreadTitle?: (title: string) => void };
+        __THETA_APP_TEST_HOOKS?: { resolveDeferredThreadTitle?: (title: string) => void };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.resolveDeferredThreadTitle) {
       throw new Error("Deferred thread-title resolve hook is unavailable");
     }
@@ -1489,9 +1491,9 @@ export async function rejectDeferredThreadTitle(harness: DesktopHarness): Promis
   await harness.electronApp.evaluate(async () => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: { rejectDeferredThreadTitle?: () => void };
+        __THETA_APP_TEST_HOOKS?: { rejectDeferredThreadTitle?: () => void };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.rejectDeferredThreadTitle) {
       throw new Error("Deferred thread-title reject hook is unavailable");
     }

@@ -44,7 +44,7 @@ const tableResponse = [
 test("renders markdown formatting in assistant responses", async () => {
   test.setTimeout(60_000);
   const userDataDir = await makeUserDataDir();
-  const proofDir = process.env.PI_APP_MARKDOWN_RENDERING_PROOF_DIR?.trim();
+  const proofDir = process.env.THETA_APP_MARKDOWN_RENDERING_PROOF_DIR?.trim();
   if (proofDir) {
     await mkdir(proofDir, { recursive: true });
   }

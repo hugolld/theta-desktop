@@ -177,9 +177,11 @@ async function emitNoWait(harness: DesktopHarness, event: SessionDriverEvent): P
   await harness.electronApp.evaluate(async (_, payload) => {
     const hooks = (
       globalThis as {
-        __PI_APP_TEST_HOOKS?: { emitSessionEvent?: (event: SessionDriverEvent) => Promise<void> };
+        __THETA_APP_TEST_HOOKS?: {
+          emitSessionEvent?: (event: SessionDriverEvent) => Promise<void>;
+        };
       }
-    ).__PI_APP_TEST_HOOKS;
+    ).__THETA_APP_TEST_HOOKS;
     if (!hooks?.emitSessionEvent) {
       throw new Error("Test session-event hook is unavailable");
     }

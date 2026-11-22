@@ -32,12 +32,12 @@ export async function setSessionVisibilityOverride(
   mode: "active" | "inactive" | null,
 ): Promise<void> {
   await harness.electronApp.evaluate((_, nextMode) => {
-    const globals = globalThis as { __PI_APP_TEST_SESSION_VISIBILITY__?: "active" | "inactive" };
+    const globals = globalThis as { __THETA_APP_TEST_SESSION_VISIBILITY__?: "active" | "inactive" };
     if (!nextMode) {
-      delete globals.__PI_APP_TEST_SESSION_VISIBILITY__;
+      delete globals.__THETA_APP_TEST_SESSION_VISIBILITY__;
       return;
     }
-    globals.__PI_APP_TEST_SESSION_VISIBILITY__ = nextMode;
+    globals.__THETA_APP_TEST_SESSION_VISIBILITY__ = nextMode;
   }, mode);
 }
 

@@ -7,7 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = __dirname;
 const pathsProject = path.resolve(projectRoot, "tsconfig.paths.json");
-const devPort = Number(process.env.PI_APP_DEV_PORT ?? "5173");
+const devPort = Number(process.env.THETA_APP_DEV_PORT ?? "5173");
 export default defineConfig(({ command }) => {
   const cleanOutputs = command === "build";
 

@@ -536,7 +536,7 @@ test("preserves durable ui state when one startup workspace is unavailable", asy
       { workspaceId: unavailableWorkspaceId, sessionId: unavailableSessionId },
     );
 
-    const proofDir = process.env.PI_APP_PERSISTENCE_PROOF_DIR?.trim();
+    const proofDir = process.env.THETA_APP_PERSISTENCE_PROOF_DIR?.trim();
     if (proofDir) {
       await mkdir(proofDir, { recursive: true });
       await window.screenshot({
@@ -565,7 +565,7 @@ test("preserves durable ui state when one startup workspace is unavailable", asy
       "unavailable-startup-workspace",
     );
 
-    const proofDir = process.env.PI_APP_PERSISTENCE_PROOF_DIR?.trim();
+    const proofDir = process.env.THETA_APP_PERSISTENCE_PROOF_DIR?.trim();
     if (proofDir) {
       await window.screenshot({
         path: join(proofDir, "unavailable-workspace-third-launch.png"),

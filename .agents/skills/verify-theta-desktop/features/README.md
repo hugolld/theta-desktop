@@ -64,7 +64,7 @@ message/tool/message/card), a second turn, thread switch to a pinned-adjacent fi
 session (pin present, 4 rows), and the `?piMock=0` opt-out shell. Doctor: UA not
 Electron, `ping()` = `mock-bridge`, 3 workspaces / 5 sessions / 2 child links, console
 clean. No real-provider proof in this pass; the conversation lane was not attempted
-(needs `PI_APP_REAL_AUTH=1` with valid credentials, blocked at auth in recent passes).
+(needs `THETA_APP_REAL_AUTH=1` with valid credentials; missing or rejected credentials stop the run at its own precheck, before anything launches).
 The Electron window from the same dev launch was health-checked by launch only;
 fixture-backed core specs (`test:e2e:runner`) remain its regression lane, and the
 desktop unit suite passed 424/424 on this checkout the same day.

@@ -87,10 +87,10 @@ const requiredPackages = [
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const desktopDir = path.resolve(scriptDir, "..");
-const packagePlatform = (process.env.PI_APP_PACKAGE_PLATFORM ?? process.platform)
+const packagePlatform = (process.env.THETA_APP_PACKAGE_PLATFORM ?? process.platform)
   .trim()
   .toLowerCase();
-const releaseDir = path.resolve(desktopDir, process.env.PI_APP_TEST_RELEASE_DIR ?? "release");
+const releaseDir = path.resolve(desktopDir, process.env.THETA_APP_TEST_RELEASE_DIR ?? "release");
 const asarPath = resolveAsarPath(releaseDir, packagePlatform);
 const notificationHelperPath =
   packagePlatform === "darwin"

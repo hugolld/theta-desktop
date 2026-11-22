@@ -96,9 +96,9 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 const isDev = Boolean(process.env.ELECTRON_RENDERER_URL);
-const appTestMode = resolveAppTestMode(process.env.PI_APP_TEST_MODE);
+const appTestMode = resolveAppTestMode(process.env.THETA_APP_TEST_MODE);
 const windowTestMode = appTestMode ?? "foreground";
-const devReloadMarkersEnabled = process.env.PI_APP_DEV_RELOAD_MARKERS === "1";
+const devReloadMarkersEnabled = process.env.THETA_APP_DEV_RELOAD_MARKERS === "1";
 const TURN_CAPTURE_BACKSTOP_MS = 10_000;
 let store: DesktopAppStore;
 let extensionViewOwner: DesktopExtensionViewOwner | undefined;
@@ -656,7 +656,7 @@ function createWindow(): BrowserWindow {
     void window.loadURL(process.env.ELECTRON_RENDERER_URL as string).catch((error: unknown) => {
       console.error("[main] loadURL failed", error);
     });
-    if (process.env.PI_APP_OPEN_DEVTOOLS !== "0") {
+    if (process.env.THETA_APP_OPEN_DEVTOOLS !== "0") {
       window.webContents.openDevTools({ mode: "detach" });
     }
   } else {
@@ -926,7 +926,7 @@ function installApplicationMenu(): void {
 // POSIX-only; on Windows the PATH is left untouched (see augmentPosixPath).
 // Tests that need an exact PATH (no gh, say, on a Mac runner whose Homebrew has one) opt out.
 const augmentedPath = augmentPosixPath();
-if (augmentedPath.changed && !(appTestMode && process.env.PI_APP_TEST_EXACT_PATH === "1")) {
+if (augmentedPath.changed && !(appTestMode && process.env.THETA_APP_TEST_EXACT_PATH === "1")) {
   process.env.PATH = augmentedPath.path;
 }
 
@@ -934,7 +934,8 @@ if (augmentedPath.changed && !(appTestMode && process.env.PI_APP_TEST_EXACT_PATH
 // leaves the user's settings and threads in the old folder.
 app.setName("Theta");
 
-const configuredUserDataDir = process.env.PI_APP_USER_DATA_DIR?.trim() || app.getPath("userData");
+const configuredUserDataDir =
+  process.env.THETA_APP_USER_DATA_DIR?.trim() || app.getPath("userData");
 app.setPath("userData", configuredUserDataDir);
 
 const hasSingleInstanceLock = app.requestSingleInstanceLock();
@@ -1085,9 +1086,9 @@ app
       }
     });
     installApplicationMenu();
-    if (process.env.PI_APP_TEST_MODE) {
+    if (process.env.THETA_APP_TEST_MODE) {
       Object.assign(globalThis, {
-        __PI_APP_TEST_HOOKS: {
+        __THETA_APP_TEST_HOOKS: {
           emitSessionEvent: (event: SessionDriverEvent) => store.emitTestSessionEvent(event),
           handleWindowActivation: () => {
             if (mainWindow) {
@@ -1335,7 +1336,7 @@ app.on("before-quit", (event) => {
 });
 
 function resolveInitialWorkspacePaths(): readonly string[] {
-  const raw = process.env.PI_APP_INITIAL_WORKSPACES;
+  const raw = process.env.THETA_APP_INITIAL_WORKSPACES;
   if (raw !== undefined) {
     return raw
       .split(path.delimiter)
