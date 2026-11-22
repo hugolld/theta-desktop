@@ -4,8 +4,8 @@ import { dirname } from "node:path";
 import type { DesktopAppStore } from "../application/app-store";
 import type { NotificationPermissionService } from "./notification-permission";
 import type { DesktopAppState } from "../../contracts/desktop-state";
-import { sessionKey } from "@pi-gui/session-driver";
-import type { SessionDriverEvent, SessionRef } from "@pi-gui/session-driver";
+import { sessionKey } from "@theta-desktop/session-driver";
+import type { SessionDriverEvent, SessionRef } from "@theta-desktop/session-driver";
 import { getSelectedSession } from "../../contracts/desktop-state";
 import { isSessionActivelyViewed } from "../conversation/session-visibility";
 

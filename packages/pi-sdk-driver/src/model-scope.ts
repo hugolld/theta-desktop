@@ -2,7 +2,10 @@ import {
   type ModelRuntime,
   resolveModelScopeWithDiagnostics,
 } from "@earendil-works/pi-coding-agent";
-import type { RuntimeModelRecord, RuntimeModelScope } from "@pi-gui/session-driver/runtime-types";
+import type {
+  RuntimeModelRecord,
+  RuntimeModelScope,
+} from "@theta-desktop/session-driver/runtime-types";
 
 type ModelKey = Pick<RuntimeModelRecord, "providerId" | "modelId">;
 

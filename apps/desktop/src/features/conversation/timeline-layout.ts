@@ -1,4 +1,4 @@
-import type { ExtensionCard } from "@pi-gui/session-driver";
+import type { ExtensionCard } from "@theta-desktop/session-driver";
 import type { DisplayTimelineItem } from "../../../contracts/timeline-types";
 
 export interface ReadingAnchor {

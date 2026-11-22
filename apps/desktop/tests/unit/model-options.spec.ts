@@ -3,7 +3,7 @@ import type {
   RuntimeModelRecord,
   RuntimeModelScope,
   RuntimeSnapshot,
-} from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/session-driver/runtime-types";
 import { buildModelOptions } from "../../src/features/conversation/composer-commands";
 
 function model(

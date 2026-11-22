@@ -39,7 +39,7 @@ These rules apply for the full session.
 
 - The product brand is Theta (`theta-desktop`); the pi coding agent keeps every name it owns.
 - Never rename: the `pi` agent and its paths (`pi`, `@earendil-works/pi-coding-agent`,
-  `~/.pi/agent`, `PI_CODING_AGENT_DIR`), `pi-sdk-driver`, the `@pi-gui/*` package scope,
+  `~/.pi/agent`, `PI_CODING_AGENT_DIR`), `pi-sdk-driver`, the `@theta-desktop/*` package scope,
   `piApp`, the `PI_APP_*`/`PI_GUI_*` environment prefixes, and stored keys such as
   `pi-gui.last-theme` or the `refs/pi-gui/snapshots/` refs. See [NOTICE.md](./NOTICE.md).
 - `scripts/check-names.mjs` fails `pnpm check` when an upstream merge brings an old brand

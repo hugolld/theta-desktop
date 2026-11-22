@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { sessionKey } from "@pi-gui/session-driver";
+import { sessionKey } from "@theta-desktop/session-driver";
 import type { OrchestrationChildThread, TranscriptMessage } from "../../contracts/desktop-state";
 import { createOrchestrationOwner } from "../../electron/orchestration/app-store-orchestration";
 

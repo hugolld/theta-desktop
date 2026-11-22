@@ -1,6 +1,9 @@
 import { useTranslation } from "../../i18n";
 import { useEffect, useMemo, useState } from "react";
-import type { RuntimeProviderRecord, RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+import type {
+  RuntimeProviderRecord,
+  RuntimeSnapshot,
+} from "@theta-desktop/session-driver/runtime-types";
 import { SearchIcon } from "../../ui/icons";
 import type { CustomProviderConfig } from "../../../contracts/ipc";
 import { SettingsCustomEndpointsSection } from "./settings-custom-endpoints-section";

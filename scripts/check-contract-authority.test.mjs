@@ -7,10 +7,10 @@ import path from "node:path";
 import { checkContractAuthority, checkContractDeclarations } from "./check-contract-authority.mjs";
 
 for (const name of [
-  "@pi-gui/session-driver",
-  "@pi-gui/session-driver/runtime-types",
-  "@pi-gui/catalogs",
-  "@pi-gui/*",
+  "@theta-desktop/session-driver",
+  "@theta-desktop/session-driver/runtime-types",
+  "@theta-desktop/catalogs",
+  "@theta-desktop/*",
   "@*",
   "*",
 ]) {
@@ -28,7 +28,7 @@ test("rejects module augmentation as another owned contract path", () => {
   assert.equal(
     checkContractDeclarations(
       "augmentation.ts",
-      'export {}; declare module "@pi-gui/session-driver" { interface SessionDriver { bypass(): void } }',
+      'export {}; declare module "@theta-desktop/session-driver" { interface SessionDriver { bypass(): void } }',
     ).length,
     1,
   );
@@ -40,10 +40,10 @@ test("accepts canonical definitions, imports, and unrelated external declaration
       "types.ts",
       `
 export interface SessionDriver { openSession(): void }
-import type { SessionRef } from "@pi-gui/session-driver";
+import type { SessionRef } from "@theta-desktop/session-driver";
 declare module "untyped-vendor" { export const value: unknown }
 declare module "*.png" { const url: string; export default url }
-// declare module "@pi-gui/catalogs" {}
+// declare module "@theta-desktop/catalogs" {}
 `,
     ),
     [],
@@ -57,9 +57,9 @@ test("repository guard rejects an untracked vendor declaration and accepts its r
   mkdirSync(path.dirname(file), { recursive: true });
   writeFileSync(
     file,
-    'declare module "@pi-gui/session-driver" { export interface SessionDriver {} }',
+    'declare module "@theta-desktop/session-driver" { export interface SessionDriver {} }',
   );
   assert.equal(checkContractAuthority(root).length, 1);
-  writeFileSync(file, 'import type { SessionDriver } from "@pi-gui/session-driver";');
+  writeFileSync(file, 'import type { SessionDriver } from "@theta-desktop/session-driver";');
   assert.deepEqual(checkContractAuthority(root), []);
 });

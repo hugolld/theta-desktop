@@ -49,7 +49,7 @@ test("extension cards, views and draft attachments resolve files through a linke
   await writeFile(
     join(extension, "index.ts"),
     `
-import { registerDesktopView } from ${JSON.stringify(require.resolve("@pi-gui/extension-ui"))};
+import { registerDesktopView } from ${JSON.stringify(require.resolve("@theta-desktop/extension-ui"))};
 export default function fixture(pi) {
   pi.registerProvider("path-fixture", {
     baseUrl: "http://127.0.0.1:9/never-contact", apiKey: "LOCAL_TEST_CANARY", api: "path-fixture",

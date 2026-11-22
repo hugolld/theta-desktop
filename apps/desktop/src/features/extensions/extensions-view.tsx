@@ -1,4 +1,4 @@
-import type { RuntimeExtensionRecord } from "@pi-gui/session-driver/runtime-types";
+import type { RuntimeExtensionRecord } from "@theta-desktop/session-driver/runtime-types";
 import type {
   ExtensionCommandCompatibilityRecord,
   WorkspaceRecord,

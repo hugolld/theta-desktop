@@ -1,8 +1,15 @@
 import { randomUUID } from "node:crypto";
-import { sessionKey } from "@pi-gui/session-driver";
-import type { SessionConfig, SessionQueuedMessage, SessionRef } from "@pi-gui/session-driver";
-import type { PiSdkDriver } from "@pi-gui/pi-sdk-driver";
-import type { RuntimeCommandRecord, RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+import { sessionKey } from "@theta-desktop/session-driver";
+import type {
+  SessionConfig,
+  SessionQueuedMessage,
+  SessionRef,
+} from "@theta-desktop/session-driver";
+import type { PiSdkDriver } from "@theta-desktop/pi-sdk-driver";
+import type {
+  RuntimeCommandRecord,
+  RuntimeSnapshot,
+} from "@theta-desktop/session-driver/runtime-types";
 import type {
   ComposerAttachment,
   DesktopAppState,

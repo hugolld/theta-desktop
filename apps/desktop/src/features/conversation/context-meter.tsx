@@ -3,7 +3,7 @@ import type {
   SessionPlanLimit,
   SessionPromptCache,
   SessionUsageSnapshot,
-} from "@pi-gui/session-driver";
+} from "@theta-desktop/session-driver";
 
 interface ContextMeterProps {
   readonly usage: SessionUsageSnapshot | undefined;

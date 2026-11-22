@@ -27,8 +27,8 @@ import type {
   RuntimeSkillRecord,
   RuntimeSourceInfo,
   RuntimeSnapshot,
-} from "@pi-gui/session-driver/runtime-types";
-import type { WorkspaceRef } from "@pi-gui/session-driver";
+} from "@theta-desktop/session-driver/runtime-types";
+import type { WorkspaceRef } from "@theta-desktop/session-driver";
 import { createRuntimeDependencies } from "./runtime-deps.js";
 import {
   createSettingsManagerWithoutNpmPackages,

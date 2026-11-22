@@ -1,4 +1,4 @@
-import type { RuntimeSkillRecord } from "@pi-gui/session-driver/runtime-types";
+import type { RuntimeSkillRecord } from "@theta-desktop/session-driver/runtime-types";
 import type { WorkspaceRecord } from "../../../contracts/desktop-state";
 import { titleCase } from "../../lib/string-utils";
 import { SkillIcon } from "../../ui/icons";

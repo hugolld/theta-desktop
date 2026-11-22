@@ -2,13 +2,13 @@ import type {
   SessionCatalogSnapshot,
   WorkspaceCatalogSnapshot,
   WorkspaceId,
-} from "@pi-gui/catalogs";
+} from "@theta-desktop/catalogs";
 import type {
   NavigateSessionTreeOptions,
   NavigateSessionTreeResult,
   SessionQueuedMessage,
   SessionTreeSnapshot,
-} from "@pi-gui/session-driver/types";
+} from "@theta-desktop/session-driver/types";
 import type {
   CreateSessionOptions,
   ForkSessionOptions,
@@ -23,7 +23,7 @@ import type {
   SessionMessageInput,
   Unsubscribe,
   WorkspaceRef,
-} from "@pi-gui/session-driver";
+} from "@theta-desktop/session-driver";
 import {
   SessionSupervisor,
   type PiSdkDriverOptions,

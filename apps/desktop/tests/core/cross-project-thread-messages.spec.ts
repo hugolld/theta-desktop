@@ -1,7 +1,7 @@
 import { writeFile } from "node:fs/promises";
 import { basename, join } from "node:path";
 import { expect, test, type Page } from "@playwright/test";
-import type { SessionRef } from "@pi-gui/session-driver";
+import type { SessionRef } from "@theta-desktop/session-driver";
 import {
   createNamedThread,
   getDesktopState,

@@ -2,7 +2,7 @@
  * Startup cost probe. Not a regression test by default: it launches the built app
  * several times, prints STARTUP_RESULT, and writes startup.json.
  *
- *   pnpm --filter @pi-gui/desktop run test:perf:startup
+ *   pnpm --filter @theta-desktop/desktop run test:perf:startup
  *
  * STARTUP_OUT=<file> copies the result there. STARTUP_BASELINE=<file> compares the run
  * with an earlier result and fails past these margins: a startup minimum above the

@@ -16,7 +16,7 @@ import {
   SessionManager,
   SettingsManager,
 } from "@earendil-works/pi-coding-agent";
-import { DESKTOP_VIEW_REGISTER } from "@pi-gui/extension-ui";
+import { DESKTOP_VIEW_REGISTER } from "@theta-desktop/extension-ui";
 
 // This is an offline integration test, not a real GitHub or model review.
 // Only gh's metadata response is a fixture; Pi, its file loader, Chord, and Git run normally.

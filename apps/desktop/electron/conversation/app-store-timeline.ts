@@ -1,6 +1,10 @@
-import { isCardEntryItem, sessionKey } from "@pi-gui/session-driver";
-import type { SessionTranscriptItem, SessionTranscriptPin } from "@pi-gui/session-driver";
-import type { SessionDriverEvent, SessionQueuedMessage, SessionRef } from "@pi-gui/session-driver";
+import { isCardEntryItem, sessionKey } from "@theta-desktop/session-driver";
+import type { SessionTranscriptItem, SessionTranscriptPin } from "@theta-desktop/session-driver";
+import type {
+  SessionDriverEvent,
+  SessionQueuedMessage,
+  SessionRef,
+} from "@theta-desktop/session-driver";
 import type { TranscriptMessage } from "../../contracts/desktop-state";
 import {
   extensionToolRowLabel,

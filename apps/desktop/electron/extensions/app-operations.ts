@@ -1,6 +1,10 @@
 import { realpath, stat } from "node:fs/promises";
 import path from "node:path";
-import { parseExtensionUrl, type ExtensionAction, type SessionRef } from "@pi-gui/session-driver";
+import {
+  parseExtensionUrl,
+  type ExtensionAction,
+  type SessionRef,
+} from "@theta-desktop/session-driver";
 import type { WorkspaceRecord } from "../../contracts/desktop-state";
 import type { ExtensionActionEffect } from "../../contracts/extension-actions";
 import { resolveExistingWorkspacePath } from "../platform/files/workspace-paths";

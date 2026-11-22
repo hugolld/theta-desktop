@@ -1,4 +1,4 @@
-import type { SessionRef } from "@pi-gui/session-driver/types";
+import type { SessionRef } from "@theta-desktop/session-driver/types";
 
 /** The live checkout scopes: HEAD→working tree, HEAD→index, and index→working tree. */
 export type WorkingReviewScope =

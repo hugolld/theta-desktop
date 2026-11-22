@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { sessionKey } from "@pi-gui/session-driver";
+import { sessionKey } from "@theta-desktop/session-driver";
 import { SessionSupervisor } from "../dist/session-supervisor.js";
 
 function fixture() {

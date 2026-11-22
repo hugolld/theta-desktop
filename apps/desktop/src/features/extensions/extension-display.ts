@@ -1,7 +1,7 @@
 import type {
   RuntimeExtensionRecord,
   RuntimeSourceScope,
-} from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/session-driver/runtime-types";
 
 export function extensionSourceSummary(extension: RuntimeExtensionRecord): string {
   return `${extensionScopeLabel(extension)} · ${extension.sourceInfo.origin}`;

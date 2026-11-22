@@ -1,5 +1,5 @@
 {
-  "name": "@pi-gui/pi-sdk-driver",
+  "name": "@theta-desktop/pi-sdk-driver",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -25,9 +25,9 @@
   },
   "dependencies": {
     "@earendil-works/pi-coding-agent": "^1.4.0",
-    "@pi-gui/catalogs": "workspace:*",
-    "@pi-gui/extension-ui": "workspace:*",
-    "@pi-gui/session-driver": "workspace:*"
+    "@theta-desktop/catalogs": "workspace:*",
+    "@theta-desktop/extension-ui": "workspace:*",
+    "@theta-desktop/session-driver": "workspace:*"
   },
   "devDependencies": {
     "@earendil-works/pi-ai": "^1.4.0"

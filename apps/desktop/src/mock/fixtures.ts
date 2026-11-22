@@ -1,5 +1,5 @@
-import type { RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
-import type { SessionUsageSnapshot } from "@pi-gui/session-driver";
+import type { RuntimeSnapshot } from "@theta-desktop/session-driver/runtime-types";
+import type { SessionUsageSnapshot } from "@theta-desktop/session-driver";
 import type {
   ChildThreadLink,
   DesktopAppState,
@@ -11,7 +11,7 @@ import type {
   WorktreeRecord,
 } from "../../contracts/desktop-state";
 import type { TranscriptMessage } from "../../contracts/timeline-types";
-import type { SessionTreeNodeSnapshot } from "@pi-gui/session-driver/types";
+import type { SessionTreeNodeSnapshot } from "@theta-desktop/session-driver/types";
 
 /** Minutes ago → ISO timestamp, so fixture recency always looks fresh. */
 function ago(minutes: number): string {

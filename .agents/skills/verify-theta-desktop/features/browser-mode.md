@@ -13,7 +13,7 @@ Source: `apps/desktop/src/mock/` (`index.ts` installs, `mock-bridge.ts` implemen
 
 ## How to get to it (user POV)
 
-- Run `pnpm --filter @pi-gui/desktop dev`; open `http://localhost:5173` in a browser. The same launch opens the real Electron window, which must keep using the real bridge.
+- Run `pnpm --filter @theta-desktop/desktop dev`; open `http://localhost:5173` in a browser. The same launch opens the real Electron window, which must keep using the real bridge.
 - `?piMock=0` opts out; the app shows its "Couldn't restore sessions" disconnected shell, proving the guard works.
 
 ## Driving it with Playwright

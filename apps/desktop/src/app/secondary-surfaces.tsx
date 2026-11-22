@@ -6,7 +6,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import type { RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+import type { RuntimeSnapshot } from "@theta-desktop/session-driver/runtime-types";
 import type { AppView, DesktopAppState, WorkspaceRecord } from "../../contracts/desktop-state";
 import { updateSnapshot } from "./desktop-app-state";
 import { getEffectiveModelRuntime } from "../features/settings/model-settings";

@@ -4,7 +4,7 @@
  * the restored state, localStorage, and the root settings files as one JSON file.
  *
  *   PI_APP_PROFILE_SOURCE_DIR=/absolute/path/to/data-folder \
- *     pnpm --filter @pi-gui/desktop run test:prod:profile-snapshot
+ *     pnpm --filter @theta-desktop/desktop run test:prod:profile-snapshot
  *
  * The source folder is read once and never modified. PROFILE_OUT=<file> copies the
  * result there. PROFILE_BASELINE=<file> compares the `profile` object with that earlier

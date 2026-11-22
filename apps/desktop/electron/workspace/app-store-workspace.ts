@@ -1,6 +1,6 @@
-import { sessionKey } from "@pi-gui/session-driver";
-import type { PiSdkDriver } from "@pi-gui/pi-sdk-driver";
-import type { JsonCatalogStore } from "@pi-gui/catalogs/node";
+import { sessionKey } from "@theta-desktop/session-driver";
+import type { PiSdkDriver } from "@theta-desktop/pi-sdk-driver";
+import type { JsonCatalogStore } from "@theta-desktop/catalogs/node";
 import type {
   CreateSessionOptions,
   ExtensionFlagValues,
@@ -9,8 +9,8 @@ import type {
   SessionRunOutcome,
   SessionSnapshot,
   WorkspaceRef,
-} from "@pi-gui/session-driver";
-import type { RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/session-driver";
+import type { RuntimeSnapshot } from "@theta-desktop/session-driver/runtime-types";
 import type {
   CreateSessionInput,
   CreateWorktreeInput,

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
-import type { HostUiResponse } from "@pi-gui/session-driver";
+import type { HostUiResponse } from "@theta-desktop/session-driver";
 import { trapDialogFocus } from "../../ui/dialog-focus";
 import { focusComposerAfter } from "./focus-composer";
 import { ChevronDownIcon, ChevronRightIcon, CloseIcon } from "../../ui/icons";

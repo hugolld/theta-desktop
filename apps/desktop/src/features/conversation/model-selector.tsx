@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+import type { RuntimeSnapshot } from "@theta-desktop/session-driver/runtime-types";
 import {
   buildModelOptions,
   MODEL_OPTIONS_EMPTY_TITLE,

@@ -47,7 +47,11 @@ test("stripForkNote leaves a README without a fork note unchanged", () => {
 test("a clean tree passes and keep-list names never match", async () => {
   const root = makeFixtureRepo();
   try {
-    track(root, "src/app.ts", 'import x from "@pi-gui/session-driver";\napp.setName("Theta");\n');
+    track(
+      root,
+      "src/app.ts",
+      'import x from "@theta-desktop/session-driver";\napp.setName("Theta");\n',
+    );
     track(root, "README.md", "# theta-desktop\n\nSee pi-gui.com and upstream's site.\n");
     const violations = await collectViolations(root);
     assert.deepEqual(violations, []);
@@ -104,7 +108,7 @@ test("a banned string outside the README fork note still fails", async () => {
 test("the CLI exits 1 on a planted name and 0 on the keep list", () => {
   const root = makeFixtureRepo();
   try {
-    track(root, "clean.ts", 'const label = "@pi-gui/desktop";\n');
+    track(root, "clean.ts", 'const label = "@theta-desktop/desktop";\n');
     const clean = execFileSync(process.execPath, [scriptPath, "--root", root], {
       cwd: root,
       encoding: "utf8",

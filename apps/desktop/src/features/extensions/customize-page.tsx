@@ -3,7 +3,7 @@ import type {
   RuntimeExtensionRecord,
   RuntimeSkillRecord,
   RuntimeSnapshot,
-} from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/session-driver/runtime-types";
 import type {
   ExtensionCommandCompatibilityRecord,
   WorkspaceRecord,

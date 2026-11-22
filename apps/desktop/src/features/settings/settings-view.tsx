@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type {
   RuntimeSettingsSnapshot,
   RuntimeSnapshot,
-} from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/session-driver/runtime-types";
 import type {
   ModelSettingsScopeMode,
   NotificationPreferences,

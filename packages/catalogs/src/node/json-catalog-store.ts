@@ -24,7 +24,7 @@ import type {
   WorktreeCatalogSnapshot,
   WorktreeId,
 } from "../index.js";
-import { sessionKey } from "@pi-gui/session-driver";
+import { sessionKey } from "@theta-desktop/session-driver";
 
 interface CatalogFileCoordinator {
   mutationQueue: Promise<void>;

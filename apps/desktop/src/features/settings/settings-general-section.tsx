@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+import type { RuntimeSnapshot } from "@theta-desktop/session-driver/runtime-types";
 import type { ModelSettingsScopeMode } from "../../../contracts/desktop-state";
 import { useTranslation } from "../../i18n";
 import { SettingsSegmented, SettingsSwitch } from "./settings-controls";

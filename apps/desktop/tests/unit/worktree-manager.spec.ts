@@ -4,8 +4,8 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { promisify } from "node:util";
 import { expect, test } from "@playwright/test";
-import type { CatalogStorage, WorktreeCatalogEntry } from "@pi-gui/catalogs";
-import type { WorkspaceRef } from "@pi-gui/session-driver";
+import type { CatalogStorage, WorktreeCatalogEntry } from "@theta-desktop/catalogs";
+import type { WorkspaceRef } from "@theta-desktop/session-driver";
 import { appWorktreeRootMatcher } from "../../electron/platform/worktrees/app-worktree-roots";
 import { GitWorktreeManager } from "../../electron/platform/worktrees/worktree-manager";
 

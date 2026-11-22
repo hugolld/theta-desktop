@@ -2,10 +2,10 @@ import {
   parseExtensionAction,
   type ExtensionFlagValues,
   type HostUiResponse,
-} from "@pi-gui/session-driver";
+} from "@theta-desktop/session-driver";
 import type { ExtensionActionRequest } from "../../contracts/extension-actions";
-import type { NavigateSessionTreeOptions } from "@pi-gui/session-driver/types";
-import type { RuntimeSettingsSnapshot } from "@pi-gui/session-driver/runtime-types";
+import type { NavigateSessionTreeOptions } from "@theta-desktop/session-driver/types";
+import type { RuntimeSettingsSnapshot } from "@theta-desktop/session-driver/runtime-types";
 import {
   isThemeMode,
   isThemePresetId,

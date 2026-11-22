@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import type { SessionTranscriptPin } from "@pi-gui/session-driver";
+import type { SessionTranscriptPin } from "@theta-desktop/session-driver";
 import type { TranscriptMessage } from "../../../contracts/timeline-types";
 import { ExtensionCardItem, type RunExtensionAction } from "../conversation/extension-card";
 import { ChevronDownIcon, ChevronRightIcon, CloseIcon } from "../../ui/icons";

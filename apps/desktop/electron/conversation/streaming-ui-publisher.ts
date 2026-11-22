@@ -1,5 +1,5 @@
-import { sessionKey } from "@pi-gui/session-driver";
-import type { SessionDriverEvent, SessionRef } from "@pi-gui/session-driver";
+import { sessionKey } from "@theta-desktop/session-driver";
+import type { SessionDriverEvent, SessionRef } from "@theta-desktop/session-driver";
 
 /**
  * Trailing-edge interval for streaming transcript / sidebar publishes.

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type {
   RuntimeSettingsSnapshot,
   RuntimeSnapshot,
-} from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/session-driver/runtime-types";
 import { useTranslation, type MessageKey, type Translate } from "../../i18n";
 
 export const THINKING_LEVELS: NonNullable<RuntimeSettingsSnapshot["defaultThinkingLevel"]>[] = [

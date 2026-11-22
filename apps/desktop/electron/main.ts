@@ -12,7 +12,7 @@ import {
   type MenuItemConstructorOptions,
   type MessageBoxOptions,
 } from "electron";
-import { isValidHttpBaseUrl } from "@pi-gui/pi-sdk-driver";
+import { isValidHttpBaseUrl } from "@theta-desktop/pi-sdk-driver";
 import { createRequire } from "node:module";
 import { randomUUID } from "node:crypto";
 import type {
@@ -83,9 +83,9 @@ import type {
   ComposerFileAttachment,
   ComposerImageAttachment,
 } from "../contracts/desktop-state";
-import type { SessionDriverEvent } from "@pi-gui/session-driver";
-import type { GenerateThreadTitleOptions } from "@pi-gui/pi-sdk-driver";
-import type { SessionRef, WorkspaceRef } from "@pi-gui/session-driver";
+import type { SessionDriverEvent } from "@theta-desktop/session-driver";
+import type { GenerateThreadTitleOptions } from "@theta-desktop/pi-sdk-driver";
+import type { SessionRef, WorkspaceRef } from "@theta-desktop/session-driver";
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -990,7 +990,7 @@ app
       hostAssets: {
         "frame-bridge.js": {
           body: await readFile(
-            createRequire(__filename).resolve("@pi-gui/extension-ui/frame-bridge"),
+            createRequire(__filename).resolve("@theta-desktop/extension-ui/frame-bridge"),
             "utf8",
           ),
           contentType: "text/javascript; charset=utf-8",

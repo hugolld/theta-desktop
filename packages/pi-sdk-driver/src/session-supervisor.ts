@@ -15,7 +15,7 @@ import {
   type ExtensionWidgetOptions,
   type SessionInfo,
 } from "@earendil-works/pi-coding-agent";
-import type { SessionCatalogSnapshot, WorkspaceCatalogSnapshot } from "@pi-gui/catalogs";
+import type { SessionCatalogSnapshot, WorkspaceCatalogSnapshot } from "@theta-desktop/catalogs";
 import type {
   NavigateSessionTreeOptions,
   NavigateSessionTreeResult,
@@ -24,7 +24,7 @@ import type {
   SessionQueuedMessage,
   SessionTreeNodeSnapshot,
   SessionTreeSnapshot,
-} from "@pi-gui/session-driver/types";
+} from "@theta-desktop/session-driver/types";
 import type {
   CreateSessionOptions,
   ExtensionFlagValues,
@@ -49,11 +49,11 @@ import type {
   Unsubscribe,
   WorkspaceId,
   WorkspaceRef,
-} from "@pi-gui/session-driver";
-import type { RuntimeCommandRecord } from "@pi-gui/session-driver/runtime-types";
-import { isMissingFileError, JsonCatalogStore } from "@pi-gui/catalogs/node";
-import type { SessionFileCatalogStorage } from "@pi-gui/catalogs";
-import { sessionKey } from "@pi-gui/session-driver";
+} from "@theta-desktop/session-driver";
+import type { RuntimeCommandRecord } from "@theta-desktop/session-driver/runtime-types";
+import { isMissingFileError, JsonCatalogStore } from "@theta-desktop/catalogs/node";
+import type { SessionFileCatalogStorage } from "@theta-desktop/catalogs";
+import { sessionKey } from "@theta-desktop/session-driver";
 import { buildSessionSchemaInfo, readSessionFileSchemaVersion } from "./session-schema.js";
 import {
   gatedBuiltinExtensions,
@@ -184,7 +184,7 @@ export interface PiSdkDriverOptions {
     sessionRef: SessionRef,
   ) => ExtensionFlagValues | undefined;
   readonly desktopExtensions?: PiDesktopExtensionObserver;
-  readonly onTurnCaptureBoundary?: import("@pi-gui/session-driver").TurnCaptureObserver;
+  readonly onTurnCaptureBoundary?: import("@theta-desktop/session-driver").TurnCaptureObserver;
   readonly turnCaptureTimeoutMs?: number;
   readonly generateThreadTitleOverride?: (
     workspace: WorkspaceRef,

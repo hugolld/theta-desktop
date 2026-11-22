@@ -48,14 +48,14 @@ import type {
   ChangeReviewFileStageInput,
   ChangeReviewFileStageResult,
 } from "../contracts/review";
-import type { SessionRef } from "@pi-gui/session-driver/types";
+import type { SessionRef } from "@theta-desktop/session-driver/types";
 import type {
   NavigateSessionTreeOptions,
   NavigateSessionTreeResult,
   SessionTreeSnapshot,
-} from "@pi-gui/session-driver/types";
-import type { HostUiResponse } from "@pi-gui/session-driver";
-import type { RuntimeSettingsSnapshot } from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/session-driver/types";
+import type { HostUiResponse } from "@theta-desktop/session-driver";
+import type { RuntimeSettingsSnapshot } from "@theta-desktop/session-driver/runtime-types";
 import type {
   AppView,
   ComposerAttachment,

@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { promisify } from "node:util";
 import { expect, type Page } from "@playwright/test";
 import { _electron as electron, type ElectronApplication } from "playwright";
-import type { SessionDriverEvent, SessionRef } from "@pi-gui/session-driver";
+import type { SessionDriverEvent, SessionRef } from "@theta-desktop/session-driver";
 import type { PiDesktopApi } from "../../contracts/ipc";
 import type {
   DesktopAppState,

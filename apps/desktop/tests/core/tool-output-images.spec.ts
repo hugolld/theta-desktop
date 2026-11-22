@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
 import { expect, test, type Page } from "@playwright/test";
-import type { SessionDriverEvent, SessionRef } from "@pi-gui/session-driver";
+import type { SessionDriverEvent, SessionRef } from "@theta-desktop/session-driver";
 import {
   createNamedThread,
   emitTestSessionEvent,

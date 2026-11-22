@@ -5,8 +5,8 @@ import type {
   SessionRef,
   SessionSnapshot,
   WorkspaceRef,
-} from "@pi-gui/session-driver";
-import type { PiSdkDriver } from "@pi-gui/pi-sdk-driver";
+} from "@theta-desktop/session-driver";
+import type { PiSdkDriver } from "@theta-desktop/pi-sdk-driver";
 import {
   MAX_SCHEDULED_TASK_RUNS,
   SCHEDULED_TASK_INTERVIEW_PROMPT,

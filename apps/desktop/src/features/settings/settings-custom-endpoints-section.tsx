@@ -3,7 +3,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import {
   CUSTOM_PROVIDER_ID_PATTERN,
   isValidHttpBaseUrl,
-} from "@pi-gui/pi-sdk-driver/custom-provider-types";
+} from "@theta-desktop/pi-sdk-driver/custom-provider-types";
 import { trapDialogFocus } from "../../ui/dialog-focus";
 import type { CustomProviderConfig, CustomProviderModelConfig } from "../../../contracts/ipc";
 import { SettingsGroup } from "./settings-utils";

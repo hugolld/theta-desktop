@@ -6,7 +6,7 @@ import type {
   TurnCaptureObserver,
   TurnCaptureOpening,
   WorkspaceRef,
-} from "@pi-gui/session-driver";
+} from "@theta-desktop/session-driver";
 
 interface CaptureOptions {
   readonly workspace: WorkspaceRef;

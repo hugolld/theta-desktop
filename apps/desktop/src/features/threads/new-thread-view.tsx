@@ -6,8 +6,8 @@ import {
   type KeyboardEvent,
   type RefObject,
 } from "react";
-import type { RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
-import type { ExtensionFlagValues } from "@pi-gui/session-driver";
+import type { RuntimeSnapshot } from "@theta-desktop/session-driver/runtime-types";
+import type { ExtensionFlagValues } from "@theta-desktop/session-driver";
 import type {
   ComposerAttachment,
   NewThreadEnvironment,

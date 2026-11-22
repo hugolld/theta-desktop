@@ -1,5 +1,9 @@
 import { expect, test } from "@playwright/test";
-import { sessionKey, type SessionDriverEvent, type SessionStatus } from "@pi-gui/session-driver";
+import {
+  sessionKey,
+  type SessionDriverEvent,
+  type SessionStatus,
+} from "@theta-desktop/session-driver";
 import type { TranscriptMessage } from "../../contracts/timeline-types";
 import { applyTimelineEvent } from "../../electron/conversation/app-store-timeline";
 

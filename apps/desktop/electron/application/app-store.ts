@@ -1,6 +1,6 @@
-import { JsonCatalogStore } from "@pi-gui/catalogs/node";
-import { sessionKey } from "@pi-gui/session-driver";
-import type { ExtensionFlagValues, SessionSchemaInfo } from "@pi-gui/session-driver";
+import { JsonCatalogStore } from "@theta-desktop/catalogs/node";
+import { sessionKey } from "@theta-desktop/session-driver";
+import type { ExtensionFlagValues, SessionSchemaInfo } from "@theta-desktop/session-driver";
 import type { BrowserWindow } from "electron";
 import { randomUUID } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
@@ -13,13 +13,13 @@ import {
   PiSdkDriver,
   type PiSdkDriverConfig,
   SessionLeasedError,
-} from "@pi-gui/pi-sdk-driver";
-import type { SessionCatalogEntry } from "@pi-gui/catalogs";
+} from "@theta-desktop/pi-sdk-driver";
+import type { SessionCatalogEntry } from "@theta-desktop/catalogs";
 import type {
   NavigateSessionTreeOptions,
   NavigateSessionTreeResult,
   SessionTreeSnapshot,
-} from "@pi-gui/session-driver/types";
+} from "@theta-desktop/session-driver/types";
 import type {
   CreateSessionOptions,
   HostUiResponse,
@@ -30,14 +30,14 @@ import type {
   SessionRef,
   SessionSnapshot,
   WorkspaceRef,
-} from "@pi-gui/session-driver";
+} from "@theta-desktop/session-driver";
 import type {
   ModelSettingsSnapshot,
   RuntimeCommandRecord,
   RuntimeLoginCallbacks,
   RuntimeSettingsSnapshot,
   RuntimeSnapshot,
-} from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/session-driver/runtime-types";
 import {
   type AppView,
   childThreadLinksOf,

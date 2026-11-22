@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { mkdir, mkdtemp, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { SessionRef } from "@pi-gui/session-driver";
+import type { SessionRef } from "@theta-desktop/session-driver";
 import type { SessionRecord, WorkspaceRecord } from "../../contracts/desktop-state";
 import {
   runExtensionAction as runChecked,

@@ -6,16 +6,16 @@ import type {
   ExtensionViewMessage,
   ExtensionViewCatalogChange,
 } from "./extension-views";
-import type { RuntimeSettingsSnapshot } from "@pi-gui/session-driver/runtime-types";
+import type { RuntimeSettingsSnapshot } from "@theta-desktop/session-driver/runtime-types";
 import type { ExtensionActionEffect, ExtensionActionRequest } from "./extension-actions";
 import type {
   NavigateSessionTreeOptions,
   NavigateSessionTreeResult,
   SessionTreeSnapshot,
-} from "@pi-gui/session-driver/types";
+} from "@theta-desktop/session-driver/types";
 import type { ClipboardImageRead } from "./composer-attachments";
 import type { DesktopEditorList } from "./editors";
-import type { SessionRef } from "@pi-gui/session-driver/types";
+import type { SessionRef } from "@theta-desktop/session-driver/types";
 import type { SaveTaskWorkbenchTemplateInput, TaskWorkbenchTemplate } from "./workbench";
 import type {
   TurnChangesInput,

@@ -1,4 +1,4 @@
-import { sessionKey } from "@pi-gui/session-driver";
+import { sessionKey } from "@theta-desktop/session-driver";
 import type { WorkspaceCatalogEntry, SessionCatalogEntry, WorktreeCatalogEntry } from "../types.js";
 
 export type CatalogFileState = {

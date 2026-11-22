@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { realpath } from "node:fs/promises";
 import { basename, join, resolve } from "node:path";
-import type { WorktreeCatalogEntry } from "@pi-gui/catalogs";
-import type { WorkspaceRef } from "@pi-gui/session-driver";
+import type { WorktreeCatalogEntry } from "@theta-desktop/catalogs";
+import type { WorkspaceRef } from "@theta-desktop/session-driver";
 import type {
   CreateWorktreeInput,
   DesktopAppState,

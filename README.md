@@ -159,7 +159,7 @@ Desktop end-to-end tests drive the real Electron app with Playwright, in lanes. 
 runs the `core` lane; to run everything:
 
 ```bash
-pnpm --filter @pi-gui/desktop run test:e2e:all   # core + live + native
+pnpm --filter @theta-desktop/desktop run test:e2e:all   # core + live + native
 ```
 
 See [`apps/desktop/README.md`](./apps/desktop/README.md) for the lanes, packaging on each

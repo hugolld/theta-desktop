@@ -1,4 +1,4 @@
-import type { RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+import type { RuntimeSnapshot } from "@theta-desktop/session-driver/runtime-types";
 import { buildModelOptions } from "../conversation/composer-commands";
 
 export type ModelOnboardingSettingsSection = "models" | "providers";

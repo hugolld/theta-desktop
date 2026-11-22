@@ -10,8 +10,8 @@ import {
   DESKTOP_VIEW_UNREGISTER,
   type DesktopViewDeclaration,
   type DesktopViewRegistrationEvent,
-} from "@pi-gui/extension-ui";
-import type { SessionRef, WorkspaceRef } from "@pi-gui/session-driver";
+} from "@theta-desktop/extension-ui";
+import type { SessionRef, WorkspaceRef } from "@theta-desktop/session-driver";
 
 type ResourceLoaderOptions = NonNullable<
   CreateAgentSessionServicesOptions["resourceLoaderOptions"]

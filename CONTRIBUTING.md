@@ -38,7 +38,7 @@ Electron harness, split into lanes:
 
 ```bash
 pnpm test                                        # each workspace's tests (desktop: core lane)
-pnpm --filter @pi-gui/desktop run test:e2e:all   # core + live + native
+pnpm --filter @theta-desktop/desktop run test:e2e:all   # core + live + native
 ```
 
 macOS is the source of truth for desktop UI verification. Linux is supported for

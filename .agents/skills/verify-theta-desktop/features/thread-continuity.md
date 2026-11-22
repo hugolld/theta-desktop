@@ -27,7 +27,7 @@ Preconditions: Alpha and Bravo created through the visible composer by the defau
 - **Drafts:** enter distinct Alpha/Bravo drafts, switch in both directions, and require the corresponding composer values.
 - **Archive:** hover Bravo, click its Archive label, require Alpha selected; expand Archived, hover Bravo and Restore. Verify Bravo's draft on selection.
 - **Restart:** close only the owned Electron process and relaunch with the same private profile and agent directory. Require Bravo still selected, then visit both rows and check each assistant marker and draft.
-- **Just-typed drafts:** `pnpm --filter @pi-gui/desktop run test:e2e:runner -- apps/desktop/tests/core/composer-draft-flush.spec.ts` (quit, last-window close, close during quit, uncommitted edit, archive shortcut, every window on quit, extension card button and view opening another thread). The default recipe types its drafts well before switching, archiving or restarting, so it does not prove this window.
+- **Just-typed drafts:** `pnpm --filter @theta-desktop/desktop run test:e2e:runner -- apps/desktop/tests/core/composer-draft-flush.spec.ts` (quit, last-window close, close during quit, uncommitted edit, archive shortcut, every window on quit, extension card button and view opening another thread). The default recipe types its drafts well before switching, archiving or restarting, so it does not prove this window.
 - **Evidence:** retain action traces, per-checkpoint screenshot/ARIA pairs, restart doctor records, completed feature IDs, and process cleanup records.
 
 ## Gotchas

@@ -6,8 +6,8 @@ import type {
   CatalogStorage,
   WorktreeCatalogEntry,
   WorktreeCatalogSnapshot,
-} from "@pi-gui/catalogs";
-import type { WorkspaceRef } from "@pi-gui/session-driver";
+} from "@theta-desktop/catalogs";
+import type { WorkspaceRef } from "@theta-desktop/session-driver";
 
 const execFileAsync = promisify(execFile);
 

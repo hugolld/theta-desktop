@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
-import { sessionKey } from "@pi-gui/session-driver";
-import type { RuntimeExtensionRecord, RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+import { sessionKey } from "@theta-desktop/session-driver";
+import type {
+  RuntimeExtensionRecord,
+  RuntimeSnapshot,
+} from "@theta-desktop/session-driver/runtime-types";
 import type { TranscriptMessage } from "../../contracts/timeline-types";
 import { extensionToolLabels, extensionToolRowLabel } from "../../contracts/tool-labels";
 import {

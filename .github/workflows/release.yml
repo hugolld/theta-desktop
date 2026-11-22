@@ -74,10 +74,10 @@ jobs:
         run: pnpm verify:install-copy
 
       - name: Build website
-        run: pnpm --filter @pi-gui/website run build
+        run: pnpm --filter @theta-desktop/website run build
 
       - name: Build desktop
-        run: pnpm --filter @pi-gui/desktop run build
+        run: pnpm --filter @theta-desktop/desktop run build
 
       - name: Package macOS
         env:

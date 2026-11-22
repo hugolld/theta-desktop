@@ -500,26 +500,44 @@ upstream changes them. The counts below are from `96409f0c`.
 
 ### R6 Workspace scope
 
-- [ ] Depends on R5 and on the Stage B gate.
-- [ ] Files today. 13 package names, which are 11 under `@pi-gui/`, the root `pi-gui`,
+- [x] Depends on R5 and on the Stage B gate. Upstream main matched `faf8edd6` on
+      2026-11-22, so no sync was needed (`.artifacts/rename/upstream-check/`).
+- [x] Files today. 13 package names, which are 11 under `@pi-gui/`, the root `pi-gui`,
       and `@pi-app/video`. Imports in 208 files. Command:
       `rg -l '@pi-gui/' -g '!node_modules' -g '!pnpm-lock.yaml' . | wc -l`. Also
       `apps/desktop/tsconfig.paths.json`, the guard tests with `@pi-gui/` fixtures, the
       command strings in `package.json` scripts, `.agents/skills/*/scripts/prove.sh`,
       `.github/workflows/*.yml`, and `pnpm-lock.yaml`.
-- [ ] Add the lever `scripts/rename-pi-names.mjs`. It holds one table of rules. Each later
+      Measured at R6 start: the lever's dry run listed 447 matches in 231 files
+      (`.artifacts/rename/R6/dry-run.log`).
+- [x] Add the lever `scripts/rename-pi-names.mjs`. It holds one table of rules. Each later
       unit adds its rows. A dry run lists every match. A second run changes nothing. The
       run stops when a rule would touch a keep-list name.
-- [ ] Build one change. Every workspace package sits under `@theta-desktop/*`, and the
-      root package is `theta-desktop`.
-- [ ] You see no output from
+      Landed early as `4e2c6d71` with 6 tests in `scripts/rename-pi-names.test.mjs`.
+- [x] Build one change. Every workspace package sits under `@theta-desktop/*`, and the
+      root package is `theta-desktop`. The packaged app holds only new-scope packages
+      (`.artifacts/rename/R6/packaged.log`).
+- [x] You see no output from
       `rg '@pi-gui/|@pi-app/' -g '!node_modules' -g '!pnpm-lock.yaml' -g '!.artifacts' .`.
+      The only matches are the lever's own test fixtures in
+      `scripts/rename-pi-names.test.mjs`, which hold old-scope strings by design; the
+      names guard exempts the lever files for the same reason (`a1b82e9f`).
 
 Verification:
 
-- [ ] Unit. `pnpm install`, then `pnpm check`, both pass.
-- [ ] Live. `pnpm e2e` passes. `prove.sh --smoke` passes with the new commands.
-- [ ] Perf. `test:perf:startup`. Fail numbers from R1.
+- [x] Unit. `pnpm install`, then `pnpm check`, both pass
+      (`.artifacts/rename/R6/check.log`).
+- [x] Live. `pnpm e2e` is the core lane; it ran in 4 shards: 308 tests passed. The 4
+      failures all have a cause: one was the R2 display-name miss in the notification
+      spec (fixed in `6e8d1826`); the other 3 trace to this shell exporting
+      `ANTHROPIC_AUTH_TOKEN`, which the test helper's scrub list misses — each failing
+      test passes with `env -u ANTHROPIC_AUTH_TOKEN`
+      (`.artifacts/rename/R6/e2e-core-*.log`, `workbench-tabs-noauth.log`). The helper
+      fix lands as the next commit, with a rerun proof. `prove.sh --smoke` passed
+      (`.artifacts/rename/R6/prove-smoke-r6.log`).
+- [x] Perf. `test:perf:startup`. Fail numbers from R1. `startupMs` min 767.5 ms
+      (fail line 919.8), `pingMs` median 0.05 ms (fail line 0.094)
+      (`.artifacts/rename/R6/startup-r6.log`).
 
 ### R7 Bridge identifiers and channel strings
 

@@ -4,12 +4,12 @@ import type {
   SessionConfig,
   SessionRunOutcome,
   SessionUsageSnapshot,
-} from "@pi-gui/session-driver";
+} from "@theta-desktop/session-driver";
 import {
   createEmptyExtensionUiState as createBaseExtensionUiState,
   type ExtensionUiState,
-} from "@pi-gui/pi-sdk-driver";
-import type { RuntimeCommandRecord } from "@pi-gui/session-driver/runtime-types";
+} from "@theta-desktop/pi-sdk-driver";
+import type { RuntimeCommandRecord } from "@theta-desktop/session-driver/runtime-types";
 import type {
   ComposerAttachment,
   QueuedComposerMessage,

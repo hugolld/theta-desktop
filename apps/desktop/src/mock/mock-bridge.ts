@@ -11,7 +11,7 @@ import type {
 import type { DesktopEditorList } from "../../contracts/editors";
 import type { TranscriptMessage } from "../../contracts/timeline-types";
 import type { PiDesktopStatePush } from "../../contracts/ipc";
-import type { SessionRef } from "@pi-gui/session-driver/types";
+import type { SessionRef } from "@theta-desktop/session-driver/types";
 import {
   buildFixtureState,
   buildSessionTree,

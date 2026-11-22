@@ -13,7 +13,7 @@ const requiredPackages = [
   // can omit hoisted pnpm dependencies even when local development resolves them.
   "@anthropic-ai/sdk",
   "@earendil-works/chord",
-  "@pi-gui/extension-ui",
+  "@theta-desktop/extension-ui",
   "@aws-crypto/sha256-browser",
   "@aws-crypto/sha256-js",
   "@aws-sdk/client-bedrock-runtime",
@@ -157,8 +157,8 @@ const modelChecks = [
   },
 ];
 const packagedRuntimeImportChecks = [
-  ["@pi-gui", "extension-ui", "dist", "transport.js"],
-  ["@pi-gui", "extension-ui", "dist", "frame-bridge.js"],
+  ["@theta-desktop", "extension-ui", "dist", "transport.js"],
+  ["@theta-desktop", "extension-ui", "dist", "frame-bridge.js"],
   // Import implementations: provider descriptors can defer loading their SDKs.
   ["@earendil-works", "pi-ai", "dist", "api", "google-generative-ai.js"],
   ["@earendil-works", "pi-ai", "dist", "api", "anthropic-messages.js"],

@@ -10,9 +10,9 @@ import type {
   AgentSessionRuntime,
   ExtensionFactory,
 } from "@earendil-works/pi-coding-agent";
-import type { SessionDriverEvent } from "@pi-gui/session-driver";
-import type { SessionFileCatalogStorage } from "@pi-gui/catalogs";
-import { JsonCatalogStore } from "@pi-gui/catalogs/node";
+import type { SessionDriverEvent } from "@theta-desktop/session-driver";
+import type { SessionFileCatalogStorage } from "@theta-desktop/catalogs";
+import { JsonCatalogStore } from "@theta-desktop/catalogs/node";
 import { PiSdkDriver } from "../dist/pi-sdk-driver.js";
 import { createAgentSessionRuntimeWithNpmFallback } from "../dist/npm-package-fallback.js";
 

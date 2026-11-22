@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import type { ExtensionFlagValues } from "@pi-gui/session-driver";
-import type { RuntimeExtensionFlag, RuntimeSnapshot } from "@pi-gui/session-driver/runtime-types";
+import type { ExtensionFlagValues } from "@theta-desktop/session-driver";
+import type {
+  RuntimeExtensionFlag,
+  RuntimeSnapshot,
+} from "@theta-desktop/session-driver/runtime-types";
 import { SettingsSwitch } from "../settings/settings-controls";
 
 interface FlagGroup {

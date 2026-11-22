@@ -10,7 +10,7 @@ import {
   type KeyboardEvent,
   type SetStateAction,
 } from "react";
-import type { ExtensionFlagValues } from "@pi-gui/session-driver";
+import type { ExtensionFlagValues } from "@theta-desktop/session-driver";
 import {
   type AppView,
   type ComposerAttachment,
