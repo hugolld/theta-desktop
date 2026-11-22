@@ -55,7 +55,7 @@ import {
 import {
   getDesktopShortcutLabel,
   THREAD_SHORTCUT_SLOT_COUNT,
-  type PiDesktopApi,
+  type ThetaDesktopApi,
 } from "../../../contracts/ipc";
 import { formatRelativeTime } from "../../lib/string-utils";
 import { PaneResizeHandle, type PaneWidthBounds } from "../../ui/pane-resize-handle";
@@ -92,7 +92,7 @@ interface SidebarProps {
   readonly linkedWorktreeByWorkspaceId: ReadonlyMap<string, WorktreeRecord>;
   readonly wsMenu: WorkspaceMenuState;
   readonly threadMenu: ThreadMenuState;
-  readonly api: PiDesktopApi;
+  readonly api: ThetaDesktopApi;
   readonly setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>;
   readonly updateSnapshot: (
     setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>,
@@ -749,7 +749,7 @@ interface WorkspaceFolderProps {
   readonly selectedSession?: SessionRecord;
   readonly linkedWorktreeByWorkspaceId: ReadonlyMap<string, WorktreeRecord>;
   readonly wsMenu: WorkspaceMenuState;
-  readonly api: PiDesktopApi;
+  readonly api: ThetaDesktopApi;
   readonly threadMenu?: ThreadMenuState;
   readonly onNewThread?: (workspaceId: string) => void;
   readonly onArchiveSession?: (target: { workspaceId: string; sessionId: string }) => void;

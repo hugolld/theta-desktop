@@ -29,8 +29,8 @@ import {
   platformShortcutModifier,
   sidePanelTabIndex,
   type ChordSource,
-  type PiDesktopApi,
-  type PiDesktopCommand,
+  type ThetaDesktopApi,
+  type ThetaDesktopCommand,
 } from "../../contracts/ipc";
 import { toolRefId, type BuiltinToolKind } from "../../contracts/workbench";
 import {
@@ -59,7 +59,7 @@ import { updateSnapshot } from "./desktop-app-state";
 type CommandHandler = (source: ChordSource) => boolean | void;
 
 interface DesktopCommandsInput {
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly snapshot: DesktopAppState | null;
   readonly setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>;
   readonly hasWorkspace: boolean;
@@ -126,7 +126,7 @@ export function useDesktopCommands(input: DesktopCommandsInput) {
     commands: createChordPairGate(),
     files: createChordPairGate(),
   });
-  const handleCommandRef = useRef<(command: PiDesktopCommand, source?: ChordSource) => boolean>(
+  const handleCommandRef = useRef<(command: ThetaDesktopCommand, source?: ChordSource) => boolean>(
     () => false,
   );
   const handleRendererKeyDownRef = useRef<(event: globalThis.KeyboardEvent) => void>(() => {});
@@ -221,7 +221,7 @@ export function useDesktopCommands(input: DesktopCommandsInput) {
     return true;
   };
 
-  const handlers: Record<PiDesktopCommand, CommandHandler> = {
+  const handlers: Record<ThetaDesktopCommand, CommandHandler> = {
     [desktopCommands.openSettings]: () => input.openSettings(selectedRootWorkspaceId),
     [desktopCommands.openNewThread]: openNewThread,
     [desktopCommands.toggleTerminal]: () => toggleWorkbenchTool("terminal"),
@@ -380,13 +380,15 @@ export function useDesktopCommands(input: DesktopCommandsInput) {
   useEffect(() => {
     // Bind once. Re-subscribing when session or search identity changes drops
     // Cmd+R and 1-9 in the gap after a thread switch or relaunch.
-    const dispatch = (command: PiDesktopCommand, source: ChordSource) => {
+    const dispatch = (command: ThetaDesktopCommand, source: ChordSource) => {
       // Thread and tab switches keep their 1-9 hints up while the modifier stays held.
       if (!isRecentThreadCommand(command)) dismissThreadShortcutHints();
       if (sidePanelTabIndex(command) === undefined) dismissSidePanelTabHints();
       handleCommandRef.current(command, source);
     };
-    const removeCommandListener = window.piApp?.onCommand?.((command) => dispatch(command, "main"));
+    const removeCommandListener = window.thetaApp?.onCommand?.((command) =>
+      dispatch(command, "main"),
+    );
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
       handleRendererKeyDownRef.current(event);
     };
@@ -414,7 +416,7 @@ export function useDesktopCommands(input: DesktopCommandsInput) {
   useEffect(() => {
     // Main routes Cmd+W to closeFocusedSurface only while a side panel tool other
     // than the terminal has focus.
-    const desktopApi = window.piApp;
+    const desktopApi = window.thetaApp;
     if (!desktopApi) {
       return undefined;
     }

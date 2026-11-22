@@ -17,16 +17,16 @@ type ResourceLoaderOptions = NonNullable<
   CreateAgentSessionServicesOptions["resourceLoaderOptions"]
 >;
 
-export interface PiDesktopExtensionRuntime {
+export interface ThetaDesktopExtensionRuntime {
   readonly target: SessionRef;
   readonly generation: string;
   readonly extensions: readonly { readonly resolvedPath: string }[];
   readonly declarations: readonly DesktopViewDeclaration[];
 }
 
-export interface PiDesktopExtensionObserver {
+export interface ThetaDesktopExtensionObserver {
   /** Invoked immediately; asynchronous UI work must not delay ordinary Pi lifecycle events. */
-  onChanged(runtime: PiDesktopExtensionRuntime): void | Promise<void>;
+  onChanged(runtime: ThetaDesktopExtensionRuntime): void | Promise<void>;
   /** Revoke capabilities before awaiting cleanup; Pi does not wait for authored view code. */
   onInvalidated(runtime: {
     readonly target: SessionRef;
@@ -37,7 +37,7 @@ export interface PiDesktopExtensionObserver {
 /** A discovery adapter around stable Pi extension APIs; Chord hosts stay with the caller. */
 export function createDesktopExtensionBridge(options: {
   readonly workspace: WorkspaceRef;
-  readonly observer: PiDesktopExtensionObserver;
+  readonly observer: ThetaDesktopExtensionObserver;
 }): {
   mergeResourceLoaderOptions(existing: ResourceLoaderOptions): ResourceLoaderOptions;
 } {
@@ -60,7 +60,7 @@ export function createDesktopExtensionBridge(options: {
   const publish = (): void => {
     const epoch = active;
     if (!epoch || discovering) return;
-    const snapshot: PiDesktopExtensionRuntime = {
+    const snapshot: ThetaDesktopExtensionRuntime = {
       ...epoch,
       extensions: loadedExtensions.map((extension) => ({ ...extension })),
       declarations: [...declarations],

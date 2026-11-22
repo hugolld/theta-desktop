@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import type { DesktopEditorDescriptor, DesktopEditorList } from "../../../../contracts/editors";
-import type { PiDesktopApi } from "../../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../../contracts/ipc";
 
 interface UseOpenInEditorParams {
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly workspaceId: string | undefined;
   readonly onOpenFolder: () => void;
 }

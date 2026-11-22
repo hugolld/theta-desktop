@@ -30,7 +30,7 @@ export function SettingsCustomEndpointsSection({
   const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
-    const api = window.piApp;
+    const api = window.thetaApp;
     if (!api) {
       return;
     }
@@ -205,7 +205,7 @@ function CustomEndpointDialog({
   }, [probePending]);
 
   const handleProbe = async () => {
-    const api = window.piApp;
+    const api = window.thetaApp;
     if (!api) {
       setProbeError(t("providers.bridgeUnavailable"));
       return;

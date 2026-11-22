@@ -30,7 +30,7 @@ pnpm --filter @theta-desktop/desktop dev
 ### Browser mode with the mock bridge
 
 In dev builds, opening the renderer URL (`http://localhost:5173` by default) in a plain
-browser tab installs a fixture-backed mock of the `window.piApp` bridge
+browser tab installs a fixture-backed mock of the `window.thetaApp` bridge
 (`src/mock/`), so UI work — layout, styling, spacing, visuals — runs against the
 real interface with realistic threads, transcripts, and a scripted streaming turn
 on submit. The Electron window itself is unaffected: the mock installs only when

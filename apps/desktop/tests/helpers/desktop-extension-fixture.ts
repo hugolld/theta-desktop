@@ -49,7 +49,7 @@ export async function mount(root, host) {
   const unsubscribe = service.state.subscribe(render);
   let parentAccess = 'allowed';
   try { void parent.document.body; } catch { parentAccess = 'blocked'; }
-  root.querySelector('#boundary').textContent = JSON.stringify({ preload: typeof window.piApp, process: typeof process, require: typeof require, parentAccess, origin: self.origin });
+  root.querySelector('#boundary').textContent = JSON.stringify({ preload: typeof window.thetaApp, process: typeof process, require: typeof require, parentAccess, origin: self.origin });
   // Record delivery and failure so a missing increment says whether the click or the call was lost.
   root.querySelector('#increment').onclick = event => {
     const button = event.currentTarget;

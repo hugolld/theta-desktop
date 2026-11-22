@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { SessionRef } from "@theta-desktop/session-driver/types";
-import type { PiDesktopApi } from "../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../contracts/ipc";
 import type { useWorkbench } from "../workbench/use-workbench";
 
 /**
@@ -13,7 +13,7 @@ export function useExtensionHostActions({
   workbench,
   flushComposerDraftAsync,
 }: {
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly target: SessionRef | null;
   readonly workbench: ReturnType<typeof useWorkbench>;
   readonly flushComposerDraftAsync: (target: SessionRef) => Promise<void>;

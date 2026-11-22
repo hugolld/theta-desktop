@@ -12,7 +12,7 @@ import type {
   RuntimeSnapshot,
 } from "@theta-desktop/session-driver/runtime-types";
 import { extensionSourceSummary } from "../../extensions/extension-display";
-import type { PiDesktopApi } from "../../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../../contracts/ipc";
 import { nextMenuIndex } from "./use-slash-menu";
 
 export type MentionOption =
@@ -39,7 +39,7 @@ interface UseMentionMenuParams {
   readonly composerRef: RefObject<HTMLTextAreaElement | null>;
   readonly workspaceId: string | undefined;
   readonly runtime?: RuntimeSnapshot;
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly onEnableExtension?: (filePath: string) => Promise<void>;
 }
 

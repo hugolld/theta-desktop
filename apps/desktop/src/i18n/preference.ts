@@ -12,7 +12,7 @@ export type LocalePreference = "system" | AppLocale;
 /** "system" plus every registered locale, in registry order. */
 export const localePreferences: readonly LocalePreference[] = ["system", ...appLocaleIds];
 
-export const LOCALE_STORAGE_KEY = "pi-gui:locale";
+export const LOCALE_STORAGE_KEY = "theta-desktop:locale";
 
 export function isLocalePreference(value: unknown): value is LocalePreference {
   return typeof value === "string" && (localePreferences as readonly string[]).includes(value);

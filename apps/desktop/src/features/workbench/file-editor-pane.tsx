@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { WorkspaceRecord, WorktreeRecord } from "../../../contracts/desktop-state";
-import type { PiDesktopApi, WorkspaceFilePreview } from "../../../contracts/ipc";
+import type { ThetaDesktopApi, WorkspaceFilePreview } from "../../../contracts/ipc";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { CloseIcon, CopyIcon, WorktreeIcon } from "../../ui/icons";
@@ -15,7 +15,7 @@ import {
 } from "./file-workbench-state";
 
 interface FileEditorPaneProps {
-  readonly api: PiDesktopApi;
+  readonly api: ThetaDesktopApi;
   readonly workspace: WorkspaceRecord;
   readonly worktree: WorktreeRecord | undefined;
   readonly tabs: FileWorkbenchTabs;

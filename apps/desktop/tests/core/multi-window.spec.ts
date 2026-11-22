@@ -19,7 +19,7 @@ const platformModifier = process.platform === "darwin" ? "meta" : "control";
 
 async function waitForPiApp(window: Page): Promise<void> {
   await window.waitForLoadState("domcontentloaded");
-  await window.waitForFunction(() => Boolean(globalThis.window.piApp), undefined, {
+  await window.waitForFunction(() => Boolean(globalThis.window.thetaApp), undefined, {
     timeout: 15_000,
   });
 }
@@ -164,9 +164,9 @@ async function pendingDialogCount(
 
 async function selectSessionViaIpc(window: Page, title: string): Promise<void> {
   await window.evaluate(async (targetTitle) => {
-    const app = globalThis.window.piApp;
+    const app = globalThis.window.thetaApp;
     if (!app) {
-      throw new Error("piApp IPC bridge is unavailable");
+      throw new Error("thetaApp IPC bridge is unavailable");
     }
     const state = await app.getState();
     for (const workspace of state.workspaces) {
@@ -186,9 +186,9 @@ async function selectSessionViaIpcAndCaptureStateEvents(
   title: string,
 ): Promise<readonly string[]> {
   return window.evaluate(async (targetTitle) => {
-    const app = globalThis.window.piApp;
+    const app = globalThis.window.thetaApp;
     if (!app) {
-      throw new Error("piApp IPC bridge is unavailable");
+      throw new Error("thetaApp IPC bridge is unavailable");
     }
     const stateEvents: string[] = [];
     const unsubscribe = app.onStateChanged((nextState) => {
@@ -378,9 +378,9 @@ test("keeps each window selection when a background window changes transparency"
     await expectSelected(secondWindow, workspacePath, "Transparency second");
 
     const returnedSelection = await secondWindow.evaluate(async () => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       const state = await app.setEnableTransparency(true);
       const workspace = state.workspaces.find((entry) => entry.id === state.selectedWorkspaceId);
@@ -454,9 +454,9 @@ test("keeps sender dialog actions scoped without blocking another window", async
 
     await stubDelayedOpenDialog(harness, [attachmentPath]);
     const pickPromise = firstWindow.evaluate(async () => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       await app.pickComposerAttachments();
     });

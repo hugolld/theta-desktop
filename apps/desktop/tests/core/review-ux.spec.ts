@@ -123,7 +123,7 @@ test("reviewed marks survive relaunch and apply only to the reviewed file revisi
   const sessionRef = await selectedSessionRef(firstWindow);
   // Legacy renderer marks are fixture state: they must not become authoritative,
   // and replacing the store must not delete the user's old bytes.
-  const storageKey = `pi-gui:reviewed-files:v1:${sessionRef.workspaceId}:${sessionRef.sessionId}`;
+  const storageKey = `theta-desktop:reviewed-files:v1:${sessionRef.workspaceId}:${sessionRef.sessionId}`;
   const legacyValue = JSON.stringify([JSON.stringify([sessionRef.workspaceId, "notes.md"])]);
   try {
     await firstWindow.evaluate(({ key, value }) => globalThis.localStorage.setItem(key, value), {
@@ -333,7 +333,7 @@ test("highlighting follows the theme when light or dark changes", async () => {
     const colorBefore = await token.evaluate((el) => getComputedStyle(el).color);
 
     await window.evaluate(async (wasDark) => {
-      await globalThis.window.piApp?.setThemeMode(wasDark ? "light" : "dark");
+      await globalThis.window.thetaApp?.setThemeMode(wasDark ? "light" : "dark");
     }, initiallyDark);
 
     await expect

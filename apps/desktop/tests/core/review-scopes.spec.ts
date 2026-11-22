@@ -267,7 +267,7 @@ test("choosing another review checkout preserves the task and terminal checkout"
     workspacePath,
     async (window, root) => {
       const state = await window.evaluate(
-        (workspaceId) => globalThis.window.piApp.createWorktree({ workspaceId }),
+        (workspaceId) => globalThis.window.thetaApp.createWorktree({ workspaceId }),
         root.id,
       );
       linked = state.workspaces.find((candidate) => candidate.id === state.selectedWorkspaceId);
@@ -276,7 +276,7 @@ test("choosing another review checkout preserves the task and terminal checkout"
       await writeFile(join(linked.path, "linked-only.txt"), "linked changes\n");
       await writeFile(join(linked.path, "shared.txt"), "linked version\n");
       await window.evaluate(
-        (workspaceId) => globalThis.window.piApp.selectWorkspace(workspaceId),
+        (workspaceId) => globalThis.window.thetaApp.selectWorkspace(workspaceId),
         root.id,
       );
     },

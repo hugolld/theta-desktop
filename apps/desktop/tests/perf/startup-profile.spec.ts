@@ -22,7 +22,7 @@ import {
   seedAgentDir,
   seedNamedTextSessionFixture,
   waitForWorkspaceByPath,
-  type PiAppWindow,
+  type ThetaAppWindow,
 } from "../helpers/electron-app";
 
 const WARMUP_RUNS = 1;
@@ -66,9 +66,9 @@ function summarize(values: readonly number[], digits = 1): Summary {
  */
 async function meanPing(window: Page, count: number): Promise<number> {
   return window.evaluate(async (pingCount) => {
-    const app = (globalThis.window as PiAppWindow).piApp;
+    const app = (globalThis.window as ThetaAppWindow).thetaApp;
     if (!app) {
-      throw new Error("piApp IPC bridge is unavailable");
+      throw new Error("thetaApp IPC bridge is unavailable");
     }
     await app.ping();
     const startedAt = performance.now();

@@ -47,9 +47,9 @@ export async function createThread(
 ): Promise<SessionContext> {
   await window.evaluate(
     async ({ targetTitle }) => {
-      const app = (window as Window & { piApp?: DesktopTestApi }).piApp;
+      const app = (window as Window & { thetaApp?: DesktopTestApi }).thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       const state = await app.getState();
       const workspaceId = state.selectedWorkspaceId ?? state.workspaces[0]?.id;
@@ -72,9 +72,9 @@ export async function selectSessionByTitle(
 ): Promise<void> {
   await window.evaluate(
     async ({ targetTitle }) => {
-      const app = (window as Window & { piApp?: DesktopTestApi }).piApp;
+      const app = (window as Window & { thetaApp?: DesktopTestApi }).thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
 
       const state = await app.getState();

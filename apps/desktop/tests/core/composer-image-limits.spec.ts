@@ -91,9 +91,9 @@ test("rejects oversized drag-drop, picker, and forged IPC images with a composer
 
     await window.evaluate(
       async (data) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         await app.addComposerAttachments([
           {
@@ -363,9 +363,9 @@ test("startThread rejects oversize-pixel images without clearing the new-thread 
     const before = await getDesktopState(window);
 
     const result = await window.evaluate(async (data) => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       const state = await app.getState();
       const workspace =

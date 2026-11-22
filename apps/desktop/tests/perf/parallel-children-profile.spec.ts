@@ -257,7 +257,7 @@ test("parallel children: main-process event-loop lag while N children stream", a
         (rendererLags.reduce((sum, lag) => sum + lag, 0) / streamMs).toFixed(3),
       ),
       stateSendsPerSec: Number(
-        (((sample.sends["pi-gui:state-changed"] ?? 0) * 1000) / streamMs).toFixed(1),
+        (((sample.sends["theta-desktop:state-changed"] ?? 0) * 1000) / streamMs).toFixed(1),
       ),
       sends: sample.sends,
     };

@@ -27,7 +27,7 @@ import { useTranslation } from "../i18n";
 import { SecondarySurface } from "./secondary-surface";
 
 interface SecondarySurfacesProps {
-  readonly api: NonNullable<typeof window.piApp>;
+  readonly api: NonNullable<typeof window.thetaApp>;
   readonly snapshot: DesktopAppState;
   readonly setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>;
   readonly activeView: Extract<AppView, "settings" | "skills" | "extensions">;
@@ -95,7 +95,7 @@ export function SecondarySurfaces({
     : [];
 
   useEffect(() => {
-    const piApi = window.piApp;
+    const piApi = window.thetaApp;
     if (!piApi?.onNotificationPermissionStatusChanged) {
       return;
     }

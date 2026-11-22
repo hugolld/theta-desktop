@@ -1,6 +1,6 @@
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import type { WorkspaceRecord, WorkspaceSessionTarget } from "../../../contracts/desktop-state";
-import type { PiDesktopApi } from "../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../contracts/ipc";
 import { sessionLastInteractedAt } from "../../../contracts/thread-recency";
 import { formatRelativeTime } from "../../lib/string-utils";
 import { ChatIcon, FileIcon, FolderIcon, ModelIcon } from "../../ui/icons";
@@ -34,7 +34,7 @@ export interface PaletteModelScope {
 
 /** Mount one per mode (key it by mode) so each list starts with an empty query. */
 interface CommandPaletteSurfaceProps {
-  readonly api: PiDesktopApi;
+  readonly api: ThetaDesktopApi;
   readonly mode: PaletteMode;
   readonly onModeChange: (mode: PaletteMode) => void;
   readonly onClose: () => void;

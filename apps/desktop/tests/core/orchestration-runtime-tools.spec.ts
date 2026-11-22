@@ -86,7 +86,7 @@ test("create_child_thread returns after a slow worker starts, before its turn co
         pushes?: { transcriptRows: number; linkedChildIds: string[] }[];
       };
       record.pushes = [];
-      globalThis.window.piApp?.onStateChanged((state) => {
+      globalThis.window.thetaApp?.onStateChanged((state) => {
         record.pushes?.push({
           transcriptRows: state.orchestrationChildren.reduce(
             (rows, child) => rows + child.transcript.length + (child.latestTranscript ? 1 : 0),

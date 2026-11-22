@@ -231,7 +231,7 @@ test("keeps the drafts of every window when quitting straight after typing", asy
     });
   }, nativeModifier);
   const secondWindow = await opened;
-  await secondWindow.waitForFunction(() => Boolean(globalThis.window.piApp));
+  await secondWindow.waitForFunction(() => Boolean(globalThis.window.thetaApp));
   await selectSession(secondWindow, "Second");
 
   await pauseRendererTimers(secondWindow);

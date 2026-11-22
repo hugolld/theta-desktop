@@ -425,7 +425,7 @@ export async function reconcileWorktrees(store: WorkspaceOwnerHost): Promise<voi
     });
   } catch (error) {
     console.warn(
-      `pi-gui: worktree reconcile skipped: ${error instanceof Error ? error.message : String(error)}`,
+      `theta-desktop: worktree reconcile skipped: ${error instanceof Error ? error.message : String(error)}`,
     );
   }
 }

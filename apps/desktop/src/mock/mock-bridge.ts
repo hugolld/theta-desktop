@@ -1,4 +1,4 @@
-import type { PiDesktopApi } from "../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../contracts/ipc";
 import type {
   ChildThreadLink,
   ComposerAttachment,
@@ -10,7 +10,7 @@ import type {
 } from "../../contracts/desktop-state";
 import type { DesktopEditorList } from "../../contracts/editors";
 import type { TranscriptMessage } from "../../contracts/timeline-types";
-import type { PiDesktopStatePush } from "../../contracts/ipc";
+import type { ThetaDesktopStatePush } from "../../contracts/ipc";
 import type { SessionRef } from "@theta-desktop/session-driver/types";
 import {
   buildFixtureState,
@@ -19,7 +19,7 @@ import {
   buildWorkspaceFiles,
 } from "./fixtures";
 
-type StateListener = (state: PiDesktopStatePush) => void;
+type StateListener = (state: ThetaDesktopStatePush) => void;
 type TranscriptListener = (payload: SelectedTranscriptRecord | null) => void;
 type Unsubscribe = () => void;
 
@@ -33,12 +33,12 @@ function previewOf(text: string): string {
 }
 
 /**
- * In-memory `window.piApp` for browser-mode UI development (no Electron, no pi).
+ * In-memory `window.thetaApp` for browser-mode UI development (no Electron, no pi).
  * Installed by `installMockBridge` only in dev builds when the real preload bridge
  * is absent, so the packaged app never sees it. State lives in fixtures.ts; a
  * submit streams a scripted turn through the same push channels main uses.
  */
-export class MockPiDesktopApi implements PiDesktopApi {
+export class MockThetaDesktopApi implements ThetaDesktopApi {
   platform: NodeJS.Platform = "darwin";
   drawsWindowControls = true;
   versions = {

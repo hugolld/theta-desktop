@@ -108,142 +108,142 @@ export type NewMcpServerInput = { readonly name: string; readonly description?: 
 );
 
 export const desktopIpc = {
-  extensionViewOpenFile: "pi-gui:extension-view-open-file",
-  listExtensionViews: "pi-gui:list-extension-views",
-  openExtensionView: "pi-gui:open-extension-view",
-  sendExtensionViewMessage: "pi-gui:send-extension-view-message",
-  closeExtensionView: "pi-gui:close-extension-view",
-  runExtensionAction: "pi-gui:run-extension-action",
-  extensionViewMessage: "pi-gui:extension-view-message",
-  extensionViewCatalogChanged: "pi-gui:extension-view-catalog-changed",
-  stateRequest: "pi-gui:state-request",
-  stateChanged: "pi-gui:state-changed",
-  getTaskWorkbenchTemplate: "pi-gui:get-task-workbench-template",
-  saveTaskWorkbenchTemplate: "pi-gui:save-task-workbench-template",
-  selectedTranscriptRequest: "pi-gui:selected-transcript-request",
-  selectedTranscriptChanged: "pi-gui:selected-transcript-changed",
-  selectedTranscriptResend: "pi-gui:selected-transcript-resend",
-  extensionUiChanged: "pi-gui:extension-ui-changed",
-  appCommand: "pi-gui:app-command",
-  workspacePicked: "pi-gui:workspace-picked",
-  clipboardImagePasted: "pi-gui:clipboard-image-pasted",
-  addWorkspacePath: "pi-gui:add-workspace-path",
-  pickWorkspace: "pi-gui:pick-workspace",
-  selectWorkspace: "pi-gui:select-workspace",
-  renameWorkspace: "pi-gui:rename-workspace",
-  removeWorkspace: "pi-gui:remove-workspace",
-  reorderWorkspaces: "pi-gui:reorder-workspaces",
-  reorderPinnedSessions: "pi-gui:reorder-pinned-sessions",
-  openWorkspaceInFinder: "pi-gui:open-workspace-in-finder",
-  listEditors: "pi-gui:list-editors",
-  setPreferredEditor: "pi-gui:set-preferred-editor",
-  openWorkspaceInEditor: "pi-gui:open-workspace-in-editor",
-  createWorktree: "pi-gui:create-worktree",
-  removeWorktree: "pi-gui:remove-worktree",
-  openSkillInFinder: "pi-gui:open-skill-in-finder",
-  openExtensionInFinder: "pi-gui:open-extension-in-finder",
-  syncCurrentWorkspace: "pi-gui:sync-current-workspace",
-  selectSession: "pi-gui:select-session",
-  renameSession: "pi-gui:rename-session",
-  archiveSession: "pi-gui:archive-session",
-  unarchiveSession: "pi-gui:unarchive-session",
-  markSessionRead: "pi-gui:mark-session-read",
-  setSessionPinned: "pi-gui:set-session-pinned",
-  createSession: "pi-gui:create-session",
-  startThread: "pi-gui:start-thread",
-  forkThread: "pi-gui:fork-thread",
-  sendChildThreadFollowUp: "pi-gui:send-child-thread-follow-up",
-  setChildSupervisionLoop: "pi-gui:set-child-supervision-loop",
-  createScheduledTask: "pi-gui:create-scheduled-task",
-  updateScheduledTask: "pi-gui:update-scheduled-task",
-  deleteScheduledTask: "pi-gui:delete-scheduled-task",
-  beginScheduledTaskInterview: "pi-gui:begin-scheduled-task-interview",
-  cancelCurrentRun: "pi-gui:cancel-current-run",
-  setActiveView: "pi-gui:set-active-view",
-  setSidebarCollapsed: "pi-gui:set-sidebar-collapsed",
-  setThreadGrouping: "pi-gui:set-thread-grouping",
-  setWorkspaceCollapsed: "pi-gui:set-workspace-collapsed",
-  refreshRuntime: "pi-gui:refresh-runtime",
-  setModelSettingsScopeMode: "pi-gui:set-model-settings-scope-mode",
-  setDefaultModel: "pi-gui:set-default-model",
-  setDefaultThinkingLevel: "pi-gui:set-default-thinking-level",
-  setSessionModel: "pi-gui:set-session-model",
-  setSessionThinkingLevel: "pi-gui:set-session-thinking-level",
-  loginProvider: "pi-gui:login-provider",
-  logoutProvider: "pi-gui:logout-provider",
-  setProviderApiKey: "pi-gui:set-provider-api-key",
-  listCustomProviders: "pi-gui:list-custom-providers",
-  setCustomProvider: "pi-gui:set-custom-provider",
-  deleteCustomProvider: "pi-gui:delete-custom-provider",
-  probeCustomProviderModels: "pi-gui:probe-custom-provider-models",
-  setEnableSkillCommands: "pi-gui:set-enable-skill-commands",
-  setScopedModelPatterns: "pi-gui:set-scoped-model-patterns",
-  setSkillEnabled: "pi-gui:set-skill-enabled",
-  setExtensionEnabled: "pi-gui:set-extension-enabled",
-  listMcpServers: "pi-gui:list-mcp-servers",
-  addMcpServer: "pi-gui:add-mcp-server",
-  removeMcpServer: "pi-gui:remove-mcp-server",
-  setMcpServerEnabled: "pi-gui:set-mcp-server-enabled",
-  setCodemodeAlwaysOn: "pi-gui:set-codemode-always-on",
-  respondToHostUiRequest: "pi-gui:respond-to-host-ui-request",
-  setNotificationPreferences: "pi-gui:set-notification-preferences",
-  setIntegratedTerminalShell: "pi-gui:set-integrated-terminal-shell",
-  setEnableTransparency: "pi-gui:set-enable-transparency",
-  terminalEnsurePanel: "pi-gui:terminal-ensure-panel",
-  terminalCreateSession: "pi-gui:terminal-create-session",
-  terminalSetActiveSession: "pi-gui:terminal-set-active-session",
-  terminalWrite: "pi-gui:terminal-write",
-  terminalResize: "pi-gui:terminal-resize",
-  terminalRestartSession: "pi-gui:terminal-restart-session",
-  terminalCloseSession: "pi-gui:terminal-close-session",
-  terminalSetTitle: "pi-gui:terminal-set-title",
-  terminalSetFocused: "pi-gui:terminal-set-focused",
-  sidePanelSetFocused: "pi-gui:side-panel-set-focused",
-  terminalData: "pi-gui:terminal-data",
-  terminalExit: "pi-gui:terminal-exit",
-  terminalError: "pi-gui:terminal-error",
-  getNotificationPermissionStatus: "pi-gui:get-notification-permission-status",
-  requestNotificationPermission: "pi-gui:request-notification-permission",
-  openSystemNotificationSettings: "pi-gui:open-system-notification-settings",
-  notificationPermissionStatusChanged: "pi-gui:notification-permission-status-changed",
-  pickComposerAttachments: "pi-gui:pick-composer-attachments",
-  readClipboardImage: "pi-gui:read-clipboard-image",
-  addComposerAttachments: "pi-gui:add-composer-attachments",
-  removeComposerAttachment: "pi-gui:remove-composer-attachment",
-  editQueuedComposerMessage: "pi-gui:edit-queued-composer-message",
-  cancelQueuedComposerEdit: "pi-gui:cancel-queued-composer-edit",
-  removeQueuedComposerMessage: "pi-gui:remove-queued-composer-message",
-  steerQueuedComposerMessage: "pi-gui:steer-queued-composer-message",
-  persistComposerDraft: "pi-gui:persist-composer-draft",
-  updateComposerDraft: "pi-gui:update-composer-draft",
-  flushPendingComposerDraft: "pi-gui:flush-pending-composer-draft",
-  pendingComposerDraftFlushed: "pi-gui:pending-composer-draft-flushed",
-  submitComposer: "pi-gui:submit-composer",
-  getSessionTree: "pi-gui:get-session-tree",
-  navigateSessionTree: "pi-gui:navigate-session-tree",
-  toggleWindowMaximize: "pi-gui:toggle-window-maximize",
-  minimizeWindow: "pi-gui:minimize-window",
-  closeWindow: "pi-gui:close-window",
-  listWorkspaceFiles: "pi-gui:list-workspace-files",
-  readWorkspaceFile: "pi-gui:read-workspace-file",
-  revealWorkspaceFile: "pi-gui:reveal-workspace-file",
-  getChangedFiles: "pi-gui:get-changed-files",
-  getFileDiff: "pi-gui:get-file-diff",
-  stageFile: "pi-gui:stage-file",
-  getTurnChanges: "pi-gui:get-turn-changes",
-  getReview: "pi-gui:get-review",
-  getReviewFile: "pi-gui:get-review-file",
-  setReviewFileReviewed: "pi-gui:set-review-file-reviewed",
-  changeReviewFileStage: "pi-gui:change-review-file-stage",
-  getThemeMode: "pi-gui:get-theme-mode",
-  getResolvedTheme: "pi-gui:get-resolved-theme",
-  setThemeMode: "pi-gui:set-theme-mode",
-  setThemePresetId: "pi-gui:set-theme-preset-id",
-  themeChanged: "pi-gui:theme-changed",
-  windowFocused: "pi-gui:window-focused",
+  extensionViewOpenFile: "theta-desktop:extension-view-open-file",
+  listExtensionViews: "theta-desktop:list-extension-views",
+  openExtensionView: "theta-desktop:open-extension-view",
+  sendExtensionViewMessage: "theta-desktop:send-extension-view-message",
+  closeExtensionView: "theta-desktop:close-extension-view",
+  runExtensionAction: "theta-desktop:run-extension-action",
+  extensionViewMessage: "theta-desktop:extension-view-message",
+  extensionViewCatalogChanged: "theta-desktop:extension-view-catalog-changed",
+  stateRequest: "theta-desktop:state-request",
+  stateChanged: "theta-desktop:state-changed",
+  getTaskWorkbenchTemplate: "theta-desktop:get-task-workbench-template",
+  saveTaskWorkbenchTemplate: "theta-desktop:save-task-workbench-template",
+  selectedTranscriptRequest: "theta-desktop:selected-transcript-request",
+  selectedTranscriptChanged: "theta-desktop:selected-transcript-changed",
+  selectedTranscriptResend: "theta-desktop:selected-transcript-resend",
+  extensionUiChanged: "theta-desktop:extension-ui-changed",
+  appCommand: "theta-desktop:app-command",
+  workspacePicked: "theta-desktop:workspace-picked",
+  clipboardImagePasted: "theta-desktop:clipboard-image-pasted",
+  addWorkspacePath: "theta-desktop:add-workspace-path",
+  pickWorkspace: "theta-desktop:pick-workspace",
+  selectWorkspace: "theta-desktop:select-workspace",
+  renameWorkspace: "theta-desktop:rename-workspace",
+  removeWorkspace: "theta-desktop:remove-workspace",
+  reorderWorkspaces: "theta-desktop:reorder-workspaces",
+  reorderPinnedSessions: "theta-desktop:reorder-pinned-sessions",
+  openWorkspaceInFinder: "theta-desktop:open-workspace-in-finder",
+  listEditors: "theta-desktop:list-editors",
+  setPreferredEditor: "theta-desktop:set-preferred-editor",
+  openWorkspaceInEditor: "theta-desktop:open-workspace-in-editor",
+  createWorktree: "theta-desktop:create-worktree",
+  removeWorktree: "theta-desktop:remove-worktree",
+  openSkillInFinder: "theta-desktop:open-skill-in-finder",
+  openExtensionInFinder: "theta-desktop:open-extension-in-finder",
+  syncCurrentWorkspace: "theta-desktop:sync-current-workspace",
+  selectSession: "theta-desktop:select-session",
+  renameSession: "theta-desktop:rename-session",
+  archiveSession: "theta-desktop:archive-session",
+  unarchiveSession: "theta-desktop:unarchive-session",
+  markSessionRead: "theta-desktop:mark-session-read",
+  setSessionPinned: "theta-desktop:set-session-pinned",
+  createSession: "theta-desktop:create-session",
+  startThread: "theta-desktop:start-thread",
+  forkThread: "theta-desktop:fork-thread",
+  sendChildThreadFollowUp: "theta-desktop:send-child-thread-follow-up",
+  setChildSupervisionLoop: "theta-desktop:set-child-supervision-loop",
+  createScheduledTask: "theta-desktop:create-scheduled-task",
+  updateScheduledTask: "theta-desktop:update-scheduled-task",
+  deleteScheduledTask: "theta-desktop:delete-scheduled-task",
+  beginScheduledTaskInterview: "theta-desktop:begin-scheduled-task-interview",
+  cancelCurrentRun: "theta-desktop:cancel-current-run",
+  setActiveView: "theta-desktop:set-active-view",
+  setSidebarCollapsed: "theta-desktop:set-sidebar-collapsed",
+  setThreadGrouping: "theta-desktop:set-thread-grouping",
+  setWorkspaceCollapsed: "theta-desktop:set-workspace-collapsed",
+  refreshRuntime: "theta-desktop:refresh-runtime",
+  setModelSettingsScopeMode: "theta-desktop:set-model-settings-scope-mode",
+  setDefaultModel: "theta-desktop:set-default-model",
+  setDefaultThinkingLevel: "theta-desktop:set-default-thinking-level",
+  setSessionModel: "theta-desktop:set-session-model",
+  setSessionThinkingLevel: "theta-desktop:set-session-thinking-level",
+  loginProvider: "theta-desktop:login-provider",
+  logoutProvider: "theta-desktop:logout-provider",
+  setProviderApiKey: "theta-desktop:set-provider-api-key",
+  listCustomProviders: "theta-desktop:list-custom-providers",
+  setCustomProvider: "theta-desktop:set-custom-provider",
+  deleteCustomProvider: "theta-desktop:delete-custom-provider",
+  probeCustomProviderModels: "theta-desktop:probe-custom-provider-models",
+  setEnableSkillCommands: "theta-desktop:set-enable-skill-commands",
+  setScopedModelPatterns: "theta-desktop:set-scoped-model-patterns",
+  setSkillEnabled: "theta-desktop:set-skill-enabled",
+  setExtensionEnabled: "theta-desktop:set-extension-enabled",
+  listMcpServers: "theta-desktop:list-mcp-servers",
+  addMcpServer: "theta-desktop:add-mcp-server",
+  removeMcpServer: "theta-desktop:remove-mcp-server",
+  setMcpServerEnabled: "theta-desktop:set-mcp-server-enabled",
+  setCodemodeAlwaysOn: "theta-desktop:set-codemode-always-on",
+  respondToHostUiRequest: "theta-desktop:respond-to-host-ui-request",
+  setNotificationPreferences: "theta-desktop:set-notification-preferences",
+  setIntegratedTerminalShell: "theta-desktop:set-integrated-terminal-shell",
+  setEnableTransparency: "theta-desktop:set-enable-transparency",
+  terminalEnsurePanel: "theta-desktop:terminal-ensure-panel",
+  terminalCreateSession: "theta-desktop:terminal-create-session",
+  terminalSetActiveSession: "theta-desktop:terminal-set-active-session",
+  terminalWrite: "theta-desktop:terminal-write",
+  terminalResize: "theta-desktop:terminal-resize",
+  terminalRestartSession: "theta-desktop:terminal-restart-session",
+  terminalCloseSession: "theta-desktop:terminal-close-session",
+  terminalSetTitle: "theta-desktop:terminal-set-title",
+  terminalSetFocused: "theta-desktop:terminal-set-focused",
+  sidePanelSetFocused: "theta-desktop:side-panel-set-focused",
+  terminalData: "theta-desktop:terminal-data",
+  terminalExit: "theta-desktop:terminal-exit",
+  terminalError: "theta-desktop:terminal-error",
+  getNotificationPermissionStatus: "theta-desktop:get-notification-permission-status",
+  requestNotificationPermission: "theta-desktop:request-notification-permission",
+  openSystemNotificationSettings: "theta-desktop:open-system-notification-settings",
+  notificationPermissionStatusChanged: "theta-desktop:notification-permission-status-changed",
+  pickComposerAttachments: "theta-desktop:pick-composer-attachments",
+  readClipboardImage: "theta-desktop:read-clipboard-image",
+  addComposerAttachments: "theta-desktop:add-composer-attachments",
+  removeComposerAttachment: "theta-desktop:remove-composer-attachment",
+  editQueuedComposerMessage: "theta-desktop:edit-queued-composer-message",
+  cancelQueuedComposerEdit: "theta-desktop:cancel-queued-composer-edit",
+  removeQueuedComposerMessage: "theta-desktop:remove-queued-composer-message",
+  steerQueuedComposerMessage: "theta-desktop:steer-queued-composer-message",
+  persistComposerDraft: "theta-desktop:persist-composer-draft",
+  updateComposerDraft: "theta-desktop:update-composer-draft",
+  flushPendingComposerDraft: "theta-desktop:flush-pending-composer-draft",
+  pendingComposerDraftFlushed: "theta-desktop:pending-composer-draft-flushed",
+  submitComposer: "theta-desktop:submit-composer",
+  getSessionTree: "theta-desktop:get-session-tree",
+  navigateSessionTree: "theta-desktop:navigate-session-tree",
+  toggleWindowMaximize: "theta-desktop:toggle-window-maximize",
+  minimizeWindow: "theta-desktop:minimize-window",
+  closeWindow: "theta-desktop:close-window",
+  listWorkspaceFiles: "theta-desktop:list-workspace-files",
+  readWorkspaceFile: "theta-desktop:read-workspace-file",
+  revealWorkspaceFile: "theta-desktop:reveal-workspace-file",
+  getChangedFiles: "theta-desktop:get-changed-files",
+  getFileDiff: "theta-desktop:get-file-diff",
+  stageFile: "theta-desktop:stage-file",
+  getTurnChanges: "theta-desktop:get-turn-changes",
+  getReview: "theta-desktop:get-review",
+  getReviewFile: "theta-desktop:get-review-file",
+  setReviewFileReviewed: "theta-desktop:set-review-file-reviewed",
+  changeReviewFileStage: "theta-desktop:change-review-file-stage",
+  getThemeMode: "theta-desktop:get-theme-mode",
+  getResolvedTheme: "theta-desktop:get-resolved-theme",
+  setThemeMode: "theta-desktop:set-theme-mode",
+  setThemePresetId: "theta-desktop:set-theme-preset-id",
+  themeChanged: "theta-desktop:theme-changed",
+  windowFocused: "theta-desktop:window-focused",
   ping: "app:ping",
   openExternal: "app:open-external",
-  relaunchApplication: "pi-gui:relaunch-application",
+  relaunchApplication: "theta-desktop:relaunch-application",
 } as const;
 
 export const desktopCommands = {
@@ -293,8 +293,8 @@ const RECENT_THREAD_COMMANDS = [
 
 export const THREAD_SHORTCUT_SLOT_COUNT = RECENT_THREAD_COMMANDS.length;
 
-export function isRecentThreadCommand(command: PiDesktopCommand | undefined): boolean {
-  return (RECENT_THREAD_COMMANDS as readonly (PiDesktopCommand | undefined)[]).includes(command);
+export function isRecentThreadCommand(command: ThetaDesktopCommand | undefined): boolean {
+  return (RECENT_THREAD_COMMANDS as readonly (ThetaDesktopCommand | undefined)[]).includes(command);
 }
 
 const SIDE_PANEL_TAB_COMMANDS = [
@@ -312,8 +312,8 @@ const SIDE_PANEL_TAB_COMMANDS = [
 export const SIDE_PANEL_TAB_SHORTCUT_SLOT_COUNT = SIDE_PANEL_TAB_COMMANDS.length;
 
 /** The zero-based side panel tab a command selects, or undefined for other commands. */
-export function sidePanelTabIndex(command: PiDesktopCommand | undefined): number | undefined {
-  const index = (SIDE_PANEL_TAB_COMMANDS as readonly (PiDesktopCommand | undefined)[]).indexOf(
+export function sidePanelTabIndex(command: ThetaDesktopCommand | undefined): number | undefined {
+  const index = (SIDE_PANEL_TAB_COMMANDS as readonly (ThetaDesktopCommand | undefined)[]).indexOf(
     command,
   );
   return index < 0 ? undefined : index;
@@ -350,7 +350,7 @@ export function getSidePanelTabCommand(
     readonly key: string;
     readonly code?: string;
   },
-): PiDesktopCommand | undefined {
+): ThetaDesktopCommand | undefined {
   if (!sidePanelTabModifierHeld(platform, input) || input.code?.startsWith("Numpad")) {
     return undefined;
   }
@@ -383,15 +383,15 @@ export function getSidePanelToggleShortcutLabel(platform: NodeJS.Platform): stri
 
 // A state push leaves out the model catalog (`runtimeByWorkspace`) when it is unchanged
 // since the last push to that window; the window keeps the one it has.
-export type PiDesktopStatePush = Omit<DesktopAppState, "runtimeByWorkspace"> & {
+export type ThetaDesktopStatePush = Omit<DesktopAppState, "runtimeByWorkspace"> & {
   readonly runtimeByWorkspace?: DesktopAppState["runtimeByWorkspace"];
 };
-export type PiDesktopStateListener = (state: PiDesktopStatePush) => void;
-export type PiDesktopSelectedTranscriptListener = (
+export type ThetaDesktopStateListener = (state: ThetaDesktopStatePush) => void;
+export type ThetaDesktopSelectedTranscriptListener = (
   payload: SelectedTranscriptRecord | SelectedTranscriptPatch | null,
 ) => void;
-export type PiDesktopExtensionUiListener = (update: SessionExtensionUiUpdate) => void;
-export type PiDesktopCommand = (typeof desktopCommands)[keyof typeof desktopCommands];
+export type ThetaDesktopExtensionUiListener = (update: SessionExtensionUiUpdate) => void;
+export type ThetaDesktopCommand = (typeof desktopCommands)[keyof typeof desktopCommands];
 
 export type ChangedFileStatus =
   "added" | "copied" | "deleted" | "modified" | "renamed" | "untracked";
@@ -497,10 +497,10 @@ const MAX_QUEUED_DESKTOP_COMMANDS = 16;
  * is swapped. Those commands are kept until the next subscriber.
  */
 export function createDesktopCommandSubscription() {
-  let listener: ((command: PiDesktopCommand) => void) | null = null;
-  const queued: PiDesktopCommand[] = [];
+  let listener: ((command: ThetaDesktopCommand) => void) | null = null;
+  const queued: ThetaDesktopCommand[] = [];
   return {
-    subscribe(next: (command: PiDesktopCommand) => void): () => void {
+    subscribe(next: (command: ThetaDesktopCommand) => void): () => void {
       listener = next;
       const pending = queued.splice(0, queued.length);
       for (const command of pending) next(command);
@@ -508,7 +508,7 @@ export function createDesktopCommandSubscription() {
         if (listener === next) listener = null;
       };
     },
-    deliver(command: PiDesktopCommand): void {
+    deliver(command: ThetaDesktopCommand): void {
       if (listener) {
         listener(command);
         return;
@@ -590,7 +590,7 @@ export const earlyModifierChords = createEarlyModifierChordBuffer();
 
 export function getDesktopCommandFromShortcut(
   input: DesktopShortcutInput,
-): PiDesktopCommand | undefined {
+): ThetaDesktopCommand | undefined {
   if (!input.modifier) {
     return undefined;
   }
@@ -671,7 +671,7 @@ export function getDesktopCommandFromShortcut(
  * Callers accept palette commands only from the platform modifier, so macOS
  * Control+K and Control+P stay with text fields, and only from a first press.
  */
-export function isPaletteCommand(command: PiDesktopCommand | undefined): boolean {
+export function isPaletteCommand(command: ThetaDesktopCommand | undefined): boolean {
   return (
     command === desktopCommands.openCommandPalette || command === desktopCommands.openFilePalette
   );
@@ -684,7 +684,7 @@ export function isPaletteCommand(command: PiDesktopCommand | undefined): boolean
  * holding Review would flicker the panel. New Tab is the exception in the terminal,
  * where the shell keeps it to open another terminal.
  */
-export function isSinglePressCommand(command: PiDesktopCommand | undefined): boolean {
+export function isSinglePressCommand(command: ThetaDesktopCommand | undefined): boolean {
   return (
     isPaletteCommand(command) ||
     command === desktopCommands.toggleReview ||
@@ -720,7 +720,7 @@ export function isCloseFocusedSurfaceShortcut(input: {
  */
 export const drawWindowControlsArgument = "--pi-draw-window-controls";
 
-export interface PiDesktopApi {
+export interface ThetaDesktopApi {
   platform: NodeJS.Platform;
   /** True when the window has no native title bar and the app draws its own. */
   drawsWindowControls: boolean;
@@ -729,12 +729,12 @@ export interface PiDesktopApi {
   getState(): Promise<DesktopAppState>;
   getTaskWorkbenchTemplate(target: SessionRef): Promise<TaskWorkbenchTemplate | null>;
   saveTaskWorkbenchTemplate(input: SaveTaskWorkbenchTemplateInput): Promise<void>;
-  onStateChanged(listener: PiDesktopStateListener): () => void;
+  onStateChanged(listener: ThetaDesktopStateListener): () => void;
   getSelectedTranscript(): Promise<SelectedTranscriptRecord | null>;
-  onSelectedTranscriptChanged(listener: PiDesktopSelectedTranscriptListener): () => void;
+  onSelectedTranscriptChanged(listener: ThetaDesktopSelectedTranscriptListener): () => void;
   resendSelectedTranscript(): void;
-  onExtensionUiChanged(listener: PiDesktopExtensionUiListener): () => void;
-  onCommand(listener: (command: PiDesktopCommand) => void): () => void;
+  onExtensionUiChanged(listener: ThetaDesktopExtensionUiListener): () => void;
+  onCommand(listener: (command: ThetaDesktopCommand) => void): () => void;
   onWorkspacePicked(listener: (workspaceId: string) => void): () => void;
   onClipboardImagePasted(listener: (result: ClipboardImageRead) => void): () => void;
   getPathForFile(file: File): string;

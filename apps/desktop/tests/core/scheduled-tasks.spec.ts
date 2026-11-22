@@ -117,9 +117,9 @@ test("firing a due existing-thread task labels the user bubble and shows a chip"
     expect(sessionId).toBeTruthy();
     await window.evaluate(
       async ({ targetWorkspaceId, targetSessionId }) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         await app.createScheduledTask({
           title: "Due ping",
@@ -163,9 +163,9 @@ test("a scheduled run can use the scheduled-task tools while it is still running
     const state = await getDesktopState(window);
     await window.evaluate(
       async (target) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         await app.createScheduledTask({
           title: "Self-checking task",
@@ -256,16 +256,16 @@ test("a second active bind to the same thread is rejected", async () => {
       },
     };
     await window.evaluate(async (input) => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       await app.createScheduledTask(input);
     }, payload);
     const second = await window.evaluate(async (input) => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       return app.createScheduledTask({ ...input, title: "Second bind", instruction: "Second" });
     }, payload);
@@ -290,9 +290,9 @@ test("past once create is rejected and title-only edit keeps timezone and nextRu
     const state = await getDesktopState(window);
     const past = await window.evaluate(
       async (input) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         return app.createScheduledTask(input);
       },
@@ -312,9 +312,9 @@ test("past once create is rejected and title-only edit keeps timezone and nextRu
 
     const created = await window.evaluate(
       async (input) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         return app.createScheduledTask(input);
       },
@@ -341,9 +341,9 @@ test("past once create is rejected and title-only edit keeps timezone and nextRu
 
     const renamed = await window.evaluate(
       async ({ id }) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         return app.updateScheduledTask(id, { title: "Renamed morning ping" });
       },

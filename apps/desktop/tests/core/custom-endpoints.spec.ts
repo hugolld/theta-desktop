@@ -310,9 +310,9 @@ test("custom endpoints keep legacy managed entries separate from built-in overri
 
     const blockedState = await window.evaluate(
       async ({ workspaceId }) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         return app.setCustomProvider(workspaceId, {
           providerId: "openai",
@@ -326,9 +326,9 @@ test("custom endpoints keep legacy managed entries separate from built-in overri
 
     await window.evaluate(
       async ({ workspaceId }) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         await app.deleteCustomProvider(workspaceId, "openai");
       },

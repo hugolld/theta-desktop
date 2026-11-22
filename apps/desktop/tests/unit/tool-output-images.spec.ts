@@ -42,7 +42,7 @@ function shownImages(content: readonly unknown[]) {
 
 test("only listed image types become thumbnails", () => {
   expect(shownImages(output.content)).toEqual([
-    { mimeType: "image/png", src: "pi-gui-image://image/w%20s/s%2F1/call%201/1" },
+    { mimeType: "image/png", src: "theta-desktop-image://image/w%20s/s%2F1/call%201/1" },
   ]);
   expect(toolOutputImages({ content: "text" })).toEqual([]);
   expect(toolOutputImages(undefined)).toEqual([]);
@@ -63,7 +63,7 @@ for (const src of [
     expect(toolOutputImages({ content: [block] })).toEqual([]);
     // A block with data and a src still shows the data, from main's URL.
     expect(shownImages([{ ...block, data: "UE5HREFUQQ==" }]).map((image) => image.src)).toEqual([
-      "pi-gui-image://image/w%20s/s%2F1/call%201/0",
+      "theta-desktop-image://image/w%20s/s%2F1/call%201/0",
     ]);
   });
 }
@@ -135,7 +135,7 @@ test("the window's transcript carries image URLs, not image data, and main serve
   expect(transcriptForWindow(sessionRef, stored)).toBe(sent);
 
   const [image] = toolOutputImages((sent[1] as typeof tool).output);
-  expect(image?.src).toMatch(/^pi-gui-image:\/\//);
+  expect(image?.src).toMatch(/^theta-desktop-image:\/\//);
   expect(stringifyToolValue((sent[1] as typeof tool).output)).toContain("[image/png image]");
 
   const lookup = (key: string) => (key === sessionKey(sessionRef) ? stored : undefined);

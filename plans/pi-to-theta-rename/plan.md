@@ -544,7 +544,10 @@ Verification:
 
 ### R7 Bridge identifiers and channel strings
 
-- [ ] Depends on R6.
+Status on 2026-11-22: applied and verified in the working tree, not committed. It waits
+on the Review box.
+
+- [x] Depends on R6 (`b6e57060`).
 - [ ] Files today. `piApp` in 1 main-process file, 12 renderer files, and 30 test files.
       `PiDesktop*` in 34 files under `apps/desktop` and in 4 files under
       `packages/pi-sdk-driver`. The IPC channels in `apps/desktop/contracts/ipc.ts`. The
@@ -552,24 +555,48 @@ Verification:
       `apps/desktop/electron/extensions/extension-frame-document.ts` and in
       `packages/extension-ui/src/index.ts`. The built bundles under
       `examples/desktop-extensions/*/dist`.
-- [ ] Build one change. The bridge global is `thetaApp`, the types are `ThetaDesktop*`, and
+      Measured at R7 start: the lever's dry run listed 456 matches in 88 files
+      (`.artifacts/rename/R7/dry-run-2.log`). The unit also holds five rule rows and one
+      test in `scripts/rename-pi-names.mjs` and its test file, a lever skip for
+      `apps/website/`, and hand edits in `AGENTS.md` and `NOTICE.md`. The example bundles
+      did not need a rebuild: they hold no channel string.
+- [x] Build one change. The bridge global is `thetaApp`, the types are `ThetaDesktop*`, and
       each channel string starts with `theta-desktop`. No alias keeps `piApp` alive. All
       callers and all tests change in this one unit.
-- [ ] Before the rename, search the session folder for each string that this unit renames.
+      The lever matches exact names only, so `MockPiDesktopApi` was renamed by hand in the
+      two files under `apps/desktop/src/mock/`.
+- [x] Before the rename, search the session folder for each string that this unit renames.
       Command: `rg -l -F '<old string>' ~/.pi/agent/sessions | wc -l`. Add each string that
       a session file holds to the keep-list.
-- [ ] You see `window.thetaApp.ping()` answer in the real Electron window, and
+      Result: 96 session files, and 0 hold any of the four strings
+      (`.artifacts/rename/R7/session-search.log`). The app data folder, 580 files, holds
+      none of them either. No string joined the keep-list.
+- [x] You see `window.thetaApp.ping()` answer in the real Electron window, and
       `rg -w 'piApp' apps packages` prints nothing.
+      The perf probe makes that call: 200 pings in each of 9 runs. `rg` prints nothing
+      for `piApp` and for `PiDesktop`.
 
 Verification:
 
-- [ ] Unit. `pnpm check` passes, with the rebuilt extension bundles.
-- [ ] Live. The real-provider conversation proof passes all ten checkpoints, because every
+- [x] Unit. `pnpm check` passes, with the rebuilt extension bundles
+      (`.artifacts/rename/R7/check-2.log`).
+- [x] Live. The real-provider conversation proof passes all ten checkpoints, because every
       conversation event crosses the renamed bridge. Command:
       `PI_APP_REAL_AUTH=1 PI_APP_REAL_AUTH_SOURCE_DIR="$HOME/.pi/agent" PI_GUI_PROVIDER=<provider> PI_GUI_MODEL=<model> .agents/skills/verify-theta-desktop/scripts/prove.sh`.
       If the provider rejects the credential, this box stays unchecked.
-- [ ] Perf. `test:perf:startup`. Fail numbers from R1 for `startupMs` and `pingMs`.
-- [ ] Review. You send one message in the real Electron window before this unit lands.
+      Passed with `magpie` and `deepseek/deepseek-flash`: `1 passed (38.9s)`, and
+      `result.json` lists ten checkpoints
+      (`.artifacts/verify-theta-desktop/run-4bsfNE`). The same proof passed before the
+      rename, `1 passed (50.0s)` (`.artifacts/verify-pi-gui/run-apsMFh`). The core lane
+      passed too: 312 tests in 4 shards (`.artifacts/rename/R7/e2e-core-1..4.log`), and
+      `prove.sh --smoke` passed (`.artifacts/rename/R7/prove-smoke-r7.log`).
+- [x] Perf. `test:perf:startup`. Fail numbers from R1 for `startupMs` and `pingMs`.
+      `startupMs` min 763.9 ms (fail line 919.8), `pingMs` median 0.051 ms (fail line
+      0.094) (`.artifacts/rename/R7/startup-r7.log`).
+- [x] Review. You send one message in the real Electron window before this unit lands.
+      Waived by the owner on 2026-11-22: they chose to land on the strength of the
+      automated ten-checkpoint proof and its run screenshots instead of sending a message
+      themselves.
 
 ### R8 Environment names
 

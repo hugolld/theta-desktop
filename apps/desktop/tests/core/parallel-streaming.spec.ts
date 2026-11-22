@@ -204,7 +204,7 @@ test("24 parallel children keep drafts and final states without per-token full-s
     await second.evaluate(() => {
       const record = globalThis as typeof globalThis & { pushedTranscripts?: string[] };
       record.pushedTranscripts = [];
-      globalThis.window.piApp?.onSelectedTranscriptChanged((payload) => {
+      globalThis.window.thetaApp?.onSelectedTranscriptChanged((payload) => {
         record.pushedTranscripts?.push(JSON.stringify(payload));
       });
     });

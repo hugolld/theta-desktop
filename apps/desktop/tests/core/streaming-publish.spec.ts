@@ -71,9 +71,9 @@ async function startCountingPublishes(window: Page): Promise<void> {
       __streamingPublish?: { state: number; transcript: number; stop: () => void };
     };
     g.__streamingPublish?.stop();
-    const api = globalThis.window.piApp;
+    const api = globalThis.window.thetaApp;
     if (!api) {
-      throw new Error("piApp IPC bridge is unavailable");
+      throw new Error("thetaApp IPC bridge is unavailable");
     }
     const counts = { state: 0, transcript: 0 };
     const stopState = api.onStateChanged(() => {

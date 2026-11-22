@@ -263,9 +263,9 @@ test("shows extensions above files in @ mentions and enables disabled extensions
 
     await window.evaluate(
       async ({ targetWorkspacePath, targetExtensionPath }) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         if (!app) {
-          throw new Error("piApp IPC bridge is unavailable");
+          throw new Error("thetaApp IPC bridge is unavailable");
         }
         const state = await app.getState();
         const workspace = state.workspaces.find((entry) => entry.path === targetWorkspacePath);

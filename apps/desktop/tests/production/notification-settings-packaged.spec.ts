@@ -39,7 +39,9 @@ test("shows not enabled yet in the packaged app and enables after Ask macOS upda
     await openNotificationSettings(window);
 
     await expect
-      .poll(() => window.evaluate(() => globalThis.window.piApp.getNotificationPermissionStatus()))
+      .poll(() =>
+        window.evaluate(() => globalThis.window.thetaApp.getNotificationPermissionStatus()),
+      )
       .toBe("default");
     await expect(window.locator(".settings-view")).toContainText("Not enabled yet");
     await expect(window.getByRole("button", { name: "Ask macOS", exact: true })).toHaveCount(1);
@@ -50,7 +52,9 @@ test("shows not enabled yet in the packaged app and enables after Ask macOS upda
     await window.getByRole("button", { name: "Ask macOS", exact: true }).click();
 
     await expect
-      .poll(() => window.evaluate(() => globalThis.window.piApp.getNotificationPermissionStatus()))
+      .poll(() =>
+        window.evaluate(() => globalThis.window.thetaApp.getNotificationPermissionStatus()),
+      )
       .toBe("granted");
     await expect(window.locator(".settings-view")).toContainText("Enabled");
     await expect(window.getByRole("button", { name: "Ask macOS", exact: true })).toHaveCount(0);
@@ -81,14 +85,18 @@ test("keeps showing not enabled yet when Ask macOS does not change packaged macO
     await openNotificationSettings(window);
 
     await expect
-      .poll(() => window.evaluate(() => globalThis.window.piApp.getNotificationPermissionStatus()))
+      .poll(() =>
+        window.evaluate(() => globalThis.window.thetaApp.getNotificationPermissionStatus()),
+      )
       .toBe("default");
     await expect(window.locator(".settings-view")).toContainText("Not enabled yet");
 
     await window.getByRole("button", { name: "Ask macOS", exact: true }).click();
 
     await expect
-      .poll(() => window.evaluate(() => globalThis.window.piApp.getNotificationPermissionStatus()))
+      .poll(() =>
+        window.evaluate(() => globalThis.window.thetaApp.getNotificationPermissionStatus()),
+      )
       .toBe("default");
     await expect(window.locator(".settings-view")).toContainText("Not enabled yet");
     await expect(window.getByRole("button", { name: "Ask macOS", exact: true })).toHaveCount(1);
@@ -124,7 +132,9 @@ test("refreshes packaged notification status after returning from System Setting
     await openNotificationSettings(window);
 
     await expect
-      .poll(() => window.evaluate(() => globalThis.window.piApp.getNotificationPermissionStatus()))
+      .poll(() =>
+        window.evaluate(() => globalThis.window.thetaApp.getNotificationPermissionStatus()),
+      )
       .toBe("denied");
     await expect(window.locator(".settings-view")).toContainText("Turned off");
     await expect(window.getByRole("button", { name: "Ask macOS", exact: true })).toHaveCount(0);
@@ -143,7 +153,9 @@ test("refreshes packaged notification status after returning from System Setting
     await harness.focusWindow();
 
     await expect
-      .poll(() => window.evaluate(() => globalThis.window.piApp.getNotificationPermissionStatus()))
+      .poll(() =>
+        window.evaluate(() => globalThis.window.thetaApp.getNotificationPermissionStatus()),
+      )
       .toBe("granted");
     await expect(window.locator(".settings-view")).toContainText("Enabled");
     await expect(window.getByRole("button", { name: "Ask macOS", exact: true })).toHaveCount(0);

@@ -12,7 +12,7 @@ import {
   createDesktopCommandSubscription,
   desktopIpc,
   drawWindowControlsArgument,
-  type PiDesktopApi,
+  type ThetaDesktopApi,
   type CustomProviderConfig,
   type CustomProviderProbeInput,
   type CustomProviderProbeResult,
@@ -22,10 +22,10 @@ import {
   type ChangedFilesResult,
   type DesktopNotificationPermissionStatus,
   type WorkspaceFilePreview,
-  type PiDesktopCommand,
-  type PiDesktopStateListener,
-  type PiDesktopStatePush,
-  type PiDesktopSelectedTranscriptListener,
+  type ThetaDesktopCommand,
+  type ThetaDesktopStateListener,
+  type ThetaDesktopStatePush,
+  type ThetaDesktopSelectedTranscriptListener,
   type TerminalDataEvent,
   type TerminalErrorEvent,
   type TerminalExitEvent,
@@ -114,11 +114,11 @@ ipcRenderer.on(desktopIpc.flushPendingComposerDraft, (_event, requestId: number)
 });
 
 const appCommands = createDesktopCommandSubscription();
-ipcRenderer.on(desktopIpc.appCommand, (_event, command: PiDesktopCommand) => {
+ipcRenderer.on(desktopIpc.appCommand, (_event, command: ThetaDesktopCommand) => {
   appCommands.deliver(command);
 });
 
-contextBridge.exposeInMainWorld("piApp", {
+contextBridge.exposeInMainWorld("thetaApp", {
   platform: process.platform,
   drawsWindowControls: process.argv.includes(drawWindowControlsArgument),
   versions: process.versions,
@@ -168,8 +168,8 @@ contextBridge.exposeInMainWorld("piApp", {
       desktopIpc.changeReviewFileStage,
       input,
     ) as Promise<ChangeReviewFileStageResult>,
-  onStateChanged: (listener: PiDesktopStateListener) => {
-    const handle = (_event: Electron.IpcRendererEvent, state: PiDesktopStatePush) => {
+  onStateChanged: (listener: ThetaDesktopStateListener) => {
+    const handle = (_event: Electron.IpcRendererEvent, state: ThetaDesktopStatePush) => {
       listener(state);
     };
     ipcRenderer.on(desktopIpc.stateChanged, handle);
@@ -181,10 +181,10 @@ contextBridge.exposeInMainWorld("piApp", {
     ipcRenderer.invoke(
       desktopIpc.selectedTranscriptRequest,
     ) as Promise<SelectedTranscriptRecord | null>,
-  onSelectedTranscriptChanged: (listener: PiDesktopSelectedTranscriptListener) => {
+  onSelectedTranscriptChanged: (listener: ThetaDesktopSelectedTranscriptListener) => {
     const handle = (
       _event: Electron.IpcRendererEvent,
-      payload: Parameters<PiDesktopSelectedTranscriptListener>[0],
+      payload: Parameters<ThetaDesktopSelectedTranscriptListener>[0],
     ) => {
       listener(payload);
     };
@@ -203,7 +203,7 @@ contextBridge.exposeInMainWorld("piApp", {
       ipcRenderer.removeListener(desktopIpc.extensionUiChanged, handle);
     };
   },
-  onCommand: (listener: (command: PiDesktopCommand) => void) => appCommands.subscribe(listener),
+  onCommand: (listener: (command: ThetaDesktopCommand) => void) => appCommands.subscribe(listener),
   onWorkspacePicked: (listener: (workspaceId: string) => void) => {
     const handle = (_event: Electron.IpcRendererEvent, workspaceId: string) => {
       listener(workspaceId);
@@ -635,4 +635,4 @@ contextBridge.exposeInMainWorld("piApp", {
     };
   },
   relaunchApplication: () => ipcRenderer.invoke(desktopIpc.relaunchApplication) as Promise<void>,
-} satisfies PiDesktopApi);
+} satisfies ThetaDesktopApi);

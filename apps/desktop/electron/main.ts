@@ -817,7 +817,7 @@ async function runManualUpdateCheck(): Promise<void> {
       buttons: ["OK"],
     });
   } catch (error) {
-    console.error("pi-gui: manual update check failed:", error);
+    console.error("theta-desktop: manual update check failed:", error);
     await showDialog({
       type: "warning",
       title: "Theta",
@@ -1315,12 +1315,12 @@ app.on("before-quit", (event) => {
     .flush(windowOwner.allWindows())
     .then(() => Promise.all([quittingStore.flushPersistence(), extensionViewOwner?.dispose()]))
     .catch((error: unknown) => {
-      console.error("pi-gui: persistence flush failed during quit:", error);
+      console.error("theta-desktop: persistence flush failed during quit:", error);
     });
   // Never let a hung flush block quit forever — quit after a bounded wait.
   const flushDeadline = new Promise<void>((resolve) => {
     setTimeout(() => {
-      console.warn("pi-gui: persistence flush timed out during quit; quitting anyway.");
+      console.warn("theta-desktop: persistence flush timed out during quit; quitting anyway.");
       resolve();
     }, QUIT_FLUSH_TIMEOUT_MS);
   });

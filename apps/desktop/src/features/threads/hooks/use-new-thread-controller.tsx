@@ -28,7 +28,7 @@ import {
   readComposerAttachmentsFromFiles,
 } from "../../conversation/composer-attachments";
 import { buildModelOptions, parseTreeComposerCommand } from "../../conversation/composer-commands";
-import type { PiDesktopApi } from "../../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../../contracts/ipc";
 import { deriveModelOnboardingState } from "../../settings/model-onboarding";
 import { getEffectiveModelRuntime } from "../../settings/model-settings";
 import type { SettingsSection } from "../../settings/settings-view";
@@ -37,7 +37,7 @@ import { useSlashMenu } from "../../conversation/hooks/use-slash-menu";
 import { resolveRepoWorkspaceId } from "../../../../contracts/workspace-roots";
 
 interface UseNewThreadControllerParams {
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly snapshot: DesktopAppState | null;
   readonly setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>;
   readonly rootWorkspace: WorkspaceRecord | undefined;

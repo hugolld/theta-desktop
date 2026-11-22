@@ -4,7 +4,7 @@ import type {
   DiffPanelSelection,
   FileWorkbenchContext,
 } from "./diff-panel-types";
-import type { PiDesktopApi } from "../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../contracts/ipc";
 import type {
   AvailableReview,
   ReviewCoverage,
@@ -24,7 +24,7 @@ import { ReviewMenu } from "./review-menu";
 interface DiffPanelProps {
   readonly workspaceId: string;
   readonly sessionId: string;
-  readonly api: PiDesktopApi;
+  readonly api: ThetaDesktopApi;
   readonly sessionStatus: string | undefined;
   readonly fileRequest?: DiffPanelFileRequest | null;
   readonly contexts: readonly FileWorkbenchContext[];

@@ -21,7 +21,7 @@ import {
   type ComposerSlashOptionEmptyState,
   type ComposerSlashOption,
 } from "../composer-commands";
-import type { PiDesktopApi } from "../../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../../contracts/ipc";
 import { deriveModelOnboardingState } from "../../settings/model-onboarding";
 import type { SettingsSection } from "../../settings/settings-view";
 
@@ -71,7 +71,7 @@ interface UseSlashMenuParams {
   readonly selectedSession: SessionRecord | undefined;
   readonly selectedWorkspace: WorkspaceRecord | undefined;
   readonly isRunning: boolean;
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>;
   readonly focusComposer: () => void;
   readonly openSettings: (workspaceId?: string, section?: SettingsSection) => void;

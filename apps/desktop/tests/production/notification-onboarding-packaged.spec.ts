@@ -34,7 +34,9 @@ test("requests notification permission in the packaged app when active work move
   try {
     const window = await harness.firstWindow();
     await expect
-      .poll(() => window.evaluate(() => globalThis.window.piApp.getNotificationPermissionStatus()))
+      .poll(() =>
+        window.evaluate(() => globalThis.window.thetaApp.getNotificationPermissionStatus()),
+      )
       .toBe("default");
     const sessionA = await createThread(window, "Packaged Session A");
     await createThread(window, "Packaged Session B");

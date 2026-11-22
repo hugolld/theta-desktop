@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 import { expect, type Page } from "@playwright/test";
 import { _electron as electron, type ElectronApplication } from "playwright";
 import type { SessionDriverEvent, SessionRef } from "@theta-desktop/session-driver";
-import type { PiDesktopApi } from "../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../contracts/ipc";
 import type {
   DesktopAppState,
   NewThreadEnvironment,
@@ -64,7 +64,7 @@ function isProviderAuthEnvVar(key: string): boolean {
     key.endsWith("_API_KEY") || (NON_API_KEY_PROVIDER_ENV_VARS as readonly string[]).includes(key)
   );
 }
-export type PiAppWindow = Window & { piApp?: PiDesktopApi };
+export type ThetaAppWindow = Window & { thetaApp?: ThetaDesktopApi };
 export type DesktopTestMode = "foreground" | "background";
 
 export interface DesktopHarness {
@@ -270,7 +270,7 @@ function createDesktopHarness(electronApp: ElectronApplication): DesktopHarness 
       // placeholder and hang on domcontentloaded.
       page = await waitForDesktopRendererPage(electronApp);
       await page.waitForLoadState("domcontentloaded");
-      await page.waitForFunction(() => Boolean(globalThis.window.piApp), undefined, {
+      await page.waitForFunction(() => Boolean(globalThis.window.thetaApp), undefined, {
         timeout: 15_000,
       });
     }
@@ -1107,9 +1107,9 @@ export async function writeTextFile(filePath: string, contents: string): Promise
 
 export async function getDesktopState(window: Page): Promise<DesktopAppState> {
   const state = await window.evaluate(() => {
-    const app = globalThis.window.piApp;
+    const app = globalThis.window.thetaApp;
     if (!app) {
-      throw new Error("piApp IPC bridge is unavailable");
+      throw new Error("thetaApp IPC bridge is unavailable");
     }
     return app.getState();
   });
@@ -1125,9 +1125,9 @@ export async function getSelectedTranscript(
   window: Page,
 ): Promise<SelectedTranscriptRecord | null> {
   return window.evaluate(async () => {
-    const app = globalThis.window.piApp;
+    const app = globalThis.window.thetaApp;
     if (!app) {
-      throw new Error("piApp IPC bridge is unavailable");
+      throw new Error("thetaApp IPC bridge is unavailable");
     }
     return app.getSelectedTranscript();
   });
@@ -1718,9 +1718,9 @@ export async function waitForWorkspaceByPath(
 
 export async function addWorkspaceViaIpc(window: Page, workspacePath: string): Promise<void> {
   await window.evaluate(async (pathValue) => {
-    const app = globalThis.window.piApp;
+    const app = globalThis.window.thetaApp;
     if (!app) {
-      throw new Error("piApp IPC bridge is unavailable");
+      throw new Error("thetaApp IPC bridge is unavailable");
     }
     await app.addWorkspacePath(pathValue);
   }, workspacePath);
@@ -1900,9 +1900,9 @@ export async function startThreadViaIpc(
 
   const rootWorkspaceId = await window.evaluate(
     async ({ requestedWorkspaceName }) => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
 
       const state = await app.getState();
@@ -1930,9 +1930,9 @@ export async function startThreadViaIpc(
       nextModelId,
       nextThinkingLevel,
     }) => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       await app.startThread({
         rootWorkspaceId,
@@ -1975,9 +1975,9 @@ export async function createNamedThread(
 
   const targetWorkspaceId = await window.evaluate(
     ({ requestedWorkspaceName }) => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       return app.getState().then((state) => {
         if (requestedWorkspaceName) {
@@ -2059,9 +2059,9 @@ export async function createSessionViaIpc(
 ): Promise<void> {
   await window.evaluate(
     async ({ workspaceTarget, targetTitle }) => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
 
       const deadline = Date.now() + 10_000;
@@ -2238,7 +2238,7 @@ export async function readIpcInvokeControl(
 export async function reloadDesktopRenderer(window: Page): Promise<void> {
   await window.reload();
   await window.waitForLoadState("domcontentloaded");
-  await window.waitForFunction(() => Boolean(globalThis.window.piApp), undefined, {
+  await window.waitForFunction(() => Boolean(globalThis.window.thetaApp), undefined, {
     timeout: 15_000,
   });
 }

@@ -238,7 +238,7 @@ async function measure(label: string, seeded: number): Promise<void> {
     });
 
     const transcriptLength = await window.evaluate(async () => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       const record = await app!.getSelectedTranscript();
       return record?.transcript.length ?? 0;
     });
@@ -312,7 +312,7 @@ async function measure(label: string, seeded: number): Promise<void> {
     // away mid-burst -- so a failure is reported rather than failing the run.
     const createSessionDuringStreamMs = await window
       .evaluate(async (workspaceId) => {
-        const app = globalThis.window.piApp;
+        const app = globalThis.window.thetaApp;
         const started = performance.now();
         await app!.createSession({ workspaceId, title: `during-stream-${Date.now()}` });
         return performance.now() - started;

@@ -77,7 +77,7 @@ class DevDesktopHarness {
     const readMarker = async (page: Page) =>
       page.evaluate(async (markerName) => {
         if (markerName === "main") {
-          const pingValue = await globalThis.window.piApp?.ping();
+          const pingValue = await globalThis.window.thetaApp?.ping();
           return pingValue?.split(":")[1] ?? null;
         }
         return (
@@ -147,7 +147,7 @@ class DevDesktopHarness {
         }
         await this.page.waitForLoadState("domcontentloaded", { timeout: 1_500 });
         await this.page.waitForFunction(
-          () => Boolean((window as Window & { piApp?: unknown }).piApp),
+          () => Boolean((window as Window & { thetaApp?: unknown }).thetaApp),
           undefined,
           {
             timeout: 1_500,

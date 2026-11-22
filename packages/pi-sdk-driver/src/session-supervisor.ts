@@ -123,7 +123,7 @@ import { createTranscriptIdentityExtension } from "./transcript-identity.js";
 import { createPlanLimitsExtension, readSessionUsage } from "./session-usage.js";
 import {
   createDesktopExtensionBridge,
-  type PiDesktopExtensionObserver,
+  type ThetaDesktopExtensionObserver,
 } from "./desktop-extension-bridge.js";
 import {
   createAgentSessionRuntimeWithNpmFallback,
@@ -183,7 +183,7 @@ export interface PiSdkDriverOptions {
   readonly extensionFlagValuesForSession?: (
     sessionRef: SessionRef,
   ) => ExtensionFlagValues | undefined;
-  readonly desktopExtensions?: PiDesktopExtensionObserver;
+  readonly desktopExtensions?: ThetaDesktopExtensionObserver;
   readonly onTurnCaptureBoundary?: import("@theta-desktop/session-driver").TurnCaptureObserver;
   readonly turnCaptureTimeoutMs?: number;
   readonly generateThreadTitleOverride?: (
@@ -332,7 +332,7 @@ export class SessionSupervisor {
   private readonly agentDir: string | undefined;
   private readonly builtinExtensions: readonly InlineExtension[];
   private readonly piAddons: readonly InlineExtension[];
-  private readonly desktopExtensions: PiDesktopExtensionObserver | undefined;
+  private readonly desktopExtensions: ThetaDesktopExtensionObserver | undefined;
   private readonly extensionFlagValuesForSession: PiSdkDriverOptions["extensionFlagValuesForSession"];
   private readonly onTurnCaptureBoundary: PiSdkDriverOptions["onTurnCaptureBoundary"];
   private readonly turnCaptureTimeoutMs: number | undefined;

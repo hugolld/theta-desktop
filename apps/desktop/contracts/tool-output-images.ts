@@ -1,12 +1,12 @@
 /**
  * Images a tool returned in its result content. pi stores each as an `{ type: "image", data,
- * mimeType }` block. Main keeps the data and gives the window a `pi-gui-image://` URL for each
+ * mimeType }` block. Main keeps the data and gives the window a `theta-desktop-image://` URL for each
  * image it can show. A tool row shows no other image source, so a tool result's image blocks can't
  * make it load a remote or local file.
  */
 
 /** Scheme main serves tool-output images on, so their data isn't sent with the transcript. */
-export const TOOL_IMAGE_SCHEME = "pi-gui-image";
+export const TOOL_IMAGE_SCHEME = "theta-desktop-image";
 
 const SHOWN_IMAGE_TYPES: ReadonlySet<string> = new Set([
   "image/png",

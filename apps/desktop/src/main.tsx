@@ -14,7 +14,7 @@ window.addEventListener(
   "keydown",
   (event) => {
     // Control+digit on macOS selects a side panel tab, not a thread; main queues it.
-    const platform = window.piApp?.platform ?? "linux";
+    const platform = window.thetaApp?.platform ?? "linux";
     const chord = {
       meta: event.metaKey,
       control: event.ctrlKey,
@@ -45,10 +45,10 @@ if (import.meta.env.DEV) {
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <I18nProvider>
-      <WindowFrame api={window.piApp}>
+      <WindowFrame api={window.thetaApp}>
         <RendererErrorBoundary
           onRelaunch={() => {
-            window.piApp?.relaunchApplication()?.catch((error: unknown) => {
+            window.thetaApp?.relaunchApplication()?.catch((error: unknown) => {
               console.error("[renderer] relaunchApplication failed", error);
             });
           }}

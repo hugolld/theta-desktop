@@ -5,7 +5,7 @@ import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { PiSdkDriver } from "../dist/pi-sdk-driver.js";
-import type { PiDesktopExtensionRuntime } from "../dist/desktop-extension-bridge.js";
+import type { ThetaDesktopExtensionRuntime } from "../dist/desktop-extension-bridge.js";
 
 await test(
   "installed Pi discovers one loaded closure per runtime without waiting for stalled desktop work",
@@ -65,7 +65,7 @@ export default function extension(pi) {
 }
 `,
     );
-    const changed: PiDesktopExtensionRuntime[] = [];
+    const changed: ThetaDesktopExtensionRuntime[] = [];
     const invalidated: Array<{ generation: string; sessionId: string }> = [];
     const stalledDesktopWork = new Promise<void>(() => {});
     let externalFactoryCalls = 0;

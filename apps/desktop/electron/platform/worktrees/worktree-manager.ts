@@ -313,7 +313,9 @@ export class GitWorktreeManager {
         await deleteAppWorktreeBranch(repoRoot, branchName);
       } catch (error) {
         skipped.push(candidatePath);
-        console.warn(`pi-gui: kept orphaned worktree ${candidatePath}: ${errorMessage(error)}`);
+        console.warn(
+          `theta-desktop: kept orphaned worktree ${candidatePath}: ${errorMessage(error)}`,
+        );
       }
     }
 
@@ -337,7 +339,7 @@ async function deleteAppWorktreeBranch(
     await runGit(["-C", repoRoot, "branch", "-d", branchName]);
   } catch (error) {
     console.warn(
-      `pi-gui: kept branch ${branchName} after worktree removal: ${errorMessage(error)}`,
+      `theta-desktop: kept branch ${branchName} after worktree removal: ${errorMessage(error)}`,
     );
   }
 }

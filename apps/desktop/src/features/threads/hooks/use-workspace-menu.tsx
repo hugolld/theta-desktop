@@ -12,10 +12,10 @@ import type {
   WorkspaceRecord,
   WorktreeRecord,
 } from "../../../../contracts/desktop-state";
-import type { PiDesktopApi } from "../../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../../contracts/ipc";
 
 interface UseWorkspaceMenuParams {
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>;
   readonly updateSnapshot: (
     setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>,

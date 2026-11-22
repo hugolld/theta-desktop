@@ -200,10 +200,10 @@ test("the Usage example totals real pi sessions for the folder and explains what
       formatTokens(all.tokens + tokens(late!.totals)),
     );
 
-    await window.evaluate(() => globalThis.window.piApp?.setThemeMode("dark"));
+    await window.evaluate(() => globalThis.window.thetaApp?.setThemeMode("dark"));
     await frame.getByRole("heading", { name: "Usage", exact: true }).scrollIntoViewIfNeeded();
     await shoot(window, "usage-dark");
-    await window.evaluate(() => globalThis.window.piApp?.setThemeMode("light"));
+    await window.evaluate(() => globalThis.window.thetaApp?.setThemeMode("light"));
 
     // Open thread switches the app to that thread, which closes this view.
     await expect(

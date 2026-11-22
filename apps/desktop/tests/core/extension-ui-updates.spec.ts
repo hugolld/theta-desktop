@@ -35,7 +35,7 @@ test("extension title and status changes arrive without full state pushes", asyn
     };
 
     await window.evaluate(() => {
-      const api = globalThis.window.piApp!;
+      const api = globalThis.window.thetaApp!;
       const counts = { state: 0, extensionUi: 0 };
       api.onStateChanged(() => {
         counts.state += 1;

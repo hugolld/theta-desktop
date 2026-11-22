@@ -119,10 +119,10 @@ export default function App() {
     readonly request: DiffPanelFileRequest;
   } | null>(null);
   const [scheduledEditor, setScheduledEditor] = useState<ScheduledEditorState | null>(null);
-  const api = window.piApp;
+  const api = window.thetaApp;
 
   useEffect(() => {
-    const piApi = window.piApp;
+    const piApi = window.thetaApp;
     if (!piApi) return;
 
     void piApi
@@ -743,11 +743,11 @@ export default function App() {
   );
 
   useEffect(() => {
-    const removeWorkspacePickedListener = window.piApp?.onWorkspacePicked?.((workspaceId) => {
+    const removeWorkspacePickedListener = window.thetaApp?.onWorkspacePicked?.((workspaceId) => {
       newThread.setPendingWorkspaceId(workspaceId);
       newThread.resetSurface();
     });
-    const removeClipboardImageListener = window.piApp?.onClipboardImagePasted?.(
+    const removeClipboardImageListener = window.thetaApp?.onClipboardImagePasted?.(
       handlePastedClipboardImage,
     );
     return () => {

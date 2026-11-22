@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type SetStateAction } from "react";
 import type { SessionRef } from "@theta-desktop/session-driver/types";
-import type { PiDesktopApi } from "../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../contracts/ipc";
 import type { TaskWorkbenchTemplate, ToolRef } from "../../../contracts/workbench";
 import type { FileWorkbenchTabs } from "./file-workbench-state";
 import {
@@ -22,7 +22,7 @@ interface WorkbenchEntry {
 }
 
 interface UseWorkbenchOptions {
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly target: SessionRef | null;
 }
 

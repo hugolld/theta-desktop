@@ -1,9 +1,9 @@
-import type { PiDesktopApi } from "../contracts/ipc";
+import type { ThetaDesktopApi } from "../contracts/ipc";
 
 export {};
 
 declare global {
   interface Window {
-    piApp?: PiDesktopApi;
+    thetaApp?: ThetaDesktopApi;
   }
 }

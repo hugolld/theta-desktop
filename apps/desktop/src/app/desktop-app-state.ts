@@ -12,7 +12,7 @@ import {
   type SelectedTranscriptRecord,
   type SessionExtensionUiUpdate,
 } from "../../contracts/desktop-state";
-import type { PiDesktopApi, PiDesktopStatePush } from "../../contracts/ipc";
+import type { ThetaDesktopApi, ThetaDesktopStatePush } from "../../contracts/ipc";
 
 export type HydrationOperation = "state" | "selected-transcript";
 
@@ -75,7 +75,7 @@ export type DesktopHydrationEvent =
       readonly state: DesktopAppState;
     }
   | { readonly type: "state-pull-failed"; readonly attemptId: number }
-  | { readonly type: "state-pushed"; readonly state: PiDesktopStatePush }
+  | { readonly type: "state-pushed"; readonly state: ThetaDesktopStatePush }
   | { readonly type: "state-patched"; readonly snapshot: DesktopAppState | null }
   | { readonly type: "extension-ui-pushed"; readonly update: SessionExtensionUiUpdate }
   | { readonly type: "transcript-pull-started"; readonly attemptId: number }
@@ -375,7 +375,7 @@ export function retryableHydrationTargets(
 
 function createInitialHydrationModel(): DesktopHydrationModel {
   const initial = initialDesktopHydrationModel();
-  if (typeof window === "undefined" || window.piApp) {
+  if (typeof window === "undefined" || window.thetaApp) {
     return initial;
   }
   return reduceDesktopHydration(initial, { type: "bridge-missing" });
@@ -392,7 +392,7 @@ export function useDesktopAppState(): DesktopAppSession {
   }, []);
 
   const pullState = useCallback(
-    (api: PiDesktopApi) => {
+    (api: ThetaDesktopApi) => {
       const attemptId = modelRef.current.nextAttemptId;
       apply({ type: "state-pull-started", attemptId });
       void api.getState().then(
@@ -413,7 +413,7 @@ export function useDesktopAppState(): DesktopAppSession {
   );
 
   const pullTranscript = useCallback(
-    (api: PiDesktopApi) => {
+    (api: ThetaDesktopApi) => {
       const attemptId = modelRef.current.nextAttemptId;
       apply({ type: "transcript-pull-started", attemptId });
       void api.getSelectedTranscript().then(
@@ -435,7 +435,7 @@ export function useDesktopAppState(): DesktopAppSession {
 
   useEffect(() => {
     let active = true;
-    const api = window.piApp;
+    const api = window.thetaApp;
     if (!api) {
       apply({ type: "bridge-missing" });
       return undefined;
@@ -502,7 +502,7 @@ export function useDesktopAppState(): DesktopAppSession {
   }, []);
 
   const retry = useCallback(() => {
-    const api = window.piApp;
+    const api = window.thetaApp;
     if (!api) {
       apply({ type: "bridge-missing" });
       return;
@@ -518,7 +518,7 @@ export function useDesktopAppState(): DesktopAppSession {
   }, [apply, pullState, pullTranscript]);
 
   const relaunch = useCallback(() => {
-    const api = window.piApp;
+    const api = window.thetaApp;
     if (!api) {
       return;
     }
@@ -534,7 +534,7 @@ export function useDesktopAppState(): DesktopAppSession {
     setSnapshot,
     retry,
     relaunch,
-    canRelaunch: Boolean(typeof window !== "undefined" && window.piApp) && !model.bridgeMissing,
+    canRelaunch: Boolean(typeof window !== "undefined" && window.thetaApp) && !model.bridgeMissing,
   };
 }
 

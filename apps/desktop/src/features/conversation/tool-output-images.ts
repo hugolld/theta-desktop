@@ -8,7 +8,7 @@ function carriesImage(value: unknown): value is { type: "image"; mimeType?: unkn
 /**
  * Images a tool returned in its result content, such as the read tool on a screenshot or a code
  * mode script calling `image()` with `models.generateImages()`. Main sends each one the window can
- * show as a `pi-gui-image://` URL and loads it when its row is shown.
+ * show as a `theta-desktop-image://` URL and loads it when its row is shown.
  */
 export interface ToolOutputImage {
   readonly mimeType: string;

@@ -8,14 +8,14 @@ import {
   filterScheduledTasks,
   formatScheduledTaskRowMeta,
 } from "../../../contracts/scheduled-tasks";
-import type { PiDesktopApi } from "../../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../../contracts/ipc";
 import type { Dispatch, SetStateAction } from "react";
 import type { ScheduledEditorState } from "./scheduled-task-editor";
 
 interface ScheduledTasksViewProps {
   readonly tasks: readonly ScheduledTaskRecord[];
   readonly lastError?: string;
-  readonly api: PiDesktopApi;
+  readonly api: ThetaDesktopApi;
   readonly setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>;
   readonly updateSnapshot: (
     setSnapshot: Dispatch<SetStateAction<DesktopAppState | null>>,

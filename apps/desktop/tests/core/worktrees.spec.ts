@@ -192,7 +192,7 @@ test("scopes worktree creation and startup collection to the active profile", as
       expect(await pathExists(rememberedProfileAWorktree.path)).toBe(true);
       expect(legacyWorkspace.kind).toBe("worktree");
       await window.evaluate(async (workspaceId) => {
-        await globalThis.window.piApp.selectWorkspace(workspaceId);
+        await globalThis.window.thetaApp.selectWorkspace(workspaceId);
       }, legacyWorkspace.id);
       const state = await getDesktopState(window);
       expect(state.selectedWorkspaceId).toBe(legacyWorkspace.id);

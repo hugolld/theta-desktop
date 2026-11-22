@@ -9,7 +9,7 @@ import {
   getDesktopState,
   launchDesktop,
   makeWorkspace,
-  type PiAppWindow,
+  type ThetaAppWindow,
 } from "../tests/helpers/electron-app.ts";
 import { replaceFileAtomically } from "./atomic-output.mts";
 
@@ -95,8 +95,8 @@ async function captureParallelSessions(
 
   const started = await page.evaluate(
     async ({ nextProvider, nextModelId }) => {
-      const app = (window as PiAppWindow).piApp;
-      if (!app) throw new Error("piApp unavailable");
+      const app = (window as ThetaAppWindow).thetaApp;
+      if (!app) throw new Error("thetaApp unavailable");
       const initialState = await app.getState();
       const workspace = initialState.workspaces[0];
       if (!workspace) throw new Error("Expected workspace");
@@ -149,8 +149,8 @@ async function captureParallelSessions(
     await hold(800);
     await page.evaluate(
       ({ workspaceId: wId, sessionId }) => {
-        const app = (window as PiAppWindow).piApp;
-        if (!app) throw new Error("piApp unavailable");
+        const app = (window as ThetaAppWindow).thetaApp;
+        if (!app) throw new Error("thetaApp unavailable");
         return app.selectSession({ workspaceId: wId, sessionId });
       },
       { workspaceId: started.workspaceId, sessionId: started.firstSessionId },
@@ -158,16 +158,16 @@ async function captureParallelSessions(
     await hold(2500);
     await page.evaluate(
       ({ workspaceId: wId, sessionId }) => {
-        const app = (window as PiAppWindow).piApp;
-        if (!app) throw new Error("piApp unavailable");
+        const app = (window as ThetaAppWindow).thetaApp;
+        if (!app) throw new Error("thetaApp unavailable");
         return app.selectSession({ workspaceId: wId, sessionId });
       },
       { workspaceId: started.workspaceId, sessionId: started.secondSessionId },
     );
     await hold(2000);
     await page.evaluate(async ({ workspaceId: wId, firstSessionId, secondSessionId }) => {
-      const app = (window as PiAppWindow).piApp;
-      if (!app) throw new Error("piApp unavailable");
+      const app = (window as ThetaAppWindow).thetaApp;
+      if (!app) throw new Error("thetaApp unavailable");
       await app.selectSession({ workspaceId: wId, sessionId: firstSessionId });
       await app.cancelCurrentRun();
       await app.selectSession({ workspaceId: wId, sessionId: secondSessionId });
@@ -191,8 +191,8 @@ async function captureSlashCommands(page: Page, evidenceDir: string): Promise<vo
 
   // Create a session so the composer is visible
   await page.evaluate(async () => {
-    const app = (window as PiAppWindow).piApp;
-    if (!app) throw new Error("piApp unavailable");
+    const app = (window as ThetaAppWindow).thetaApp;
+    if (!app) throw new Error("thetaApp unavailable");
     const state = await app.getState();
     const workspace = state.workspaces[0];
     if (!workspace) throw new Error("Expected workspace");
@@ -258,16 +258,16 @@ async function captureSkillsSettings(page: Page, evidenceDir: string): Promise<v
 
     // Navigate to Skills view via IPC
     await page.evaluate(() => {
-      const app = (window as PiAppWindow).piApp;
-      if (!app) throw new Error("piApp unavailable");
+      const app = (window as ThetaAppWindow).thetaApp;
+      if (!app) throw new Error("thetaApp unavailable");
       return app.setActiveView("skills");
     });
     await hold(3000);
 
     // Navigate to Settings via IPC
     await page.evaluate(() => {
-      const app = (window as PiAppWindow).piApp;
-      if (!app) throw new Error("piApp unavailable");
+      const app = (window as ThetaAppWindow).thetaApp;
+      if (!app) throw new Error("thetaApp unavailable");
       return app.setActiveView("settings");
     });
     await hold(3000);

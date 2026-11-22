@@ -41,9 +41,9 @@ test("shows the detected editor beside the side panel toggle", async () => {
     await expect(mainButton).toBeEnabled();
 
     const list = await window.evaluate(async () => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       return app.listEditors();
     });
@@ -115,9 +115,9 @@ test("shows the detected editor beside the side panel toggle", async () => {
           await expect(label).toHaveText(other.shortLabel);
         }
         const refreshed = await window.evaluate(async () => {
-          const app = globalThis.window.piApp;
+          const app = globalThis.window.thetaApp;
           if (!app) {
-            throw new Error("piApp IPC bridge is unavailable");
+            throw new Error("thetaApp IPC bridge is unavailable");
           }
           return app.listEditors();
         });
@@ -129,9 +129,9 @@ test("shows the detected editor beside the side panel toggle", async () => {
     const selected = state.workspaces.find((entry) => entry.path === workspace);
     expect(selected).toBeDefined();
     const rejection = await window.evaluate(async (workspaceId: string) => {
-      const app = globalThis.window.piApp;
+      const app = globalThis.window.thetaApp;
       if (!app) {
-        throw new Error("piApp IPC bridge is unavailable");
+        throw new Error("thetaApp IPC bridge is unavailable");
       }
       try {
         await app.openWorkspaceInEditor(workspaceId, "not-a-real-editor");

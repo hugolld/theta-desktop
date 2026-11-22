@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { PiDesktopApi } from "../../contracts/ipc";
+import type { ThetaDesktopApi } from "../../contracts/ipc";
 import { useTranslation } from "../i18n";
 import { CloseIcon } from "../ui/icons";
 
@@ -12,7 +12,7 @@ export function WindowFrame({
   api,
   children,
 }: {
-  readonly api: PiDesktopApi | undefined;
+  readonly api: ThetaDesktopApi | undefined;
   readonly children: ReactNode;
 }) {
   const { t } = useTranslation();
