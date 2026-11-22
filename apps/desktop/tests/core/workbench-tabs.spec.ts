@@ -274,6 +274,10 @@ test("restores each task's tabs and draft through Settings, switching, and resta
     await expect(window.getByRole("tab", { name: "Files", exact: true })).toHaveCount(0);
     await addTool(window, "Terminal");
     await window.getByTestId("composer").fill("Draft for task B");
+    // The terminal steals focus when its shell becomes ready, and a keydown
+    // inside the terminal never reaches the Settings command. Click the
+    // composer so the shortcut starts from a known focus, like the press below.
+    await window.getByTestId("composer").click();
     await window.keyboard.press(desktopShortcut(","));
     await expect(window.getByTestId("settings-surface")).toBeVisible();
     await window.getByRole("button", { name: "Back to app", exact: true }).click();

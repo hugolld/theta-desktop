@@ -528,12 +528,15 @@ Verification:
 - [x] Unit. `pnpm install`, then `pnpm check`, both pass
       (`.artifacts/rename/R6/check.log`).
 - [x] Live. `pnpm e2e` is the core lane; it ran in 4 shards: 308 tests passed. The 4
-      failures all have a cause: one was the R2 display-name miss in the notification
-      spec (fixed in `6e8d1826`); the other 3 trace to this shell exporting
-      `ANTHROPIC_AUTH_TOKEN`, which the test helper's scrub list misses — each failing
-      test passes with `env -u ANTHROPIC_AUTH_TOKEN`
-      (`.artifacts/rename/R6/e2e-core-*.log`, `workbench-tabs-noauth.log`). The helper
-      fix lands as the next commit, with a rerun proof. `prove.sh --smoke` passed
+      failures all have a cause. One was the R2 display-name miss in the notification
+      spec (fixed in `6e8d1826`). Two new-thread-composer failures came from this shell
+      exporting `ANTHROPIC_AUTH_TOKEN`, which the helper's scrub list missed; the fix
+      landed as `e6c807ed` and the two tests pass with the variable set. The
+      workbench-tabs Settings failure is a pre-existing focus race, not a rename
+      effect: the terminal steals focus when its shell becomes ready, and a keydown
+      inside the terminal never reaches the Settings command; the test now clicks the
+      composer first and passed 3 of 3 repeats
+      (`.artifacts/rename/R6/workbench-tabs-fixproof.log`). `prove.sh --smoke` passed
       (`.artifacts/rename/R6/prove-smoke-r6.log`).
 - [x] Perf. `test:perf:startup`. Fail numbers from R1. `startupMs` min 767.5 ms
       (fail line 919.8), `pingMs` median 0.05 ms (fail line 0.094)
