@@ -1,0 +1,539 @@
+# Plan for the pi to Theta rename
+
+Status: plan only. Nothing in this plan changes code until the owner says go.
+
+Baseline: `main` at `96409f0c` on 2026-11-22. Every count below was measured at that
+commit, and each count lists the command that regenerates it.
+
+## What changes
+
+Today the window title and the app menu read `pi`. Dialogs, the macOS bundle, and the
+installers read `pi-gui`. After this plan each of them reads **Theta**. Settings move to a
+new data folder, and the owner's current settings are copied there before the first launch.
+
+The work has two stages.
+
+- Stage A renames what a user can see, the data folder, and the update source. It lands
+  now. A later merge from upstream `pi-gui` conflicts only on the lines that Stage A
+  changed.
+- Stage B renames the package scope, code identifiers, IPC strings, and environment names.
+  It lands after the last upstream merge. After Stage B, each upstream merge conflicts on
+  every renamed line.
+
+Names that mean the `pi` agent itself never change.
+
+## Names to confirm before go
+
+The values in the second column are proposals. Change them before R2 starts. Each later
+unit uses the values that you confirm.
+
+| What                        | Today                            | Proposed                                | Locked when                      |
+| --------------------------- | -------------------------------- | --------------------------------------- | -------------------------------- |
+| Display name                | `pi-gui` in dialogs, `pi` in menu | `Theta`                                 | First build that you share       |
+| Bundle ID                   | `com.pi-gui.desktop`             | `io.github.hugolld.theta-desktop`       | First build that you share       |
+| Data folder                 | `<appData>/pi`                   | `<appData>/Theta`                       | First build that you share       |
+| Linux executable, deb name  | `pi-gui`                         | `theta-desktop`                         | First Linux build that you share |
+| macOS notification helper   | `pi-gui-notification-status-helper` | `theta-notification-status-helper`    | Same                             |
+| Update source               | `minghinmatthewlam/pi-gui`       | `hugolld/theta-desktop`                 | First published release          |
+| Workspace scope             | `@pi-gui/*`, `@pi-app/video`     | `@theta-desktop/*`                      | Never. All packages are private. |
+| Root package name           | `pi-gui`                         | `theta-desktop`                         | Never                            |
+| Bridge global and types     | `piApp`, `PiDesktop*`            | `thetaApp`, `ThetaDesktop*`             | Never                            |
+| Environment prefix          | `PI_APP_*`, `PI_GUI_*`           | `THETA_APP_*`, `THETA_GUI_*`            | First documented release         |
+| Verification skill          | `verify-pi-gui`                  | `verify-theta-desktop`                  | R5                               |
+
+Three installer fields also need your values, because R3 writes them into
+`apps/desktop/electron-builder.yml`:
+
+- `copyright`. Proposed: `Copyright 2026 Theta contributors. Portions Copyright 2026 Matthew Lam, MIT license.`
+  The MIT license requires that upstream's notice stays with its code.
+- Linux `maintainer`. Proposed: your name and email. Today the field holds the upstream
+  author's address, and Linux users send package problems to that address.
+- `vendor`. Proposed: `Theta`.
+
+The bundle ID is permanent after the first shared build. macOS ties notification access,
+the app defaults, and the update identity to it. If the campaign owns a domain, use that
+domain in the reverse form instead of `io.github`.
+
+## Names that stay pi
+
+Never rename these. A rename breaks the `pi` integration or orphans stored values.
+
+- The `pi` agent and its paths: `pi`, `@earendil-works/pi-coding-agent`, `~/.pi/agent`,
+  `.pi/settings.json`, `PI_CODING_AGENT_DIR`, and `pi install npm:theta-agent`.
+- `pi-sdk-driver`. The package adapts the `pi` SDK.
+- Identifiers that the app writes outside its code. I read each one in the source:
+
+  - The checkpoint git refs `refs/pi-gui/snapshots/` in each user repository
+    (`apps/desktop/electron/workbench/checkpoint-store.ts:63`).
+  - The built-in extension names that `ui-state.json` stores for extensions that the user
+    switched off (`apps/desktop/electron/application/app-store.ts:2251`). The names are
+    `pi-gui-thread-orchestration`, `pi-gui-scheduled-tasks`, `pi-gui-desktop-views`,
+    `pi-gui-plan-limits`, `pi-gui-transcript-identity`, and `pi-gui-turn-capture`.
+  - The transcript entry types `pi-gui.card` and `pi-gui.pin`
+    (`packages/session-driver/src/transcript.ts:61`), and the prompt block markers
+    `<pi-gui-file-attachments>` (`packages/pi-sdk-driver/src/session-supervisor-utils.ts:35`).
+  - The session lease value `PI_GUI_LEASE_SURFACE = "pi-gui"`
+    (`packages/pi-sdk-driver/src/session-lease.ts:36`).
+
+- Attribution for upstream: `LICENSE`, `NOTICE.md`, and the fork note at the top of
+  `README.md`.
+
+On 2026-11-22, 0 of 56 session files in `~/.pi/agent/sessions` contained any of the
+stored identifiers above. Command: `rg -l -F '<identifier>' ~/.pi/agent/sessions | wc -l`.
+
+## Landing order and dependencies
+
+R1 to R10 are the review units. Each unit is one commit series on the current branch
+`main`, because the repo rule forbids new branches unless you ask. If you prefer pull
+requests, each unit becomes one pull request.
+
+```mermaid
+flowchart LR
+    R1[R1 Baseline probes] --> R2[R2 App name]
+    R1 --> R3[R3 Bundle identity]
+    R2 --> R4[R4 Update targets]
+    R3 --> R4
+    R4 --> R5[R5 Docs, rule, guard]
+    G[Owner decides the last upstream merge] --> R6[R6 Scope]
+    R5 --> R6
+    R6 --> R7[R7 Bridge and channels]
+    R7 --> R8[R8 Environment names]
+    R8 --> R9[R9 Stored names]
+    R9 --> R10[R10 Comments, guard, blame]
+```
+
+- R2 and R3 do not depend on each other. Each one is green when it lands alone.
+- R1 comes first. The perf boxes of the later units compare against its trunk numbers.
+- R5 comes last in Stage A. Its documents describe the result of R2 to R4.
+- R6 to R10 are sequential. R6 also waits for your upstream decision.
+
+Do not start a unit before the current one is green. Evidence for each unit goes to
+`.artifacts/rename/<R>/`.
+
+## Stage A. Land now
+
+### R1 Baseline probes
+
+Status: green on 2026-11-22.
+
+- [x] Depends on nothing.
+- [x] Add `apps/desktop/tests/perf/startup-profile.spec.ts` and the script
+      `test:perf:startup` in `apps/desktop/package.json`.
+- [x] Add `apps/desktop/tests/production/profile-snapshot.spec.ts`, the preflight script
+      `apps/desktop/scripts/require-profile-source.mjs`, and the script
+      `test:prod:profile-snapshot`.
+- [x] Run both probes on trunk. The results are in `.artifacts/rename/R1/`.
+
+The startup probe launches the built app ten times through the standard helper
+`launchDesktop()`. The first launch is a warm-up. Nine launches are measured. It records
+two numbers:
+
+- `startupMs`. The time from the `launchDesktop()` call to the resolved `firstWindow()`.
+- `pingMs`. The mean time of 200 sequential `window.piApp.ping()` calls. The renderer clock
+  moves in steps of 0.1 ms, so one call is too short to time on its own.
+
+The profile snapshot copies the data folder that `PI_APP_PROFILE_SOURCE_DIR` names. It
+launches the app on the copy without test mode. It writes these to one JSON file:
+`getState()` without `revision`, all `localStorage` entries, the window title,
+`app.getName()`, `app.getPath("userData")`, and the `*.json` files in the folder root after
+the app quits. Paths under the temporary folder become `<tmp>`.
+
+The JSON has two objects. `identity` holds the app name, the title, and the data path.
+`profile` holds everything else. Only `profile` is compared, because R2 changes `identity`
+by design.
+
+| File in `.artifacts/rename/R1/`                    | Content                                                                                                 |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `startup-trunk.json`, `startup-trunk-2.json`       | Two trunk startup runs                                                                                  |
+| `profile-trunk.json`, `profile-trunk-2.json`       | Two trunk snapshots of two copies of the owner's data folder                                            |
+| `profile-source-nondefault/`                       | A copy of the owner's data folder with three settings away from their defaults                          |
+| `profile-trunk-nondefault.json`                    | A trunk snapshot of that copy                                                                           |
+
+The changed copy sets theme mode `dark`, thread grouping `workspace`, and background
+completion notices off. The owner's data folder holds no workspace and no thread, and each
+stored setting has its default value. A default-valued folder cannot show the difference
+between a setting that was found and a setting that was lost. The changed copy closes that
+gap, and the owner's folder stays untouched.
+
+Verification:
+
+- [x] Unit. `pnpm check` passed. Desktop unit tests: 424 passed, 1 skipped. The log is
+      `.artifacts/rename/R1/check.log`.
+- [x] Live. Both probes ran on the real Electron window. Three trunk startup runs had
+      medians of 827.9 ms, 846.5 ms, and 835.3 ms. The largest difference is 2.2%. The
+      `profile` objects of the two copies are equal. The changed copy restored `dark`,
+      `workspace`, and `backgroundCompletion: false` into the state and into `ui-state.json`.
+- [x] Perf. Trunk numbers from `startup-trunk.json`: `startupMs` median 827.9 ms, min
+      799.8 ms, max 846.9 ms. `pingMs` mean 0.047 ms.
+
+Fail numbers for every later unit. Set `STARTUP_BASELINE=.artifacts/rename/R1/startup-trunk.json`,
+and the probe enforces them:
+
+- `startupMs`. Fail when the 9-run minimum is above the trunk minimum × 1.15. That is
+  919.8 ms.
+- `pingMs`. Fail when the median of the per-run means is above the trunk value × 2. That is
+  0.094 ms.
+
+Two changes from the first draft of this plan, each with its reason:
+
+- The minimum decides, not the median. One trunk run had a median of 1136.9 ms while the
+  machine was busy. Other processes slow a launch and never speed one up, so the minimum is
+  the number that noise cannot raise.
+- The ping margin is relative. A trunk ping takes 0.047 ms, so the old absolute margin of
+  0.25 ms was five times the signal.
+
+A run against an impossible baseline failed on both numbers, so the check can fail.
+
+### R2 App name in the running app
+
+- [ ] Depends on R1 for the baseline files.
+- [ ] Edit these files:
+
+      | File                                                            | Lines                |
+      | --------------------------------------------------------------- | -------------------- |
+      | `apps/desktop/index.html`                                       | 6, the title         |
+      | `apps/desktop/electron/main.ts`                                 | 363, 368, 377, 789, 805, 814, 823, 933, 1515 |
+      | `apps/desktop/electron/ipc/request-validation.ts`               | 546                  |
+      | `apps/desktop/electron/application/app-store.ts`                | 3239                 |
+      | `apps/desktop/src/app/desktop-recovery.tsx`                     | 33, 84, 105          |
+      | `apps/desktop/src/app/App.tsx`                                  | 1161                 |
+      | `apps/desktop/src/i18n/messages/en.ts`                          | 9 strings            |
+      | `apps/desktop/src/i18n/messages/zh-CN.ts`                       | 9 strings            |
+      | `packages/pi-sdk-driver/src/unsupported-host-ui.ts`             | 38, 45               |
+      | `packages/pi-sdk-driver/src/custom-provider-store.ts`           | 56                   |
+      | `packages/pi-sdk-driver/src/session-supervisor.ts`              | 2398                 |
+      | `apps/desktop/tests/unit/renderer-error-boundary.spec.ts`       | 33                   |
+      | `apps/desktop/tests/core/extension-command-compatibility.spec.ts` | 93, 115, 181       |
+      | `apps/desktop/tests/core/app-identity.spec.ts`                  | New file             |
+
+- [ ] Build one change. The running app says **Theta**, and it opens `<appData>/Theta`.
+      `app.setName("pi")` becomes `app.setName("Theta")` at `main.ts:933`.
+- [ ] Triage each remaining hit of
+      `rg -P -n '(?<!@)\bpi-gui\b' apps/desktop/src apps/desktop/electron packages -g '!*.spec.ts' -g '!*.test.mts' -g '!dist' -g '!node_modules'`.
+      Fix a string that a user can see in this unit. Leave model-facing prompt text and log
+      prefixes for R10. Leave the keep-list names.
+- [ ] You see **Theta** in the window title, in the app menu, and in the Settings text about
+      language, appearance, and notifications.
+
+The dev launch runs the Electron binary. Only a packaged bundle proves the Dock name, so
+the Dock check is in R3.
+
+Data folder. R2 comes with operator steps and no migration code. theta-desktop has one
+owner with old settings. A copy keeps the old folder for upstream `pi-gui`, so both apps
+can run on one Mac. Migration code would stay in `main.ts` for one launch.
+
+1. Quit every running copy of the app.
+2. Confirm that the old folder has no `worktrees`, `attachments`, or `turn-checkpoints`
+   folder. Git stores absolute paths for app worktrees, so a moved worktree breaks. If one
+   of these folders exists, stop and decide how to move it. Command:
+   `ls "$HOME/Library/Application Support/pi"`.
+3. Confirm that the new folder does not exist.
+4. Copy the folder:
+   `cp -R "$HOME/Library/Application Support/pi" "$HOME/Library/Application Support/Theta"`.
+5. Confirm that `diff -rq` of the two folders prints nothing.
+6. Create a marker file with `touch /tmp/theta-rename-marker`. Launch and quit the app one
+   time. Then `find "$HOME/Library/Application Support/pi" -newer /tmp/theta-rename-marker -type f`
+   prints nothing, and `find "$HOME/Library/Application Support/Theta" -newer /tmp/theta-rename-marker -type f`
+   prints at least one file.
+
+The old folder stays. Its deletion needs your approval. On Linux the folder is
+`~/.config/pi`. On Windows it is `%APPDATA%\pi`.
+
+Verification:
+
+- [ ] Unit. `pnpm check` passes. `renderer-error-boundary.spec.ts` asserts the new recovery
+      text.
+- [ ] Live 1. The new `apps/desktop/tests/core/app-identity.spec.ts` passes on the real
+      Electron window. It asserts that `page.title()` is `Theta`. On macOS it also asserts
+      that the app-menu label, which `main.ts:838` builds from `app.name`, is `Theta`.
+- [ ] Live 2. `pnpm --filter @pi-gui/desktop run test:prod:profile-snapshot` runs on a copy
+      of the source folder. Its JSON equals `profile-trunk.json`.
+- [ ] Live 3. Operator steps 1 to 6 pass.
+- [ ] Live 4. `.agents/skills/verify-pi-gui/scripts/prove.sh --smoke` passes with zero
+      assertion failures. Its Settings screenshots show the new strings.
+- [ ] Perf. `pnpm --filter @pi-gui/desktop run test:perf:startup`. Fail numbers from R1.
+- [ ] Review. You see the new title, the app menu, and the Settings text before this unit
+      lands.
+
+### R3 Bundle and installer identity
+
+- [ ] Depends on no code. Land it after R2, so that the first packaged app is complete.
+- [ ] Edit these files:
+
+      | File                                                  | Change                                             |
+      | ----------------------------------------------------- | -------------------------------------------------- |
+      | `apps/desktop/electron-builder.yml`                   | `appId`, `productName`, `copyright`, `linux.executableName`, `linux.maintainer`, `linux.vendor`, `deb.packageName`, `win.executableName`, both helper paths |
+      | `apps/desktop/package.json`                           | `homepage`                                         |
+      | `apps/desktop/scripts/build-notification-status-helper.mjs` | Output name, line 14                         |
+      | `apps/desktop/electron/platform/notification-permission.ts` | Helper name, line 17. Must match the binary |
+      | `apps/desktop/scripts/verify-release-config.mjs`      | Assertions at lines 170, 172, 192                  |
+      | `apps/desktop/scripts/assert-packaged-runtime-deps.mjs` | Bundle paths                                    |
+      | `apps/desktop/scripts/release-artifacts.mjs`          | Artifact names                                     |
+      | `apps/desktop/scripts/release-artifacts.test.mjs`     | 17 references                                      |
+      | `apps/desktop/scripts/finalize-macos-release.sh`      | Artifact names                                     |
+      | `apps/desktop/scripts/verify-linux-release.sh`        | 55 references, with the deb `Homepage` check at 178 |
+      | `apps/desktop/scripts/verify-windows-release.ps1`     | 8 references                                       |
+      | `.github/workflows/release.yml`                       | Bundle paths, for example line 242                 |
+      | `apps/desktop/tests/helpers/packaged-app.ts`          | Bundle names at lines 25, 74, 82                   |
+      | `apps/desktop/tests/production/release-zip-reopen-new-thread.spec.ts` | Bundle names at lines 27, 100          |
+      | `apps/desktop/tests/production/finder-env-open-folder.spec.ts` | Bundle name at line 47                   |
+      | `apps/desktop/tests/production/applications-relaunch.spec.ts` | Bundle name at line 44                   |
+
+- [ ] Build one change. The bundle, the helper binary, the executables, and the installers
+      carry Theta names and the new bundle ID.
+- [ ] You see `apps/desktop/release/mac-arm64/Theta.app` and
+      `Theta-<version>-arm64.dmg`.
+
+Verification:
+
+- [ ] Unit. `pnpm verify:release-config`, `pnpm test:release-helpers`, and `pnpm check`
+      pass. The first two commands check the renamed scripts on this Mac.
+- [ ] Live 1. `pnpm --filter @pi-gui/desktop run package:dir`. Then
+      `/usr/libexec/PlistBuddy -c 'Print :CFBundleName' -c 'Print :CFBundleIdentifier' apps/desktop/release/mac-arm64/Theta.app/Contents/Info.plist`
+      prints `Theta` and the new bundle ID. `Contents/MacOS` holds the new helper binary.
+- [ ] Live 2. `pnpm --filter @pi-gui/desktop run test:prod:packaged-smoke` passes on the
+      packaged app.
+- [ ] Live 3. `pnpm --filter @pi-gui/desktop run package`.
+      `ls apps/desktop/release` shows `Theta-<version>-arm64.dmg`.
+- [ ] Perf. Not applicable. This unit changes no file that the running app loads.
+- [ ] After the push that you approve, the `desktop-package-linux` and
+      `desktop-package-windows` jobs pass on the fork.
+
+If the full Xcode selection blocks `swiftc` on this host, set
+`DEVELOPER_DIR=/Library/Developer/CommandLineTools` for the helper build. Confirm with
+`xcrun --find swiftc` first.
+
+### R4 Update and release targets
+
+- [ ] Depends on R3. Both units edit `electron-builder.yml` and `release.yml`.
+- [ ] Edit these files:
+
+      | File                                               | Change                                      |
+      | -------------------------------------------------- | ------------------------------------------- |
+      | `apps/desktop/electron/platform/update-checker.ts` | URLs at 5 and 6, title at 40, message at 78 |
+      | `apps/desktop/tests/unit/update-checker.spec.ts`  | Assert the new request URL                  |
+      | `apps/desktop/electron-builder.yml`                | `publish.owner` and `publish.repo`          |
+      | `scripts/homebrew-tap-utils.mjs`                   | Cask token                                  |
+      | `scripts/release-homebrew-sync.mjs`                | Cask token and DMG name                     |
+      | `scripts/update-homebrew-tap.mjs`                  | Cask token and DMG name                     |
+      | `scripts/verify-homebrew-flow.mjs`                 | Cask token and DMG name                     |
+      | `scripts/test-update-homebrew-tap.mjs`             | Cask token and DMG name                     |
+      | `.github/workflows/release.yml`                    | DMG pattern at line 646                     |
+
+- [ ] Build one change. The app asks `hugolld/theta-desktop` for updates, and the update
+      dialogs say Theta.
+- [ ] You see that **Check for Updates…** reports that no Theta release exists.
+
+Verification:
+
+- [ ] Unit. `update-checker.spec.ts` asserts that the checker requests
+      `https://api.github.com/repos/hugolld/theta-desktop/releases/latest`. `pnpm test:homebrew-tap`
+      and `pnpm check` pass.
+- [ ] Live. Dev build, network on. Record the dialog with a patched `dialog.showMessageBox`,
+      then click **Check for Updates…** in the app menu. Pass when the dialog detail is
+      `No Theta release has been published yet.` On trunk the same step reports that the app
+      is up to date, because upstream published `v1.0.1`. The two results tell the old target
+      and the new target apart.
+- [ ] Perf. Not applicable. This unit changes no startup path.
+
+The `sync-homebrew` job keeps the upstream tap repository until M8 creates a Theta tap.
+The job cannot publish from the fork, because it needs the `HOMEBREW_TAP_TOKEN` secret.
+
+### R5 Documents, names rule, guard, skill
+
+- [ ] Depends on R2 to R4.
+- [ ] Edit these files:
+
+      | File or folder                                | Change                                                                 |
+      | --------------------------------------------- | ---------------------------------------------------------------------- |
+      | `README.md`                                   | Title, badges, Install section, license section                        |
+      | `CONTRIBUTING.md`                             | Title and first paragraph                                              |
+      | `NOTICE.md`                                   | Add the rule for names that stay `pi`                                  |
+      | `AGENTS.md`                                   | Add the same rule for agents                                           |
+      | `apps/desktop/tests/AGENTS.md`                | Link to the renamed skill                                              |
+      | `scripts/verify-install-copy.mjs`             | Assert that the README no longer installs upstream's cask              |
+      | `.agents/skills/verify-pi-gui/`               | Rename the folder and the `name` field to `verify-theta-desktop`        |
+      | `scripts/check-names.mjs`, `check-names.test.mjs` | New guard and its test                                             |
+      | `package.json`                                | Add the guard to `check:architecture` and its test to `test:guards`    |
+      | `apps/desktop/src/mock/fixtures.ts`           | Skill names at lines 246 to 254 and 668                                |
+
+- [ ] Build one change. The documents present theta-desktop, and `pnpm check` fails when
+      an upstream merge brings an old brand name back.
+- [ ] You see a README titled theta-desktop. Its Install section says that no Theta build
+      is published and shows how to run from source.
+
+The README must not tell a reader to install upstream's build as Theta. Today its Install
+section links to upstream's releases and to `brew install --cask pi-gui`.
+
+The guard fails `pnpm check` on these strings outside `LICENSE`, `NOTICE.md`, and the fork
+note of `README.md`: `com.pi-gui.`, `productName: pi-gui`, `app.setName("pi")`,
+`<title>pi</title>`, `pi-gui.app`, and `minghinmatthewlam/pi-gui/releases`.
+
+Verification:
+
+- [ ] Unit. `pnpm verify:install-copy`, `pnpm test:guards`, and `pnpm check` pass. The guard
+      test shows one planted old name failing, and it shows the keep-list passing.
+- [ ] Live. `.agents/skills/verify-theta-desktop/scripts/prove.sh --smoke` passes from the
+      new path.
+- [ ] Perf. Not applicable. This unit changes no runtime code.
+- [ ] Review. You read the README and the names rule before this unit lands.
+
+## Between the stages. After each upstream merge
+
+No `upstream` remote is configured today. Command: `git remote`. After each
+`git merge upstream/main`, while Stage B waits:
+
+1. Resolve the conflicts. Keep the Theta values.
+2. Run `pnpm verify:release-config`.
+3. Run `pnpm check`. The names guard from R5 fails the step when a merge brings an old
+   name back.
+
+## Stage B. Land after the last upstream merge
+
+Start R6 when one of these is true:
+
+- You record that theta-desktop takes no more merges from upstream `pi-gui`.
+- The last planned upstream merge has landed.
+
+Do not start earlier. Each renamed line conflicts in a later upstream merge.
+
+The file lists of R6 to R10 are generated on the day that each unit starts, because
+upstream changes them. The counts below are from `96409f0c`.
+
+### R6 Workspace scope
+
+- [ ] Depends on R5 and on the Stage B gate.
+- [ ] Files today. 13 package names, which are 11 under `@pi-gui/`, the root `pi-gui`,
+      and `@pi-app/video`. Imports in 208 files. Command:
+      `rg -l '@pi-gui/' -g '!node_modules' -g '!pnpm-lock.yaml' . | wc -l`. Also
+      `apps/desktop/tsconfig.paths.json`, the guard tests with `@pi-gui/` fixtures, the
+      command strings in `package.json` scripts, `.agents/skills/*/scripts/prove.sh`,
+      `.github/workflows/*.yml`, and `pnpm-lock.yaml`.
+- [ ] Add the lever `scripts/rename-pi-names.mjs`. It holds one table of rules. Each later
+      unit adds its rows. A dry run lists every match. A second run changes nothing. The
+      run stops when a rule would touch a keep-list name.
+- [ ] Build one change. Every workspace package sits under `@theta-desktop/*`, and the
+      root package is `theta-desktop`.
+- [ ] You see no output from
+      `rg '@pi-gui/|@pi-app/' -g '!node_modules' -g '!pnpm-lock.yaml' -g '!.artifacts' .`.
+
+Verification:
+
+- [ ] Unit. `pnpm install`, then `pnpm check`, both pass.
+- [ ] Live. `pnpm e2e` passes. `prove.sh --smoke` passes with the new commands.
+- [ ] Perf. `test:perf:startup`. Fail numbers from R1.
+
+### R7 Bridge identifiers and channel strings
+
+- [ ] Depends on R6.
+- [ ] Files today. `piApp` in 1 main-process file, 12 renderer files, and 30 test files.
+      `PiDesktop*` in 34 files under `apps/desktop` and in 4 files under
+      `packages/pi-sdk-driver`. The IPC channels in `apps/desktop/contracts/ipc.ts`. The
+      image scheme in `apps/desktop/contracts/tool-output-images.ts`. The frame messages in
+      `apps/desktop/electron/extensions/extension-frame-document.ts` and in
+      `packages/extension-ui/src/index.ts`. The built bundles under
+      `examples/desktop-extensions/*/dist`.
+- [ ] Build one change. The bridge global is `thetaApp`, the types are `ThetaDesktop*`, and
+      each channel string starts with `theta-desktop`. No alias keeps `piApp` alive. All
+      callers and all tests change in this one unit.
+- [ ] Before the rename, search the session folder for each string that this unit renames.
+      Command: `rg -l -F '<old string>' ~/.pi/agent/sessions | wc -l`. Add each string that
+      a session file holds to the keep-list.
+- [ ] You see `window.thetaApp.ping()` answer in the real Electron window, and
+      `rg -w 'piApp' apps packages` prints nothing.
+
+Verification:
+
+- [ ] Unit. `pnpm check` passes, with the rebuilt extension bundles.
+- [ ] Live. The real-provider conversation proof passes all ten checkpoints, because every
+      conversation event crosses the renamed bridge. Command:
+      `PI_APP_REAL_AUTH=1 PI_APP_REAL_AUTH_SOURCE_DIR="$HOME/.pi/agent" PI_GUI_PROVIDER=<provider> PI_GUI_MODEL=<model> .agents/skills/verify-theta-desktop/scripts/prove.sh`.
+      If the provider rejects the credential, this box stays unchecked.
+- [ ] Perf. `test:perf:startup`. Fail numbers from R1 for `startupMs` and `pingMs`.
+- [ ] Review. You send one message in the real Electron window before this unit lands.
+
+### R8 Environment names
+
+- [ ] Depends on R7.
+- [ ] Files today. 37 names that start with `PI_APP_` and 11 names that start with
+      `PI_GUI_`. Command:
+      `rg -o --no-filename 'PI_(APP|GUI)_[A-Z0-9_]+' -g '!node_modules' -g '!.artifacts' -g '!pnpm-lock.yaml' . | sort -u | wc -l`.
+      They sit in the main process, the tests, the scripts, the workflows, and the skills.
+- [ ] Build one change. The 48 names start with `THETA_APP_` or `THETA_GUI_`. The rule table
+      lists the 48 exact names. No rule matches a prefix, because the `pi` agent owns names
+      such as `PI_CODING_AGENT_DIR`.
+- [ ] You see `rg 'PI_(APP|GUI)_' -g '!node_modules' -g '!.artifacts' .` print nothing
+      outside the keep-list.
+
+Verification:
+
+- [ ] Unit. `pnpm check` passes. It includes `workflow-action-policy.test.mjs`.
+- [ ] Live. `prove.sh --smoke` passes, because its scripts set the renamed variables. One
+      core spec passes with the renamed lane variables.
+- [ ] Perf. Not applicable. A renamed variable does not change a startup step.
+
+### R9 Stored names
+
+- [ ] Depends on R8. You can skip this unit. Skip it if a one-time reset of four
+      preferences is not acceptable.
+- [ ] Files. `apps/desktop/src/i18n/preference.ts`, `apps/desktop/src/ui/active-theme.ts`,
+      `apps/desktop/src/features/workbench/diff-panel.tsx`, and
+      `apps/desktop/src/features/threads/thread-switcher-order.ts`. Their unit specs.
+- [ ] Build one change. The four `localStorage` keys start with `theta-desktop`.
+- [ ] Declared breakage. Each user selects the language, the theme preset, the review tree
+      visibility, and the thread-switcher order one more time. No migration code.
+- [ ] You see the new keys in the devtools **Application** panel.
+
+Verification:
+
+- [ ] Unit. `pnpm check` passes.
+- [ ] Live. `test:prod:profile-snapshot` runs on the same source folder as in R2. Its diff
+      against the R2 result shows exactly the four keys as missing, and all other entries
+      equal.
+- [ ] Perf. Not applicable.
+- [ ] Review. You pick the four preferences one more time before this unit lands.
+
+### R10 Comments, guard, blame
+
+- [ ] Depends on R9, or on R8 when you skip R9.
+- [ ] Files. Code comments and model-facing text that name `pi-gui` when they mean this app.
+      The log prefixes in `main.ts`, `pending-draft-flush.ts`, and `packages/pi-sdk-driver`.
+      The library default path in `packages/catalogs/src/node/json-catalog-store.ts:361`.
+      `NOTICE.md`, `AGENTS.md`, and the skill documents. A new `.git-blame-ignore-revs`.
+- [ ] Build one change. `pi-gui` remains only in the keep-list files, and `git blame` skips
+      the rename commits.
+- [ ] Tighten `scripts/check-names.mjs`. It also fails on `piApp`, `PiDesktop`, `PI_APP_`,
+      and `PI_GUI_` outside the keep-list files.
+- [ ] You see no output from
+      `rg 'pi-gui|piApp|\bPiDesktop|PI_APP_|PI_GUI_' -g '!node_modules' -g '!.artifacts' -g '!pnpm-lock.yaml' .`
+      outside the keep-list files.
+
+Verification:
+
+- [ ] Unit. `pnpm check` passes. The guard test shows one planted old name failing.
+- [ ] Live. `pnpm e2e` passes. `prove.sh --smoke` passes.
+- [ ] Perf. `test:perf:startup`. Fail numbers from R1.
+
+## Not in this plan
+
+- `apps/website`. It is upstream's site for pi-gui.com, and it still builds. It needs a
+  decision on a Theta site, a domain, and copy.
+- A Theta icon. `apps/desktop/resources/icon.icns` and `icon.png` are upstream's artwork.
+  The Dock shows that artwork under the new name until you supply Theta artwork.
+- A Theta Homebrew tap and the release pipeline for Theta. They belong to M8.
+- The version of the first Theta release, and the `author` field of the packages.
+
+## Not proven at plan time
+
+- No probe has run. The trunk numbers for `startupMs` and `pingMs` are unmeasured. R1
+  measures them.
+- The default data folder follows the app name. This is inferred from one fact. The folder
+  on this Mac is named `pi`, and the package is named `@pi-gui/desktop`. No launch with a
+  new name has run.
+- Linux and Windows installer names are not proven on this Mac. The CI jobs on the fork
+  prove them after a push that you approve.
+- A local macOS DMG build is expected to complete without signing credentials. It did not
+  run in this session.
+- The real-provider conversation proof was blocked at auth in each pass of the verification
+  map since 2026-10-07. R7 needs it.
+- Upstream activity since the fork point `faf8edd6` of 2026-10-28 was not checked.
