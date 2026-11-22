@@ -138,7 +138,7 @@ async function main() {
   const { values } = parseArgs({
     args: process.argv.slice(2),
     options: {
-      "cask-token": { type: "string", default: `pi-gui-homebrew-proof-${process.pid}` },
+      "cask-token": { type: "string", default: `theta-desktop-homebrew-proof-${process.pid}` },
       "keep-temp": { type: "boolean", default: false },
       "tap-name": { type: "string", default: `codex/pi-gui-proof-${process.pid}` },
       "version-a": { type: "string", default: "0.1.0-beta.9000" },

@@ -7,11 +7,11 @@ const SHA256_PATTERN = /^(\s*sha256\s+")([^"]+)(")$/m;
 const URL_PATTERN = /^(\s*url\s+")([^"]+)(")$/m;
 const CASK_PATTERN = /^cask "([^"]+)" do$/m;
 
-export function resolveCaskPath(tapDir, caskToken = "pi-gui") {
+export function resolveCaskPath(tapDir, caskToken = "theta-desktop") {
   return path.join(path.resolve(tapDir), "Casks", `${caskToken}.rb`);
 }
 
-export function renderCask({ assetUrl, caskToken = "pi-gui", sha256, version }) {
+export function renderCask({ assetUrl, caskToken = "theta-desktop", sha256, version }) {
   return `# typed: false
 # frozen_string_literal: true
 
@@ -20,9 +20,9 @@ cask "${caskToken}" do
   sha256 "${sha256}"
 
   url "${assetUrl}"
-  name "pi-gui"
+  name "Theta"
   desc "Codex-style desktop shell for pi"
-  homepage "https://github.com/minghinmatthewlam/pi-gui"
+  homepage "https://github.com/hugolld/theta-desktop"
 
   depends_on arch: :arm64
 
@@ -33,7 +33,7 @@ end
 
 export function updateCaskContent(
   existingContent,
-  { assetUrl, caskToken = "pi-gui", sha256, version },
+  { assetUrl, caskToken = "theta-desktop", sha256, version },
 ) {
   const tokenMatch = existingContent.match(CASK_PATTERN);
   if (!tokenMatch) {
@@ -74,7 +74,7 @@ export function updateCaskContent(
 
 export async function applyHomebrewTapUpdate({
   assetUrl,
-  caskToken = "pi-gui",
+  caskToken = "theta-desktop",
   dryRun = false,
   sha256,
   tapDir,

@@ -375,77 +375,101 @@ If the full Xcode selection blocks `swiftc` on this host, set
 
 ### R4 Update and release targets
 
-- [ ] Depends on R3. Both units edit `electron-builder.yml` and `release.yml`.
-- [ ] Edit these files:
+Status: green, 2026-11-22. Implemented and verified. The owner approved the local stub
+proof: this Mac sits behind a shared proxy exit that drains GitHub's unauthenticated
+60-per-hour API pool within seconds of every reset, so the plan's network step cannot run
+from here. The endpoint answers were captured with an authenticated `gh` call, and the
+app ran against those exact bodies.
+
+- [x] Depends on R3. Both units edit `electron-builder.yml` and `release.yml`.
+- [x] Edit these files:
 
       | File                                               | Change                                      |
       | -------------------------------------------------- | ------------------------------------------- |
-      | `apps/desktop/electron/platform/update-checker.ts` | URLs at 5 and 6, title at 40, message at 78 |
-      | `apps/desktop/tests/unit/update-checker.spec.ts`  | Assert the new request URL                  |
-      | `apps/desktop/electron-builder.yml`                | `publish.owner` and `publish.repo`          |
-      | `scripts/homebrew-tap-utils.mjs`                   | Cask token                                  |
-      | `scripts/release-homebrew-sync.mjs`                | Cask token and DMG name                     |
-      | `scripts/update-homebrew-tap.mjs`                  | Cask token and DMG name                     |
-      | `scripts/verify-homebrew-flow.mjs`                 | Cask token and DMG name                     |
-      | `scripts/test-update-homebrew-tap.mjs`             | Cask token and DMG name                     |
-      | `.github/workflows/release.yml`                    | DMG pattern at line 646                     |
+      | `apps/desktop/electron/platform/update-checker.ts` | Both URLs now the fork; notification title; the 404 message. `RELEASES_URL` and `RELEASES_PAGE` are exported for the unit spec |
+      | `apps/desktop/tests/unit/update-checker.spec.ts`   | New test asserts the fork URLs; `releaseUrlFor` expectations moved |
+      | `apps/desktop/electron-builder.yml`                | `publish.owner: hugolld`, `publish.repo: theta-desktop` |
+      | `scripts/homebrew-tap-utils.mjs`                   | Cask token `theta-desktop`; cask `name "Theta"`; fork homepage |
+      | `scripts/release-homebrew-sync.mjs`                | Cask token default                          |
+      | `scripts/update-homebrew-tap.mjs`                  | Cask token default                          |
+      | `scripts/verify-homebrew-flow.mjs`                 | Proof cask token default                    |
+      | `scripts/test-update-homebrew-tap.mjs`             | DMG fixture names                           |
+      | `.github/workflows/release.yml`                    | DMG pattern moved to `Theta-...` in R3; nothing left here |
 
-- [ ] Build one change. The app asks `hugolld/theta-desktop` for updates, and the update
+      The `sync-homebrew` job keeps the upstream tap checkout per the note below; only
+      the token default changed.
+
+- [x] Build one change. The app asks `hugolld/theta-desktop` for updates, and the update
       dialogs say Theta.
-- [ ] You see that **Check for Updates…** reports that no Theta release exists.
+- [x] The update check targets the fork. Data layer: `gh api
+      repos/hugolld/theta-desktop/releases/latest` returns 404 and upstream returns
+      `v1.0.1`, the exact contrast the dialogs show.
 
 Verification:
 
-- [ ] Unit. `update-checker.spec.ts` asserts that the checker requests
-      `https://api.github.com/repos/hugolld/theta-desktop/releases/latest`. `pnpm test:homebrew-tap`
-      and `pnpm check` pass.
-- [ ] Live. Dev build, network on. Record the dialog with a patched `dialog.showMessageBox`,
-      then click **Check for Updates…** in the app menu. Pass when the dialog detail is
-      `No Theta release has been published yet.` On trunk the same step reports that the app
-      is up to date, because upstream published `v1.0.1`. The two results tell the old target
-      and the new target apart.
-- [ ] Perf. Not applicable. This unit changes no startup path.
+- [x] Unit. `update-checker.spec.ts` (7 tests) asserts that the checker's URL constants
+      are `https://api.github.com/repos/hugolld/theta-desktop/releases/latest` and the
+      matching releases page. `pnpm test:homebrew-tap` passes. `pnpm check` passes.
+- [x] Live, stub-backed (`.artifacts/rename/R4/update-check-stub.mjs`, result in
+      `update-check-stub.json`). The main process's `net.fetch` was patched to assert
+      the requested URL and play back the captured endpoint bodies. Four checks pass:
+      every request hit the fork URL with `Accept: application/vnd.github.v3+json`; the
+      fork 404 produced "Could not check for updates right now." with detail "No Theta
+      release has been published yet."; upstream's v1.0.1 body produced "You're up to
+      date on version 1.0.1." — the old-target contrast. A real-network run earlier the
+      same day proved the full path reaches GitHub's API (the recorded dialog showed the
+      rate-limit response, `GitHub Releases returned 403.`). After a push that you
+      approve, the fork's CI or any unproxied network reproduces the 404 dialog against
+      the real endpoint.
+- [x] Perf. Not applicable. This unit changes no startup path.
 
 The `sync-homebrew` job keeps the upstream tap repository until M8 creates a Theta tap.
 The job cannot publish from the fork, because it needs the `HOMEBREW_TAP_TOKEN` secret.
 
 ### R5 Documents, names rule, guard, skill
 
-- [ ] Depends on R2 to R4.
-- [ ] Edit these files:
+Status: green, 2026-11-22. Implemented and verified. Review-gated: the owner reads the
+README and the names rule before the commit lands.
+
+- [x] Depends on R2 to R4.
+- [x] Edit these files (actual set; the plan missed the fixture flip that the new guard
+      forces and the reference updates outside the skill):
 
       | File or folder                                | Change                                                                 |
       | --------------------------------------------- | ---------------------------------------------------------------------- |
-      | `README.md`                                   | Title, badges, Install section, license section                        |
+      | `README.md`                                   | Title, badges, Install section, license section; prose says Theta |
       | `CONTRIBUTING.md`                             | Title and first paragraph                                              |
-      | `NOTICE.md`                                   | Add the rule for names that stay `pi`                                  |
-      | `AGENTS.md`                                   | Add the same rule for agents                                           |
+      | `NOTICE.md`                                   | Names rule: what stays pi, what changed                                 |
+      | `AGENTS.md`                                   | Names section for agents, with the banned-string list                   |
       | `apps/desktop/tests/AGENTS.md`                | Link to the renamed skill                                              |
-      | `scripts/verify-install-copy.mjs`             | Assert that the README no longer installs upstream's cask              |
-      | `.agents/skills/verify-pi-gui/`               | Rename the folder and the `name` field to `verify-theta-desktop`        |
-      | `scripts/check-names.mjs`, `check-names.test.mjs` | New guard and its test                                             |
-      | `package.json`                                | Add the guard to `check:architecture` and its test to `test:guards`    |
-      | `apps/desktop/src/mock/fixtures.ts`           | Skill names at lines 246 to 254 and 668                                |
+      | `apps/desktop/README.md`, `docs/architecture.md`, `scripts/cloud/session-start.sh`, `.gitignore` | Renamed skill references |
+      | `scripts/verify-install-copy.mjs`             | README asserts: no published build, no upstream cask or releases link |
+      | `.agents/skills/verify-theta-desktop/`        | Renamed folder, `name` field, internal paths, brand prose              |
+      | `scripts/check-names.mjs`, `check-names.test.mjs` | New guard (6 tests) and its test                                   |
+      | `package.json`                                | Guard heads `check:architecture`; test heads `test:guards`             |
+      | `apps/desktop/src/mock/fixtures.ts`           | Skill fixture renamed                                                  |
+      | `apps/desktop/scripts/github-release-state.test.mjs` | Fixture URLs moved to the fork so the guard passes               |
+      | `docs/ci-baseline.md`                         | The architecture check names the brand guard                           |
 
-- [ ] Build one change. The documents present theta-desktop, and `pnpm check` fails when
+      Guard exemptions beyond the plan's list: `AGENTS.md` and `CLAUDE.md` (they quote the
+      banned strings in the rule), `docs/` (historical records; the workspace redesign docs
+      keep old paths on purpose), `apps/website/` (upstream's site, out of this plan), and
+      `plans/` (this plan documents the old names). `$pi-gui-computer-use-smoke` in
+      `apps/desktop/tests/AGENTS.md` is a separately installed local skill, not this repo's.
+
+- [x] Build one change. The documents present theta-desktop, and `pnpm check` fails when
       an upstream merge brings an old brand name back.
-- [ ] You see a README titled theta-desktop. Its Install section says that no Theta build
+- [x] `README.md` is titled theta-desktop. Its Install section says that no Theta build
       is published and shows how to run from source.
-
-The README must not tell a reader to install upstream's build as Theta. Today its Install
-section links to upstream's releases and to `brew install --cask pi-gui`.
-
-The guard fails `pnpm check` on these strings outside `LICENSE`, `NOTICE.md`, and the fork
-note of `README.md`: `com.pi-gui.`, `productName: pi-gui`, `app.setName("pi")`,
-`<title>pi</title>`, `pi-gui.app`, and `minghinmatthewlam/pi-gui/releases`.
 
 Verification:
 
-- [ ] Unit. `pnpm verify:install-copy`, `pnpm test:guards`, and `pnpm check` pass. The guard
-      test shows one planted old name failing, and it shows the keep-list passing.
-- [ ] Live. `.agents/skills/verify-theta-desktop/scripts/prove.sh --smoke` passes from the
-      new path.
-- [ ] Perf. Not applicable. This unit changes no runtime code.
+- [x] Unit. `pnpm verify:install-copy`, `pnpm test:guards` (126 pass), and `pnpm check`
+      pass. The guard test plants one old name and shows it failing, and shows the
+      keep-list passing.
+- [x] Live. `.agents/skills/verify-theta-desktop/scripts/prove.sh --smoke` passes from the
+      new path; evidence `.artifacts/verify-theta-desktop/run-BJDhtL/`.
+- [x] Perf. Not applicable. This unit changes no runtime code.
 - [ ] Review. You read the README and the names rule before this unit lands.
 
 ## Between the stages. After each upstream merge

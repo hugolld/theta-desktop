@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { compareSemver, releaseUrlFor } from "../../electron/platform/update-checker";
+import {
+  RELEASES_PAGE,
+  RELEASES_URL,
+  compareSemver,
+  releaseUrlFor,
+} from "../../electron/platform/update-checker";
 
 /**
  * Unit coverage for the version comparison that gates update notifications.
@@ -8,6 +13,11 @@ import { compareSemver, releaseUrlFor } from "../../electron/platform/update-che
  */
 
 const sign = (n: number) => (n < 0 ? -1 : n > 0 ? 1 : 0);
+
+test("the update check targets this fork's releases", () => {
+  expect(RELEASES_URL).toBe("https://api.github.com/repos/hugolld/theta-desktop/releases/latest");
+  expect(RELEASES_PAGE).toBe("https://github.com/hugolld/theta-desktop/releases");
+});
 
 test("compareSemver orders released versions", () => {
   expect(sign(compareSemver("0.80.4", "0.80.3"))).toBe(1);
@@ -38,19 +48,19 @@ test("releaseUrlFor keeps the selected repository release URL", () => {
   expect(
     releaseUrlFor({
       tag_name: "v0.1.0-beta.34",
-      html_url: "https://github.com/minghinmatthewlam/pi-gui/releases/tag/v0.1.0-beta.34",
+      html_url: "https://github.com/hugolld/theta-desktop/releases/tag/v0.1.0-beta.34",
     }),
-  ).toBe("https://github.com/minghinmatthewlam/pi-gui/releases/tag/v0.1.0-beta.34");
+  ).toBe("https://github.com/hugolld/theta-desktop/releases/tag/v0.1.0-beta.34");
 });
 
 test("releaseUrlFor falls back to the exact tag instead of the generic latest route", () => {
   expect(releaseUrlFor({ tag_name: "v0.1.0-beta.34" })).toBe(
-    "https://github.com/minghinmatthewlam/pi-gui/releases/tag/v0.1.0-beta.34",
+    "https://github.com/hugolld/theta-desktop/releases/tag/v0.1.0-beta.34",
   );
   expect(
     releaseUrlFor({
       tag_name: "v0.1.0-beta.34",
       html_url: "https://example.com/releases/tag/v0.1.0-beta.34",
     }),
-  ).toBe("https://github.com/minghinmatthewlam/pi-gui/releases/tag/v0.1.0-beta.34");
+  ).toBe("https://github.com/hugolld/theta-desktop/releases/tag/v0.1.0-beta.34");
 });
