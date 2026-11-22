@@ -142,6 +142,46 @@ test("forkNoteSpan covers the leading blockquote only", () => {
   assert.equal(forkNoteSpan("# title\n\nbody\n"), null);
 });
 
+const BRIDGE_FIXTURES = {
+  "electron/preload.ts": 'contextBridge.exposeInMainWorld("piApp", { ping });\n',
+  "tests/helpers/electron-app.ts": "export type PiAppWindow = Window & { piApp?: PiDesktopApi };\n",
+  "contracts/ipc.ts": 'openExtensionView: "pi-gui:open-extension-view",\n',
+  "contracts/tool-output-images.ts": 'export const TOOL_IMAGE_SCHEME = "pi-gui-image";\n',
+  "electron/extension-frame.ts": "if (event.data?.type !== 'pi-gui:extension-connect') return;\n",
+  "src/views.ts": 'const name = "pi-gui-desktop-views";\nconst lease = PI_GUI_LEASE_SURFACE;\n',
+};
+
+const BRIDGE_RENAMED = {
+  "electron/preload.ts": 'contextBridge.exposeInMainWorld("thetaApp", { ping });\n',
+  "tests/helpers/electron-app.ts":
+    "export type ThetaAppWindow = Window & { thetaApp?: ThetaDesktopApi };\n",
+  "contracts/ipc.ts": 'openExtensionView: "theta-desktop:open-extension-view",\n',
+  "contracts/tool-output-images.ts": 'export const TOOL_IMAGE_SCHEME = "theta-desktop-image";\n',
+  "electron/extension-frame.ts":
+    "if (event.data?.type !== 'theta-desktop:extension-connect') return;\n",
+  "src/views.ts": 'const name = "pi-gui-desktop-views";\nconst lease = PI_GUI_LEASE_SURFACE;\n',
+};
+
+test("R7 renames the bridge global, the type prefixes, and the channel strings", async () => {
+  const root = makeFixtureRepo();
+  try {
+    for (const [file, content] of Object.entries(BRIDGE_FIXTURES)) {
+      track(root, file, content);
+    }
+    const plan = await planRename(root);
+    assert.deepEqual(plan.violations, []);
+    await applyRename(plan);
+    for (const [file, content] of Object.entries(BRIDGE_RENAMED)) {
+      assert.equal(read(root, file), content, `${file} did not rename as intended`);
+    }
+    const again = await planRename(root);
+    assert.deepEqual(again.files, []);
+    assert.deepEqual(again.violations, []);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("attribution, the plan, symlinks, binaries, and lockfiles are left alone", async () => {
   const root = makeFixtureRepo();
   try {
