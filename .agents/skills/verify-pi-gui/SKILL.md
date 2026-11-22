@@ -65,6 +65,10 @@ The default `conversation.spec.ts` drives [conversations](features/conversations
 
 Playwright sends input to the real renderer; it does not move the desktop pointer. Native pickers, clipboard, permissions and OS switching need a native/Computer Use journey. The launcher uses the development Electron binary with freshly built app code, not a packaged installation. Read the feature map for other required entry points. [Queued follow-ups](features/follow-ups.md), worktrees, and native/package paths have separate coverage; do not imply they passed with the default proof.
 
+## Browser mode (dev-only, never a substitute)
+
+In dev builds a plain browser tab on `http://localhost:5173` runs the real interface against the fixture-backed mock bridge (`apps/desktop/src/mock/`); see [features/browser-mode.md](features/browser-mode.md). Use it for UI iteration — layout, styling, spacing, visuals — where loading Electron for every change is wasteful, including agent browser tools (for example Cursor's browser with Annotate). It uses no provider, creates no session files, and stubs review, extension views, terminal, and file contents. A green browser-mode run proves rendering and interaction only; product changes still gate on the Electron lanes above.
+
 For product changes, use `apps/desktop/tests/AGENTS.md` and the current package scripts to choose additional regression lanes. Existing core/live specs may contain IPC fixtures or injected events; inspect them before treating them as real conversation proof.
 
 ## Evidence

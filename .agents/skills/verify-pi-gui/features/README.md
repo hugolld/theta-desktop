@@ -29,6 +29,7 @@ Record exact feature/entry point, command, result and evidence directory. `compl
 | Supporting | [Worktrees](worktrees.md)                       | `--maintenance` switches to Workspace grouping, creates a permanent worktree, and checks `git worktree list` |
 | Supporting | [Review panel](review.md)                       | Core `review-*` specs only; no `prove.sh` lane                                                               |
 | Supporting | [Add to Chat](add-to-chat.md)                   | Core `transcript-annotations.spec.ts` only; no `prove.sh` lane                                               |
+| Supporting | [Browser mode](browser-mode.md)                 | Dev-only mock bridge on :5173, driven with a plain browser; never substitutes for Electron proof             |
 
 Packaged-app launch, native dialogs/clipboard, model/account onboarding, attachments, file browsing and terminal interaction, and broader extension behavior require separate mapped journeys as those features are changed. Do not claim full-app coverage from this initial map.
 
@@ -51,7 +52,24 @@ These user-facing surfaces have no feature file and no `prove.sh` checkpoint yet
 - Side panel width handle ("Side panel width"), `apps/desktop/src/features/workbench/workbench-resize-handle.tsx`; core `workbench-tabs.spec.ts`.
 - Find in thread on Cmd/Ctrl+F (also in Cmd-K), `apps/desktop/src/app/use-desktop-commands.ts`; core `timeline-viewport.spec.ts` (shortcut open/close and match highlight; the Cmd-K entry is not driven).
 
-## Latest observed proof (2026-10-28)
+## Latest observed proof (2026-11-22)
+
+Churn-scoped pass on main `6a592a7b` (macOS local session). Product source since the
+2026-10-28 source pass changed only by the dev-only mock bridge (`apps/desktop/src/mock/`,
+commit `6a592a7b`) and a DEV-gated install in `main.tsx`, so the 11 existing feature
+coverages stand and no source wave reran for them. New [Browser mode](browser-mode.md)
+feature file added; its live pass in `.artifacts/verify-pi-gui/run-browser-20261122/`
+covered boot, a scripted streaming turn (state JSON: idle, revision 3, final rows
+message/tool/message/card), a second turn, thread switch to a pinned-adjacent fixture
+session (pin present, 4 rows), and the `?piMock=0` opt-out shell. Doctor: UA not
+Electron, `ping()` = `mock-bridge`, 3 workspaces / 5 sessions / 2 child links, console
+clean. No real-provider proof in this pass; the conversation lane was not attempted
+(needs `PI_APP_REAL_AUTH=1` with valid credentials, blocked at auth in recent passes).
+The Electron window from the same dev launch was health-checked by launch only;
+fixture-backed core specs (`test:e2e:runner`) remain its regression lane, and the
+desktop unit suite passed 424/424 on this checkout the same day.
+
+## Earlier observed proof (2026-10-28)
 
 Weekly maintenance pass on main `c65474b`, Linux cloud session (Xvfb), 29 commits after the last source pass. Smoke `run-yZCov3` passed; its Appearance screenshot shows the new Language row and the drawn Linux window controls with no menu bar. Conversation `run-leYOre` was **blocked** at auth (`refresh_token_reused`, the same saved credential), so the maintenance lane was not run and this pass has no real-provider proof. 43 fixture-backed core spec files passed 127/127 via `test:e2e:runner`: the 2026-10-21 set plus `sidebar-drawer`, `thread-hierarchy-archive`, `settings-language`, `window-controls`, `cross-project-thread-messages`, `composer-attachments-while-running`, `open-in-editor`, `sidebar-recency`, `sidebar-ordering` and `stop-running-prompt`. The source pass found doc gaps only (child threads, the narrow drawer, the Linux title bar, Language, queued previews); recipe selectors still match.
 
