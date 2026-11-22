@@ -18,17 +18,36 @@ test("real conversation: stream, switch, tool, stop, archive, restart", async ()
       "BLOCKED: conversation proof requires explicit real-auth source, provider and model; it never skips to a pass",
     );
   }
-  const auth = JSON.parse(await readFile(join(source, "auth.json"), "utf8"));
-  if (!auth[provider]) throw new Error(`BLOCKED: no saved credentials for ${provider}`);
+  const auth = (await readFile(join(source, "auth.json"), "utf8")
+    .then((text) => JSON.parse(text) as Record<string, unknown>)
+    .catch(() => ({}))) as Record<string, unknown>;
+  // models.json-declared providers keep their credentials inline; auth.json has no entry for them.
+  const sourceModels = (await readFile(join(source, "models.json"), "utf8")
+    .then((text) => JSON.parse(text) as { providers?: Record<string, unknown> })
+    .catch(() => null)) as { providers?: Record<string, unknown> } | null;
+  const providerEntry = sourceModels?.providers?.[provider];
+  if (!auth[provider] && !providerEntry) {
+    throw new Error(`BLOCKED: no saved credentials or models.json entry for ${provider}`);
+  }
   // Keep copied credentials outside the shareable evidence directory.
   const privateRoot = await mkdtemp(join(tmpdir(), "pi-gui-conversation-private-"));
   await chmod(privateRoot, 0o700);
   const profile = join(privateRoot, "profile");
   const agentDir = join(privateRoot, "agent");
   await mkdir(agentDir, { mode: 0o700 });
-  await writeFile(join(agentDir, "auth.json"), JSON.stringify({ [provider]: auth[provider] }), {
-    mode: 0o600,
-  });
+  if (auth[provider]) {
+    await writeFile(join(agentDir, "auth.json"), JSON.stringify({ [provider]: auth[provider] }), {
+      mode: 0o600,
+    });
+  }
+  if (providerEntry) {
+    // Copy only the named provider's entry; other providers' keys never leave the source.
+    await writeFile(
+      join(agentDir, "models.json"),
+      JSON.stringify({ providers: { [provider]: providerEntry } }),
+      { mode: 0o600 },
+    );
+  }
   await writeFile(
     join(agentDir, "settings.json"),
     JSON.stringify({
