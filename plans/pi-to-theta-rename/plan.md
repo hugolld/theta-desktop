@@ -428,8 +428,8 @@ The job cannot publish from the fork, because it needs the `HOMEBREW_TAP_TOKEN` 
 
 ### R5 Documents, names rule, guard, skill
 
-Status: green, 2026-11-22. Implemented and verified. Review-gated: the owner reads the
-README and the names rule before the commit lands. Note: `git mv` had staged the skill
+Status: green, landed 2026-11-22 as `5dfffe7d`. The owner approved the commit after
+the README and names rule were presented. Note: `git mv` had staged the skill
 folder rename before the R4 commit, so the pure rename (content-identical, 100%
 renames) landed in R4's commit `be6d4466`; this unit's commit carries every content
 edit, including the skill's `name` field and prose.
@@ -473,7 +473,8 @@ Verification:
 - [x] Live. `.agents/skills/verify-theta-desktop/scripts/prove.sh --smoke` passes from the
       new path; evidence `.artifacts/verify-theta-desktop/run-BJDhtL/`.
 - [x] Perf. Not applicable. This unit changes no runtime code.
-- [ ] Review. You read the README and the names rule before this unit lands.
+- [x] Review. The owner read the README and the names rule as presented and approved
+      the commit.
 
 ## Between the stages. After each upstream merge
 
