@@ -164,7 +164,7 @@ pnpm --dir apps/desktop run verify:packaged-runtime-deps:windows
 
 `pnpm check` at the repository root proves the static/unit baseline described in [CI baseline](../../docs/ci-baseline.md), not Electron, provider, or native behavior. Core Electron specs can use fixtures and injected events. Report fixture-backed Electron, deterministic runtime integration, real-provider conversation, native OS, and packaged-artifact evidence separately.
 
-For a visible send/stream/tool/restart journey without injected assistant events, use the checked-in [verify-pi-gui skill](../../.agents/skills/verify-pi-gui/SKILL.md). Its no-provider settings smoke proves navigation and preference persistence only. Missing auth blocks conversation proof; skipped specs are not passes.
+For a visible send/stream/tool/restart journey without injected assistant events, use the checked-in [verify-theta-desktop skill](../../.agents/skills/verify-theta-desktop/SKILL.md). Its no-provider settings smoke proves navigation and preference persistence only. Missing auth blocks conversation proof; skipped specs are not passes.
 
 ## Focus And Foreground Rules
 

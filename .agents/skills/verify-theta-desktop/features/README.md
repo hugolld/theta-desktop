@@ -1,4 +1,4 @@
-# pi-gui verification map
+# Theta verification map
 
 Choose proof by product importance and affected behavior. Core conversation coverage comes first; opening peripheral screens is not sufficient proof of this app.
 
@@ -58,7 +58,7 @@ Churn-scoped pass on main `6a592a7b` (macOS local session). Product source since
 2026-10-28 source pass changed only by the dev-only mock bridge (`apps/desktop/src/mock/`,
 commit `6a592a7b`) and a DEV-gated install in `main.tsx`, so the 11 existing feature
 coverages stand and no source wave reran for them. New [Browser mode](browser-mode.md)
-feature file added; its live pass in `.artifacts/verify-pi-gui/run-browser-20261122/`
+feature file added; its live pass in `.artifacts/verify-theta-desktop/run-browser-20261122/`
 covered boot, a scripted streaming turn (state JSON: idle, revision 3, final rows
 message/tool/message/card), a second turn, thread switch to a pinned-adjacent fixture
 session (pin present, 4 rows), and the `?piMock=0` opt-out shell. Doctor: UA not
@@ -141,4 +141,4 @@ were not part of this proof.
 - `run-Y5MlNp`: anthropic configuration reached Send but displayed No API key for provider; no response proof.
 - `run-zH4Jq1`: earlier secondary visible settings/navigation smoke passed.
 
-Evidence directories are under `.artifacts/verify-pi-gui/`. These are point-in-time observations of the checkout used; re-run after moving the skill to another branch.
+Evidence directories are under `.artifacts/verify-theta-desktop/`. These are point-in-time observations of the checkout used; re-run after moving the skill to another branch.

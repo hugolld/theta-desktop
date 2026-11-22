@@ -7,7 +7,7 @@ Users create local on-device schedules from the Scheduled sidebar, a thread menu
 - `scheduled-list`: open Scheduled, create a manual task, filter Active, persist after restart.
 - `scheduled-interview`: Create with pi prefills the interview draft and does not send.
 - `scheduled-fire`: a due task sends its instruction and labels **Sent by scheduled task**.
-- `scheduled-tool`: `create_scheduled_task` / `list_scheduled_tasks` / `update_scheduled_task` mutate the same records. Settings > Skills and extensions > Extensions > pi-gui tools has an "Enable Scheduled tasks" switch; off, the agent has no scheduled-task tools. No spec turns it off.
+- `scheduled-tool`: `create_scheduled_task` / `list_scheduled_tasks` / `update_scheduled_task` mutate the same records. Settings > Skills and extensions > Extensions > Theta tools has an "Enable Scheduled tasks" switch; off, the agent has no scheduled-task tools. No spec turns it off.
 - `scheduled-chip`: a thread bound to a task that is not completed shows `scheduled-task-chip` with an Open button; only its visibility is covered, in `scheduled-tasks.spec.ts`.
 
 ## How to get to it (user POV)
@@ -25,13 +25,13 @@ Preconditions: isolated profile and fixture folder. Core coverage is credential-
 - **List/create:** click Scheduled, Set up manually, fill title and instruction, Create. Active should show the row and next-run copy. Pause, then restart the same profile.
 - **Interview:** Create with pi. Composer must contain the interview prompt and the transcript must have no assistant row.
 - **Fire:** bind a due once/interval task to the selected thread, call the test-mode fire hook, require `sent-by-scheduled-task`.
-- **Tool:** `runScheduledTaskRuntimeTool` with `create_scheduled_task`, then `list_scheduled_tasks`. The snapshot must contain the new task id. No Electron spec calls `update_scheduled_task`; unit `apps/desktop/tests/unit/app-store-scheduled-tasks.spec.ts` covers it (schedule merges) and claim-before-delivery, via (from the repo root) `pnpm exec playwright test -c apps/desktop/playwright.config.ts apps/desktop/tests/unit/app-store-scheduled-tasks.spec.ts`. The test hook bypasses the pi-gui tools switch.
+- **Tool:** `runScheduledTaskRuntimeTool` with `create_scheduled_task`, then `list_scheduled_tasks`. The snapshot must contain the new task id. No Electron spec calls `update_scheduled_task`; unit `apps/desktop/tests/unit/app-store-scheduled-tasks.spec.ts` covers it (schedule merges) and claim-before-delivery, via (from the repo root) `pnpm exec playwright test -c apps/desktop/playwright.config.ts apps/desktop/tests/unit/app-store-scheduled-tasks.spec.ts`. The test hook bypasses the Theta tools switch.
 
 This is fixture-backed Electron proof, not real-provider interview execution. A live tool-call interview belongs only behind `PI_APP_REAL_AUTH=1`.
 
 ## Gotchas
 
-- Tasks run only while pi-gui is open on this device.
+- Tasks run only while Theta is open on this device.
 - Fire of `new-thread` must not steal the selected session.
 - Pause, Delete and agent tools must not hang while a fired run is in progress.
 - Fire must not clear composer drafts, attachments, or queued follow-up edits.

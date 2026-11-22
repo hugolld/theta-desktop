@@ -25,7 +25,8 @@ Run `pnpm check` locally and in the existing CI typecheck job. It runs:
    workspaces with the real typed-lint configuration, so adding a workspace
    without typed-lint coverage fails the baseline. Generated-output exclusions
    are scoped to output locations, not similarly named folders inside source.
-3. `pnpm check:architecture`: checks renderer runtime imports and reachable local
+3. `pnpm check:architecture`: checks the upstream brand-name guard, renderer runtime
+   imports and reachable local
    helpers. It rejects Node, Electron, Pi runtime, and main/preload implementation
    dependencies. Explicit type-only imports and pure shared helpers remain valid.
 4. `pnpm typecheck`: builds shared declarations, then checks every workspace,

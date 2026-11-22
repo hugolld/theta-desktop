@@ -5,7 +5,7 @@ These rules apply for the full session.
 ## Workflow
 
 - Define success criteria before coding; if unclear, stop and clarify.
-- For non-trivial work, plan verification before editing: name the affected user flow, observable result, failure cases, and existing commands that prove them. Start with the checked-in [desktop verification skill](.agents/skills/verify-pi-gui/SKILL.md) for desktop flows and [baseline checks](docs/ci-baseline.md) for repository checks.
+- For non-trivial work, plan verification before editing: name the affected user flow, observable result, failure cases, and existing commands that prove them. Start with the checked-in [desktop verification skill](.agents/skills/verify-theta-desktop/SKILL.md) for desktop flows and [baseline checks](docs/ci-baseline.md) for repository checks.
 - Do not create or switch to new branches to start work unless the user explicitly asks; respect the current branch or worktree as intentional.
 - Commit in small focused checkpoints; don’t batch unrelated changes.
 - Before closing non-trivial implementation work, review the diff for unnecessary abstractions, duplicate paths, unsafe escapes, and obsolete code; simplify within scope and rerun affected checks.
@@ -34,3 +34,15 @@ These rules apply for the full session.
 
 - Root `AGENTS.md` is the repo instruction source of truth.
 - Root `CLAUDE.md` should remain a symlink to `AGENTS.md`.
+
+## Names
+
+- The product brand is Theta (`theta-desktop`); the pi coding agent keeps every name it owns.
+- Never rename: the `pi` agent and its paths (`pi`, `@earendil-works/pi-coding-agent`,
+  `~/.pi/agent`, `PI_CODING_AGENT_DIR`), `pi-sdk-driver`, the `@pi-gui/*` package scope,
+  `piApp`, the `PI_APP_*`/`PI_GUI_*` environment prefixes, and stored keys such as
+  `pi-gui.last-theme` or the `refs/pi-gui/snapshots/` refs. See [NOTICE.md](./NOTICE.md).
+- `scripts/check-names.mjs` fails `pnpm check` when an upstream merge brings an old brand
+  name back (`com.pi-gui.`, `productName: pi-gui`, `app.setName("pi")`, `<title>pi</title>`,
+  `pi-gui.app`, `minghinmatthewlam/pi-gui/releases`), except in `LICENSE`, `NOTICE.md`,
+  `docs/`, `apps/website/`, `plans/`, and README's fork note.

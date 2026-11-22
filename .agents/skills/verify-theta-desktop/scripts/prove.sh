@@ -7,8 +7,8 @@ case "${1:-}" in
   --maintenance) spec=maintenance.spec.ts ;;
   *) printf 'Usage: %s [--conversation|--smoke|--maintenance]\n' "$0" >&2; exit 2 ;;
 esac
-mkdir -p .artifacts/verify-pi-gui
-PI_GUI_PROOF_DIR=$(mktemp -d "$PWD/.artifacts/verify-pi-gui/run-XXXXXX")
+mkdir -p .artifacts/verify-theta-desktop
+PI_GUI_PROOF_DIR=$(mktemp -d "$PWD/.artifacts/verify-theta-desktop/run-XXXXXX")
 export PI_GUI_PROOF_DIR
 printf 'Evidence: %s\n' "$PI_GUI_PROOF_DIR"
 if [ "$spec" = conversation.spec.ts ] || [ "$spec" = maintenance.spec.ts ]; then
@@ -27,7 +27,7 @@ else
   exit 1
 fi
 set +e
-pnpm exec playwright test -c .agents/skills/verify-pi-gui/scripts/playwright.config.ts "$spec" --output "$PI_GUI_PROOF_DIR/playwright" --reporter=line >"$PI_GUI_PROOF_DIR/run.log" 2>&1
+pnpm exec playwright test -c .agents/skills/verify-theta-desktop/scripts/playwright.config.ts "$spec" --output "$PI_GUI_PROOF_DIR/playwright" --reporter=line >"$PI_GUI_PROOF_DIR/run.log" 2>&1
 result=$?
 set -e
 cat "$PI_GUI_PROOF_DIR/run.log"

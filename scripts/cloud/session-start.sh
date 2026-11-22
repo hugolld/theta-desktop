@@ -4,7 +4,7 @@
 #   1. writes ~/.pi/agent/auth.json from the PI_AUTH_JSON_B64 environment
 #      variable, without printing it, unless an auth file already exists;
 #   2. starts a virtual X display, with a window manager when installed;
-#   3. exports the verify-pi-gui real-auth defaults for later shell commands.
+#   3. exports the verify-theta-desktop real-auth defaults for later shell commands.
 # Credentials never go in the setup script, which is cached as a snapshot.
 set -uo pipefail
 

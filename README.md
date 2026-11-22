@@ -1,4 +1,4 @@
-# pi-gui
+# theta-desktop
 
 > **This fork is `theta-desktop`** — the Theta campaign's desktop scientist surface, forked
 > from [pi-gui](https://github.com/minghinmatthewlam/pi-gui) on 2026-11-22. Licensing here is
@@ -8,17 +8,17 @@
 
 The desktop app for the [pi](https://github.com/earendil-works/pi) coding agent.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Latest release](https://img.shields.io/github/v/release/minghinmatthewlam/pi-gui?include_prereleases&label=release)](https://github.com/minghinmatthewlam/pi-gui/releases)
+[![Upstream code: MIT](https://img.shields.io/badge/upstream%20code-MIT-blue.svg)](./LICENSE)
+[![Theta files: PolyForm NC](https://img.shields.io/badge/Theta%20files-PolyForm%20NC%201.0.0-lightgrey.svg)](./LICENSE-THETA.md)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](#install)
 
 Run agents in parallel threads, each in its own git worktree if you want one. Review every
-change, run the tests in a real terminal, and ship without leaving the window. pi-gui is a
+change, run the tests in a real terminal, and ship without leaving the window. Theta is a
 desktop shell around [`@earendil-works/pi-coding-agent`](https://www.npmjs.com/package/@earendil-works/pi-coding-agent),
 not a separate agent: sessions, models, auth and tools all run through pi itself, so anything
 you set up with the pi CLI carries over.
 
-[![An agent in pi-gui fixing a bug, running the tests, then the change open in the review tab](./apps/website/public/media/hero.gif)](./apps/website/public/media/hero.mp4)
+[![An agent in Theta fixing a bug, running the tests, then the change open in the review tab](./apps/website/public/media/hero.gif)](./apps/website/public/media/hero.mp4)
 
 <sub>A real run: the agent fixes a bug, adds a test and runs it, then the change opens for review. ([Watch in full quality](./apps/website/public/media/hero.mp4))</sub>
 
@@ -30,7 +30,7 @@ Every task gets its own thread. Start it in your checkout or in a fresh git work
 start the next one while it works. The sidebar shows what is running, what finished and what
 needs you. Pin threads, group them by time or workspace, and archive the ones you are done with.
 
-<img src="./apps/website/public/media/threads.webp" alt="pi-gui running an agent thread while two other threads work in the sidebar" width="720">
+<img src="./apps/website/public/media/threads.webp" alt="Theta running an agent thread while two other threads work in the sidebar" width="720">
 
 ### Review every change before it lands
 
@@ -90,46 +90,30 @@ the review tab, your worktrees, and tabs from desktop extensions. Each task keep
 
 ## Install
 
-pi-gui runs on macOS (Apple Silicon), Linux (x64) and Windows (x64).
+Theta runs on macOS (Apple Silicon), Linux (x64) and Windows (x64).
 
-Download the latest `.dmg` (macOS), `.AppImage` or `.deb` (Linux), or `.exe` (Windows) from the
-[Releases page](https://github.com/minghinmatthewlam/pi-gui/releases).
+No Theta build is published yet, so there is nothing to download or install. Run Theta from
+source instead; see [Development](#development). When the first Theta release lands, the
+`.dmg` (macOS), `.AppImage` and `.deb` (Linux), and `.exe` (Windows) artifacts will appear on
+this repository's GitHub Releases page.
 
-- **macOS:** drag `pi-gui.app` into Applications. Releases are signed and notarized.
-- **Linux:** make the AppImage executable and run it, or install the `.deb`.
-- **Windows:** run the setup `.exe`, or use the portable `.exe`. Builds are not code-signed
-  yet, so SmartScreen may ask you to confirm.
-
-On macOS you can also use Homebrew:
-
-```bash
-brew tap minghinmatthewlam/tap
-brew trust minghinmatthewlam/tap
-brew install --cask pi-gui
-```
-
-Homebrew refuses to load casks from untrusted third-party taps, so the
-`brew trust` step is required on first install.
-
-Update with `brew upgrade --cask pi-gui`. A Homebrew upgrade may ask you to
-re-confirm macOS permissions or Dock placement. Other installs tell you when a new release is
-out and update from the Releases page.
-
-Building from source is for contributors; see [Development](#development).
+Upstream pi-gui publishes its own signed builds, reachable through the upstream repository
+linked at the top of this file. That build is upstream's app under its own name; it is not
+Theta, and this fork does not distribute or support it.
 
 ## Quickstart
 
-1. Install pi-gui and open it.
+1. Run Theta from source and open it.
 2. Open **Settings → Providers** and connect a model provider (OAuth or API key).
 3. Add a workspace: a local project folder.
 4. Click **New thread**, choose **Local** or **Worktree**, and send your first prompt.
 
-pi-gui reads and writes pi's own session files and settings, so threads, credentials and
+Theta reads and writes pi's own session files and settings, so threads, credentials and
 skills are shared with the pi CLI.
 
 ## Architecture
 
-pi-gui is an Electron app with a tight main, preload and renderer boundary, on top of the pi
+Theta is an Electron app with a tight main, preload and renderer boundary, on top of the pi
 runtime:
 
 - **Renderer** (`apps/desktop/src`): the React UI, including the timeline, composer,
@@ -141,7 +125,7 @@ runtime:
 - **`packages/pi-sdk-driver`**: a thin adapter over `@earendil-works/pi-coding-agent`. It stays
   close to upstream pi and does not fork or reimplement runtime behavior.
 - **Session files are the source of truth.** pi stores each session as a JSONL transcript on
-  disk, and pi-gui reads those files rather than keeping its own copy.
+  disk, and Theta reads those files rather than keeping its own copy.
 
 See [docs/architecture.md](docs/architecture.md) for ownership and boundaries.
 
@@ -184,7 +168,7 @@ platform, and how the product media is recorded.
 ## Repository layout
 
 - `apps/desktop`: the Electron app (renderer, main and preload).
-- `apps/website`: [pi-gui.com](https://www.pi-gui.com).
+- `apps/website`: [pi-gui.com](https://www.pi-gui.com), upstream's site.
 - `packages/pi-sdk-driver`: the adapter over `@earendil-works/pi-coding-agent`.
 - `packages/session-driver`: shared session driver types.
 - `packages/catalogs`: workspace and session catalog state.
@@ -202,7 +186,7 @@ Electron app, not only by unit tests.
 
 ## Computer use
 
-Native computer use is not built into pi-gui. Desktop and browser control is available
+Native computer use is not built into Theta. Desktop and browser control is available
 separately through the standalone
 [`computer-use-mcp`](https://github.com/minghinmatthewlam/computer-use-mcp) server, which any
 MCP-capable agent can use.
@@ -214,4 +198,6 @@ and the [pi](https://github.com/earendil-works/pi) runtime and ecosystem.
 
 ## License
 
-[MIT](./LICENSE) © Matthew Lam
+Licensing is two-tier; see [NOTICE](./NOTICE.md). Upstream pi-gui code is
+[MIT](./LICENSE) © Matthew Lam. Theta-authored files carry the
+[PolyForm Noncommercial License 1.0.0](./LICENSE-THETA.md) © Theta contributors.

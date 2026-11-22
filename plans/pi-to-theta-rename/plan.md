@@ -429,7 +429,10 @@ The job cannot publish from the fork, because it needs the `HOMEBREW_TAP_TOKEN` 
 ### R5 Documents, names rule, guard, skill
 
 Status: green, 2026-11-22. Implemented and verified. Review-gated: the owner reads the
-README and the names rule before the commit lands.
+README and the names rule before the commit lands. Note: `git mv` had staged the skill
+folder rename before the R4 commit, so the pure rename (content-identical, 100%
+renames) landed in R4's commit `be6d4466`; this unit's commit carries every content
+edit, including the skill's `name` field and prose.
 
 - [x] Depends on R2 to R4.
 - [x] Edit these files (actual set; the plan missed the fixture flip that the new guard

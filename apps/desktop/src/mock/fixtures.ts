@@ -243,15 +243,15 @@ function runtimeForTheta(): RuntimeSnapshot {
     ],
     skills: [
       {
-        name: "verify-pi-gui",
-        description: "Verify pi-gui conversation flows through the visible Electron UI.",
-        filePath: "/Users/mock/Code/theta-desktop/.agents/skills/verify-pi-gui/SKILL.md",
-        baseDir: "/Users/mock/Code/theta-desktop/.agents/skills/verify-pi-gui",
+        name: "verify-theta-desktop",
+        description: "Verify Theta conversation flows through the visible Electron UI.",
+        filePath: "/Users/mock/Code/theta-desktop/.agents/skills/verify-theta-desktop/SKILL.md",
+        baseDir: "/Users/mock/Code/theta-desktop/.agents/skills/verify-theta-desktop",
         source: "project",
         scope: "project",
         enabled: true,
         disableModelInvocation: false,
-        slashCommand: "/verify-pi-gui",
+        slashCommand: "/verify-theta-desktop",
       },
       {
         name: "docling-pdf",
@@ -665,11 +665,11 @@ export function buildFixtureState(): DesktopAppState {
     sessionCommandsBySession: {
       [MOCK_SELECTED_SESSION]: [
         {
-          name: "verify-pi-gui",
+          name: "verify-theta-desktop",
           description: "Verify the desktop conversation flows.",
           source: "skill",
           sourceInfo: {
-            path: "/Users/mock/Code/theta-desktop/.agents/skills/verify-pi-gui/SKILL.md",
+            path: "/Users/mock/Code/theta-desktop/.agents/skills/verify-theta-desktop/SKILL.md",
             source: "project",
             scope: "project",
             origin: "top-level",

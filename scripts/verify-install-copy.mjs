@@ -15,10 +15,14 @@ async function main() {
 
   assert.match(
     readme,
-    /Download the latest `\.dmg` \(macOS\), `\.AppImage` or `\.deb` \(Linux\), or `\.exe` \(Windows\) from the\s+\[Releases page\]/,
+    /No Theta build is published yet, so there is nothing to download or install\./,
   );
-  assert.match(readme, /brew install --cask pi-gui/);
-  assert.match(readme, /brew upgrade --cask pi-gui/);
+  assert.match(readme, /Run Theta from\s+source instead/);
+  assert.match(readme, /this repository's GitHub Releases page/);
+  // The fork must not point a reader at upstream's installer or tap as if it were Theta.
+  assert.doesNotMatch(readme, /brew (install|upgrade) --cask pi-gui/);
+  assert.doesNotMatch(readme, /minghinmatthewlam\/pi-gui\/releases/);
+  assert.match(readme, /PolyForm Noncommercial License 1\.0\.0/);
   assert.doesNotMatch(readme, /Homebrew installation will be published/);
 
   assert.match(

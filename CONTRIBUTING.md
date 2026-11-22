@@ -1,6 +1,7 @@
-# Contributing to pi-gui
+# Contributing to theta-desktop
 
-Thanks for your interest in improving pi-gui. This guide covers local setup, the
+Thanks for your interest in improving Theta, this fork's desktop scientist surface
+built on the pi coding agent. This guide covers local setup, the
 test lanes, and what "done" means for a change.
 
 ## Prerequisites
