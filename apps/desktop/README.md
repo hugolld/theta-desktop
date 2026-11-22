@@ -27,6 +27,16 @@ pnpm --filter @pi-gui/desktop dev
 
 `dev` now runs through `electron-vite`, so renderer edits hot-update in place and Electron `main` / `preload` changes trigger the appropriate reload or restart behavior automatically. The desktop dev launcher also rebuilds the shared workspace packages up front and keeps them in watch mode so Node-side package changes can be picked up without manual rebuilds.
 
+### Browser mode with the mock bridge
+
+In dev builds, opening the renderer URL (`http://localhost:5173` by default) in a plain
+browser tab installs a fixture-backed mock of the `window.piApp` bridge
+(`src/mock/`), so UI work — layout, styling, spacing, visuals — runs against the
+real interface with realistic threads, transcripts, and a scripted streaming turn
+on submit. The Electron window itself is unaffected: the mock installs only when
+the real preload bridge is absent, and the dev-only branch is removed from
+production builds. Add `?piMock=0` to see the bridge-missing shell instead.
+
 Run the built app locally without packaging:
 
 ```bash

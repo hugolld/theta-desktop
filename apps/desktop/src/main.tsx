@@ -5,6 +5,7 @@ import App from "./app/App";
 import { RendererErrorBoundary } from "./app/desktop-recovery";
 import { WindowFrame } from "./app/window-titlebar";
 import { I18nProvider } from "./i18n";
+import { installMockBridge } from "./mock";
 import { applyLastTheme } from "./ui/active-theme";
 import "./dev-reload-hook";
 import "./styles.css";
@@ -34,6 +35,12 @@ window.addEventListener(
 );
 
 applyLastTheme();
+
+// Browser-mode UI development: fixture-backed bridge when no preload exists.
+// Dev-only; Vite removes the branch from production builds.
+if (import.meta.env.DEV) {
+  installMockBridge();
+}
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
