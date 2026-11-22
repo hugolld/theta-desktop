@@ -1,5 +1,11 @@
 # pi-gui
 
+> **This fork is `theta-desktop`** — the Theta campaign's desktop scientist surface, forked
+> from [pi-gui](https://github.com/minghinmatthewlam/pi-gui) on 2026-11-22. Licensing here is
+> two-tier: upstream pi-gui code stays MIT ([LICENSE](./LICENSE)); Theta-authored files carry
+> the PolyForm Noncommercial License 1.0.0 ([LICENSE-THETA](./LICENSE-THETA.md)). See
+> [NOTICE](./NOTICE.md).
+
 The desktop app for the [pi](https://github.com/earendil-works/pi) coding agent.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
