@@ -303,6 +303,11 @@ test("R10 renames the last names for this app and spares the keeps", async () =>
       "scripts/check-names.mjs",
       "// Exact strings that mark upstream pi-gui brand identity.\n",
     );
+    track(
+      root,
+      "AGENTS.md",
+      "- Never rename. The guard fails on any `pi-gui`, `piApp`, or `PiDesktop` outside the keep names.\n",
+    );
     const plan = await planRename(root);
     assert.deepEqual(plan.violations, []);
     await applyRename(plan);
@@ -321,6 +326,10 @@ test("R10 renames the last names for this app and spares the keeps", async () =>
     assert.equal(
       read(root, "scripts/check-names.mjs"),
       "// Exact strings that mark upstream pi-gui brand identity.\n",
+    );
+    assert.equal(
+      read(root, "AGENTS.md"),
+      "- Never rename. The guard fails on any `pi-gui`, `piApp`, or `PiDesktop` outside the keep names.\n",
     );
     const again = await planRename(root);
     assert.deepEqual(again.files, []);

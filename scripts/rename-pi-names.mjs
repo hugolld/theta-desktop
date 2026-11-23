@@ -442,6 +442,8 @@ const SKIPPED_FILES = new Set([
   "scripts/rename-pi-names.test.mjs",
   "scripts/check-names.mjs",
   "scripts/check-names.test.mjs",
+  // AGENTS.md quotes the banned identifiers in its names rule, like the guard does.
+  "AGENTS.md",
 ]);
 
 function isSkipped(relativePath) {
