@@ -1,0 +1,12 @@
+{"id":"hyp-0001","type":"hypothesis","date":"2026-11-20T09:14:00Z","text":"Compound X inhibits kinase Y allosterically rather than at the ATP site.","evidence":[{"source":"theta-lit-search","endpoints":["pubmed"],"query":"allosteric inhibition kinase Y","retrieved":"2026-11-20T09:12:00Z","grade":"asserted","snapshot":"evidence/9f2a1c/lit-search.json","supports":"hyp-0001"}]}
+{"id":"mth-0001","type":"method","date":"2026-11-20T09:20:00Z","text":"Dock with AutoDock Vina at exhaustiveness 8; validate against the redocked co-crystal with RMSD under 2 angstrom."}
+{"id":"obs-0001","type":"observation","date":"2026-11-20T10:02:00Z","text":"Redock RMSD 1.4 angstrom across 12 poses; binding site reproduces the crystallographic pose.","grade":"re-executed","evidence":[{"source":"theta-compute","retrieved":"2026-11-20T10:01:00Z","grade":"re-executed","job_id":"job-8c42","snapshot":"evidence/5b7d02/vina-redock.json"}]}
+{"id":"dec-0001","type":"decision","date":"2026-11-20T10:15:00Z","text":"Proceed with the top-20 pose ensemble for MD refinement; skip the ATP-site analogs."}
+{"id":"cnf-0001","type":"confidence","date":"2026-11-20T10:16:00Z","text":"Moderate: docking supports the allosteric hypothesis; no kinetic assay yet.","hypothesis":"hyp-0001"}
+{"id":"obs-0002","type":"observation","date":"2026-11-20T11:30:00Z","text":"MD trajectory stable over 50 ns for 14 of 20 poses.","grade":"cross-checked","evidence":[{"source":"theta-compute","retrieved":"2026-11-20T11:29:00Z","grade":"cross-checked","job_id":"job-91aa","snapshot":"evidence/c01d3e/md-stability.json"}]}
+{"id":"hyp-0001","type":"hypothesis","date":"2026-11-20T09:14:00Z","text":"Compound X inhibits kinase Y allosterically rather than at the ATP site.","evidence":[{"source":"theta-lit-search","endpoints":["pubmed"],"query":"allosteric inhibition kinase Y","retrieved":"2026-11-20T09:12:00Z","grade":"asserted","snapshot":"evidence/9f2a1c/lit-search.json","supports":"hyp-0001"}]}
+{"id":"obs-0003","type":"observation","date":"2026-11-20T11:31:0"}
+{"id":"mth-0002","type":"transformed","date":"2026-11-20T11:40:00Z","text":"Not one of the five types."}
+{"id":"mth-0003","type":"method","date":"2026-11-20T11:45:00Z","text":"Evidence with a broken grade.","evidence":[{"source":"theta-compute","retrieved":"2026-11-20T11:44:00Z","grade":"vibes"}]}
+
+{"id":"mth-0004","type":"method","date":"2026-11-20T11:50:00Z","text":"Recorded after a blank line; still parses."}
