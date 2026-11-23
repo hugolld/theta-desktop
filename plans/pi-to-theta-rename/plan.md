@@ -670,24 +670,54 @@ Verification:
 
 ### R10 Comments, guard, blame
 
-- [ ] Depends on R9, or on R8 when you skip R9.
-- [ ] Files. Code comments and model-facing text that name `pi-gui` when they mean this app.
-      The log prefixes in `main.ts`, `pending-draft-flush.ts`, and `packages/pi-sdk-driver`.
-      The library default path in `packages/catalogs/src/node/json-catalog-store.ts:361`.
-      `NOTICE.md`, `AGENTS.md`, and the skill documents. A new `.git-blame-ignore-revs`.
-- [ ] Build one change. `pi-gui` remains only in the keep-list files, and `git blame` skips
-      the rename commits.
-- [ ] Tighten `scripts/check-names.mjs`. It also fails on `piApp`, `PiDesktop`, `PI_APP_`,
-      and `PI_GUI_` outside the keep-list files.
-- [ ] You see no output from
+- [x] Depends on R9.
+- [x] Files. A script classified all 611 raw hits (keep-string, exempt-path, work): 221
+      work hits in 120 files before the run. The survey was stale in two places:
+      `pending-draft-flush.ts` had no remaining hits, and the sweep surfaced two more
+      stored pane keys the R9 inventory missed (`pi-gui.workbench-width`,
+      `pi-gui.sidebar-width`) plus a dead WER crash filter (see below). The lever's
+      eight rules covered log prefixes (`[theta]`), prose and possessives, quoted
+      temp-dir/fixture names in three quote styles, `<inline:` paths, the two stored
+      keys, and the `.pi-gui` catalogs default (now `.theta-desktop`): 190 matches in
+      108 files. 16 hand fixes covered what rules cannot reach (dot-terminated prose,
+      bare `"pi-gui"` fixture display names, a wrapped comment, one regex literal).
+      `NOTICE.md`, `AGENTS.md`, the skill documents, and `.git-blame-ignore-revs` are
+      done.
+- [x] Build one change. `pi-gui` remains only in sanctioned places: the keep names (the
+      six extension names, `pi-gui.card`/`pin`, the lease surface value, the
+      attachments tags, `refs/pi-gui/`), upstream links and fixture data (`issues/`,
+      `pull/`, the example fixtures), `pi-gui.com` site references, and the
+      upstream-derived `examples/` content — now skipped like the website. The
+      examples' fixtures carry upstream repo data, so their prose keeps upstream's
+      name. `.git-blame-ignore-revs` lists the campaign's nine mass-rename commits;
+      GitHub blame uses it automatically.
+- [x] Tighten `scripts/check-names.mjs`. After stripping the keep names, it fails on
+      any `pi-gui`, `piApp`, `PiDesktop`, `PI_APP_`, or `PI_GUI_`, plus
+      `app.setName("pi")` and `<title>pi</title>`. Exemptions: `LICENSE`, `NOTICE.md`,
+      `docs/`, `plans/`, `apps/website/`, `examples/`, README's fork note, the rename
+      and guard tooling, and the two install-copy verifiers whose strings assert
+      upstream absence. The tightened guard caught a real bug the renames left:
+      `windows-release-diagnostic.yml` grepped WER crash logs for `pi-gui.*setup`
+      while the installer is `Theta-*-setup.exe`, so the filter could never match —
+      fixed in its own commit.
+- [x] You see no output from
       `rg 'pi-gui|piApp|\bPiDesktop|PI_APP_|PI_GUI_' -g '!node_modules' -g '!.artifacts' -g '!pnpm-lock.yaml' .`
-      outside the keep-list files.
+      outside the sanctioned places above: `node scripts/check-names.mjs` prints
+      "No upstream brand names in tracked files," and the residual 22 hits are exactly
+      the sanctioned set (`R10/classify-final.log`).
 
 Verification:
 
-- [ ] Unit. `pnpm check` passes. The guard test shows one planted old name failing.
-- [ ] Live. `pnpm e2e` passes. `prove.sh --smoke` passes.
-- [ ] Perf. `test:perf:startup`. Fail numbers from R1.
+- [x] Unit. `pnpm check` passes (`R10/check-2.log`, 425 unit tests). The guard test
+      plants `piApp`, `PiDesktop`, `PI_APP_`, a generic `pi-gui`, and the two pi
+      strings, and shows each failing; the keep names pass in a product-shaped file.
+      Lever tests 10/10.
+- [x] Live. The core e2e lane passed 312/0 across the four shards (`R10/e2e-core-*.log`),
+      and `prove.sh --smoke` passed (`run-bjvUcP`).
+- [x] Perf. `test:perf:startup`: startupMs min 745.4 (fail above 919.8), pingMs median
+      0.05 (fail above 0.094) (`R10/perf-startup-2.log`). The first run read min
+      1005.2 because it shared the machine with the four e2e shards; the serialized
+      rerun on the idle machine passes with margin.
 
 ## Not in this plan
 
