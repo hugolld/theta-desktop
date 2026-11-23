@@ -25,17 +25,15 @@ export interface NotebookParseResult {
 const ENTRY_TYPES: ReadonlySet<string> = new Set(Object.keys(TYPE_PREFIX));
 const GRADE_VALUES: ReadonlySet<string> = new Set(GRADES);
 
-function parseEvidence(value: unknown): EvidenceGrade[] | null {
-  // Returns the invalid grades found, or null when the evidence shape itself is broken.
-  if (!Array.isArray(value)) return null;
-  const bad: EvidenceGrade[] = [];
+function evidenceShapeIsValid(value: unknown): boolean {
+  if (!Array.isArray(value)) return false;
   for (const item of value) {
-    if (typeof item !== "object" || item === null) return null;
+    if (typeof item !== "object" || item === null) return false;
     const record = item as Record<string, unknown>;
-    if (typeof record.source !== "string" || typeof record.retrieved !== "string") return null;
-    if (typeof record.grade !== "string" || !GRADE_VALUES.has(record.grade)) return null;
+    if (typeof record.source !== "string" || typeof record.retrieved !== "string") return false;
+    if (typeof record.grade !== "string" || !GRADE_VALUES.has(record.grade)) return false;
   }
-  return bad;
+  return true;
 }
 
 function parseEntry(line: string): NotebookEntry | null {
@@ -51,7 +49,7 @@ function parseEntry(line: string): NotebookEntry | null {
   if (typeof record.type !== "string" || !ENTRY_TYPES.has(record.type)) return null;
   if (typeof record.date !== "string" || record.date === "") return null;
   if (typeof record.text !== "string") return null;
-  if (record.evidence !== undefined && parseEvidence(record.evidence) === null) return null;
+  if (record.evidence !== undefined && !evidenceShapeIsValid(record.evidence)) return null;
   if (
     record.grade !== undefined &&
     (typeof record.grade !== "string" || !GRADE_VALUES.has(record.grade))
