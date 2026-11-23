@@ -284,6 +284,52 @@ test("R9 renames the last two stored keys and keeps the card names", async () =>
   }
 });
 
+test("R10 renames the last names for this app and spares the keeps", async () => {
+  const root = makeFixtureRepo();
+  try {
+    track(
+      root,
+      "src/log.ts",
+      'log("[pi-gui] started");\n// pi-gui owns these built-ins; pi-gui\'s own wording applies.\n',
+    );
+    track(
+      root,
+      "src/names.ts",
+      'const a = mkdtemp("pi-gui-review-");\nconst b = `pi-gui-window-${id}`;\nconst c = "<inline:pi-gui-demo>";\nconst keep = "pi-gui-desktop-views";\nconst lease = "pi-gui";\nconst width = "pi-gui.workbench-width";\nconst card = "pi-gui.card";\n',
+    );
+    track(root, "examples/readme.md", "The pi-gui example fixtures keep upstream's name.\n");
+    track(
+      root,
+      "scripts/check-names.mjs",
+      "// Exact strings that mark upstream pi-gui brand identity.\n",
+    );
+    const plan = await planRename(root);
+    assert.deepEqual(plan.violations, []);
+    await applyRename(plan);
+    assert.equal(
+      read(root, "src/log.ts"),
+      'log("[theta] started");\n// Theta owns these built-ins; Theta\'s own wording applies.\n',
+    );
+    assert.equal(
+      read(root, "src/names.ts"),
+      'const a = mkdtemp("theta-review-");\nconst b = `theta-window-${id}`;\nconst c = "<inline:theta-demo>";\nconst keep = "pi-gui-desktop-views";\nconst lease = "pi-gui";\nconst width = "theta-desktop:workbench-width";\nconst card = "pi-gui.card";\n',
+    );
+    assert.equal(
+      read(root, "examples/readme.md"),
+      "The pi-gui example fixtures keep upstream's name.\n",
+    );
+    assert.equal(
+      read(root, "scripts/check-names.mjs"),
+      "// Exact strings that mark upstream pi-gui brand identity.\n",
+    );
+    const again = await planRename(root);
+    assert.deepEqual(again.files, []);
+    assert.deepEqual(again.violations, []);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("the CLI writes only with --write, and a second write reports nothing to do", () => {
   const root = makeFixtureRepo();
   try {
