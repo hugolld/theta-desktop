@@ -180,8 +180,12 @@ test("card buttons run through main: a keyed card updates in place, and non-exte
     await expect(card).toHaveCount(1);
     await expect(card).toContainText("CI passed on main");
 
-    // Back to the failing card: its open-file button opens the checked file at the line.
+    // The saved draft comes back in the relaunched app. The restore lands after paint,
+    // behind the card assertions above; wait for it so the command below cannot race it.
     const composer = window.getByTestId("composer");
+    await expect(composer).toHaveValue("My own draft\nFix the failing search test.");
+
+    // Back to the failing card: its open-file button opens the checked file at the line.
     await composer.fill("/ci ");
     await composer.press("Enter");
     await expect(card).toHaveCount(1);

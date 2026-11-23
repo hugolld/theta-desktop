@@ -3,7 +3,7 @@ import type { SessionRef } from "@theta-desktop/session-driver/types";
 import type { ComposerDraftSyncSource, DesktopAppState } from "../../../../contracts/desktop-state";
 import type { ThetaDesktopApi } from "../../../../contracts/ipc";
 
-/** Persist/state/command restore saved or submitted text. They must not overwrite a newer local edit. */
+/** Snapshots that restore saved or submitted text must not overwrite a newer local edit. */
 export function shouldAdoptComposerSnapshot(
   source: ComposerDraftSyncSource | undefined,
   localEditPending: boolean,
@@ -11,7 +11,9 @@ export function shouldAdoptComposerSnapshot(
   if (!localEditPending) {
     return true;
   }
-  return source !== "persist" && source !== "state" && source !== "command";
+  return (
+    source !== "persist" && source !== "state" && source !== "command" && source !== "selection"
+  );
 }
 
 interface UseComposerDraftSyncParams {
@@ -77,8 +79,15 @@ export function useComposerDraftSync(params: UseComposerDraftSyncParams) {
     if (hydratedComposerSessionKeyRef.current !== selectedSessionKey) {
       hydratedComposerSessionKeyRef.current = selectedSessionKey;
       handledComposerSyncNonceRef.current = snapshot.composerDraftSyncNonce;
-      acknowledgedLocalEditGenerationRef.current = localEditGenerationRef.current;
       pendingComposerDraftRef.current = null;
+      const localEditPending =
+        localEditGenerationRef.current > acknowledgedLocalEditGenerationRef.current;
+      if (!shouldAdoptComposerSnapshot(snapshot.composerDraftSyncSource, localEditPending)) {
+        // The edit typed while the task loaded stays; it stays unacknowledged, so the
+        // write-back below still saves it for the newly selected task.
+        return;
+      }
+      acknowledgedLocalEditGenerationRef.current = localEditGenerationRef.current;
       composerDraftRef.current = snapshot.composerDraft;
       setComposerDraftState(snapshot.composerDraft);
       return;
