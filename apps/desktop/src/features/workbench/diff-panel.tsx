@@ -753,7 +753,7 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-const TREE_VISIBLE_KEY = "pi-gui.review-tree-visible";
+const TREE_VISIBLE_KEY = "theta-desktop:review-tree-visible";
 
 /** Whether the changed-file tree shows beside the diff; a window preference like pane widths. */
 function useReviewTreeVisible() {

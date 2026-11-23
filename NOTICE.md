@@ -41,8 +41,8 @@ pi integration or orphans stored values. In particular:
 - The `pi` agent itself and its paths: `pi`, `@earendil-works/pi-coding-agent`,
   `~/.pi/agent`, `.pi/settings.json`, `PI_CODING_AGENT_DIR`.
 - `packages/pi-sdk-driver`: the adapter over the pi SDK.
-- Stored keys such as `pi-gui.last-theme` and the `refs/pi-gui/snapshots/` git refs in user
-  repositories.
+- The `refs/pi-gui/snapshots/` git refs in user repositories, and the `pi-gui` lease
+  surface value stored in session leases.
 
 Brand names that this fork did change: the display name (Theta), the app and data folder
 name, the bundle ID, installer and executable names, the update source, the workspace

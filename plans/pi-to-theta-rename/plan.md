@@ -631,24 +631,42 @@ Verification:
 
 ### R9 Stored names
 
-- [ ] Depends on R8. You can skip this unit. Skip it if a one-time reset of four
-      preferences is not acceptable.
-- [ ] Files. `apps/desktop/src/i18n/preference.ts`, `apps/desktop/src/ui/active-theme.ts`,
-      `apps/desktop/src/features/workbench/diff-panel.tsx`, and
-      `apps/desktop/src/features/threads/thread-switcher-order.ts`. Their unit specs.
-- [ ] Build one change. The four `localStorage` keys start with `theta-desktop`.
-- [ ] Declared breakage. Each user selects the language, the theme preset, the review tree
-      visibility, and the thread-switcher order one more time. No migration code.
-- [ ] You see the new keys in the devtools **Application** panel.
+- [x] Depends on R8. The owner chose to run it ("Run R9 now", 2026-11-23) knowing the
+      reset.
+- [x] Files. The plan's four files were stale: R7's `pi-gui:` channel rule had already
+      renamed the two colon-style keys (`theta-desktop:locale`,
+      `theta-desktop:thread-switcher-order:v1`) in `preference.ts` and
+      `thread-switcher-order.ts` — an undeclared preference reset that rode along with
+      R7. R9 renames the last two, in `active-theme.ts` and `diff-panel.tsx`. No unit
+      spec names either key; `thread-switcher-order.spec.ts` and the i18n specs cover
+      their behavior.
+- [x] Build one change. Every renderer `localStorage` key starts with `theta-desktop`
+      now. The two renamed keys join the colon-style namespace:
+      `theta-desktop:last-theme`, `theta-desktop:review-tree-visible`. Two lever rules,
+      two matches, second dry run 0, lever tests 9/9. `AGENTS.md` and `NOTICE.md` lost
+      the `pi-gui.last-theme` example by hand before the run, so no rule reached them.
+- [x] Declared breakage. Each user selects the language, the theme preset, the review
+      tree visibility, and the thread-switcher order one more time. No migration code.
+      (Language and thread order reset at R7; theme and review tree reset at R9.)
+- [x] You see the new keys in the devtools **Application** panel — and the snapshot
+      proves it without devtools: see Live.
 
 Verification:
 
-- [ ] Unit. `pnpm check` passes.
-- [ ] Live. `test:prod:profile-snapshot` runs on the same source folder as in R2. Its diff
-      against the R2 result shows exactly the four keys as missing, and all other entries
-      equal.
-- [ ] Perf. Not applicable.
-- [ ] Review. You pick the four preferences one more time before this unit lands.
+- [x] Unit. `pnpm check` passes (`R9/check.log`, 425 unit tests).
+- [x] Live. The plan's expectation was wrong about storage mechanics: renaming the key
+      in source does not delete the old entry — Chromium keeps it, inert and never read.
+      Proof by two runs on the R2 source folder (`~/Library/Application Support/Theta`):
+      Run A on the pre-R9 tree wrote `pre-r9.json` (holds `pi-gui.last-theme`), Run B on
+      the R9 tree wrote `post-r9.json`. The explicit JSON diff shows exactly: the new
+      key `theta-desktop:last-theme` written at startup, the old entry unchanged in
+      place, and only launch timestamps and the temp user-data path besides
+      (`R9/diff.py`, `R9/diff.log`). `PROFILE_BASELINE` is strict equality and would
+      fail on any rename by design, so the explicit diff is the gate.
+- [x] Perf. Not applicable.
+- [x] Review. The owner approved the reset in the question UI before the run. The
+      preference picks ran on the real window: `settings-appearance.spec.ts` and
+      `settings-language.spec.ts` passed 5/5 on the R9 tree (`R9/prefs-specs.log`).
 
 ### R10 Comments, guard, blame
 
