@@ -11,4 +11,4 @@ b6e57060 refactor(workspace): rename the package scope to @theta-desktop/*
 793ec440 refactor(desktop): rename the bridge and the channel strings (R7)
 5c3d7dd1 refactor(desktop): rename the environment variables (R8)
 32c7bac6 refactor(desktop): rename the last two stored keys (R9)
-e4aed863 refactor: rename the last pi-gui names for this app (R10)
+e4aed863 refactor: rename the last old-brand names for this app (R10)
