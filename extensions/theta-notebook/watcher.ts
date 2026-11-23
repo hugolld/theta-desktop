@@ -176,7 +176,9 @@ export class NotebookWatcher {
     const fresh = parseNotebook(complete + (tailEntry ? tailEntry + "\n" : ""));
     this.entries.push(...fresh.entries);
     this.skipped += fresh.skipped;
-    return { present: true, entries: this.entries, skipped: this.skipped };
+    // Publish a copy: the accumulators keep growing, and a published state that
+    // aliases them would make every change check compare the array with itself.
+    return { present: true, entries: [...this.entries], skipped: this.skipped };
   }
 
   private publish(state: NotebookState): void {

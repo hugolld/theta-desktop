@@ -77,6 +77,30 @@ test("appends render without duplicating; malformed complete lines count as skip
   watcher.stop();
 });
 
+test("an append notifies listeners, and earlier states stay frozen", async () => {
+  const notebook = path.join(project, ".theta", "notebook.jsonl");
+  mkdirSync(path.join(project, ".theta"));
+  writeFileSync(notebook, `${LINE.hypothesis}\n`, "utf8");
+  const states: NotebookState[] = [];
+  const watcher = new NotebookWatcher(project, (state) => states.push(state));
+  await watcher.start();
+  await settle(watcher, 200);
+  appendFileSync(notebook, `${LINE.method}\n`, "utf8");
+  await settle(watcher);
+  // The append itself must fire: the pane's live update hangs on it.
+  assert.ok(
+    states.some((state) => state.entries.length === 2),
+    `no publish carried the appended entry (got ${JSON.stringify(states.map((s) => s.entries.map((e) => e.id)))})`,
+  );
+  // A published state is a snapshot: later appends must not mutate it.
+  const first = states[0];
+  assert.deepEqual(
+    first.entries.map((entry) => entry.id),
+    ["hyp-0001"],
+  );
+  watcher.stop();
+});
+
 test("a mid-append line without its newline is held back, then renders once complete", async () => {
   const notebook = path.join(project, ".theta", "notebook.jsonl");
   mkdirSync(path.join(project, ".theta"));

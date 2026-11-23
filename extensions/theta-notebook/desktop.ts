@@ -221,7 +221,7 @@ export async function mount(root: HTMLElement, host: DesktopViewContext): Promis
     }
     const parts = [`${state.entries.length} ${state.entries.length === 1 ? "entry" : "entries"}`];
     if (state.skipped > 0)
-      parts.push(`${state.skipped} ${state.skipped === 1 ? "line" : "lines"} not shown`);
+      parts.push(` · ${state.skipped} ${state.skipped === 1 ? "line" : "lines"} not shown`);
     status.replaceChildren(...parts);
     status.title =
       state.skipped > 0

@@ -27,17 +27,23 @@ Status: in progress (started 2026-11-23). Owner approved the approach
 - Out of scope (v1): opening snapshot files (paths shown only), any write
   path, editing, and the plan/viewer/canvas panes (their payload order is
   recorded in the vault; plan pane waits on theta-agent's plan object).
+- Fix during U4 proof (2026-11-23): the watcher published its internal
+  accumulator array, so the pane's change check compared the array with
+  itself and live appends never reached the view. Published states are now
+  copies; the regression test asserts the listener fires and earlier states
+  stay frozen. Found by the real-Electron spec, not by the unit suite —
+  the original tests asserted final snapshots, never that the callback fired.
 
 ## Units
 
 - [x] U1 Contract + fixtures — `contract.ts` (state + service, chord),
       `notebook.ts` parser (complete-lines caller contract, dedupe by line
       bytes, shape validation, skipped count), fixture notebook, tests.
-- [ ] U2 Host service — session-cwd resolution, initial read, fs.watch tail
+- [x] U2 Host service — session-cwd resolution, initial read, fs.watch tail
       (debounced, complete lines only), delta push over the view bridge.
-- [ ] U3 Desktop view — grouped cards, type filters, grade marks, confidence
+- [x] U3 Desktop view — grouped cards, type filters, grade marks, confidence
       naming its hypothesis, snapshot paths, live append, empty state.
-- [ ] U4 Packaging + proof — build.mjs (+ committed dist, build:check),
+- [x] U4 Packaging + proof — build.mjs (+ committed dist, build:check),
       README with `.pi/settings.json` registration, root test chain extended,
       `pnpm check` green, real-Electron verification: seeded workspace → pane
       renders → live append from bash → pane updates.
