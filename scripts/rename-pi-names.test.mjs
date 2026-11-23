@@ -261,6 +261,29 @@ test("R8 renames the exact environment names and keeps the pi agent and lease na
   }
 });
 
+test("R9 renames the last two stored keys and keeps the card names", async () => {
+  const root = makeFixtureRepo();
+  try {
+    track(
+      root,
+      "src/stored-keys.ts",
+      'const theme = "pi-gui.last-theme";\nconst tree = "pi-gui.review-tree-visible";\nconst card = "pi-gui.card";\n',
+    );
+    const plan = await planRename(root);
+    assert.deepEqual(plan.violations, []);
+    await applyRename(plan);
+    assert.equal(
+      read(root, "src/stored-keys.ts"),
+      'const theme = "theta-desktop:last-theme";\nconst tree = "theta-desktop:review-tree-visible";\nconst card = "pi-gui.card";\n',
+    );
+    const again = await planRename(root);
+    assert.deepEqual(again.files, []);
+    assert.deepEqual(again.violations, []);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("the CLI writes only with --write, and a second write reports nothing to do", () => {
   const root = makeFixtureRepo();
   try {

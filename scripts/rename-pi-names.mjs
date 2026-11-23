@@ -351,6 +351,21 @@ export const RULES = [
     find: /\bPI_GUI_WORKBENCH_CANARY\b/g,
     replace: "THETA_GUI_WORKBENCH_CANARY",
   },
+  // R9 stored names. R7's channel rule already moved the two colon-style localStorage
+  // keys (locale, thread-switcher-order), so these two dot-style keys are the last
+  // stored names. They join the colon-style namespace the other two renderer keys use.
+  {
+    unit: "R9",
+    id: "stored-last-theme",
+    find: /pi-gui\.last-theme/g,
+    replace: "theta-desktop:last-theme",
+  },
+  {
+    unit: "R9",
+    id: "stored-review-tree-visible",
+    find: /pi-gui\.review-tree-visible/g,
+    replace: "theta-desktop:review-tree-visible",
+  },
 ];
 
 // Names that the app writes outside its code, and names of the pi agent. A rule match
