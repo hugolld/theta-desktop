@@ -43,6 +43,8 @@ These rules apply for the full session.
   and the `refs/pi-gui/snapshots/` refs in user repositories. See
   [NOTICE.md](./NOTICE.md).
 - `scripts/check-names.mjs` fails `pnpm check` when an upstream merge brings an old brand
-  name back (`com.pi-gui.`, `productName: pi-gui`, `app.setName("pi")`, `<title>pi</title>`,
-  `pi-gui.app`, `minghinmatthewlam/pi-gui/releases`), except in `LICENSE`, `NOTICE.md`,
-  `docs/`, `apps/website/`, `plans/`, and README's fork note.
+  name back: any `pi-gui`, `piApp`, `PiDesktop`, `PI_APP_`, or `PI_GUI_` outside the keep
+  names, or `app.setName("pi")` and `<title>pi</title>` anywhere. The exemptions are
+  `LICENSE`, `NOTICE.md`, `docs/`, `apps/website/`, `examples/`, `plans/`, the rename and
+  install-copy tooling, and README's fork note. [NOTICE.md](./NOTICE.md) lists the keep
+  names.

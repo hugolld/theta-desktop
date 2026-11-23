@@ -8,24 +8,54 @@ const execFileAsync = promisify(execFile);
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "..");
 
-// Exact strings that mark upstream pi-gui brand identity. An upstream merge that
-// brings one of these back must fail `pnpm check` instead of silently renaming the
-// product again. Names of the pi agent and the @pi-gui package scope are keep-list
-// names and never match here; see NOTICE.md for the full rule.
+// Old brand identifiers. After the keep names below are removed from a file, any
+// occurrence of one of these fails `pnpm check`. An upstream merge that brings a
+// renamed identifier back must fail here instead of silently renaming the product
+// again. Names of the pi agent itself never match; see NOTICE.md for the full rule.
 const BANNED_STRINGS = [
-  "com.pi-gui.",
-  "productName: pi-gui",
   'app.setName("pi")',
   "<title>pi</title>",
-  "pi-gui.app",
-  "minghinmatthewlam/pi-gui/releases",
+  "pi-gui",
+  "piApp",
+  "PiDesktop",
+  "PI_APP_",
+  "PI_GUI_",
+];
+
+// Names that stay pi by decision: the pi agent's own names, stored values it reads,
+// and upstream attribution. A file is checked with every occurrence of these removed,
+// so a sanctioned name never trips the banned strings above.
+const KEEP_NAMES = [
+  "@earendil-works/pi-coding-agent",
+  "PI_CODING_AGENT_DIR",
+  "$pi-gui-computer-use-smoke",
+  "minghinmatthewlam/pi-gui/issues/",
+  "minghinmatthewlam/pi-gui/pull/",
+  '"minghinmatthewlam/pi-gui"',
+  "</pi-gui-file-attachments>",
+  "<pi-gui-file-attachments>",
+  "PI_GUI_LEASE_SURFACE",
+  'surface: "pi-gui"',
+  "refs/pi-gui/",
+  "pi-gui.com",
+  "pi-gui.json",
+  "pi-gui.card",
+  "pi-gui.pin",
+  "pi-gui-desktop-views",
+  "pi-gui-transcript-identity",
+  "pi-gui-turn-capture",
+  "pi-gui-thread-orchestration",
+  "pi-gui-scheduled-tasks",
+  "pi-gui-plan-limits",
+  "pi-sdk-driver",
+  '"pi-gui"',
 ];
 
 // Historical records and upstream's own surfaces keep their old names on purpose.
 // AGENTS.md and CLAUDE.md quote the banned strings in their names rule. The guard's
-// own source and test carry the strings by definition — the rule data lives in the
-// source, and the test plants fixtures to prove detection works.
-const SKIPPED_PREFIXES = ["docs/", "plans/", "apps/website/"];
+// own source and test, the rename lever's, and the two install-copy verifiers carry
+// the strings by definition — rule data and absence assertions live in their sources.
+const SKIPPED_PREFIXES = ["docs/", "plans/", "apps/website/", "examples/"];
 const SKIPPED_FILES = new Set([
   "LICENSE",
   "LICENSE-THETA.md",
@@ -35,6 +65,10 @@ const SKIPPED_FILES = new Set([
   "CLAUDE.md",
   "scripts/check-names.mjs",
   "scripts/check-names.test.mjs",
+  "scripts/rename-pi-names.mjs",
+  "scripts/rename-pi-names.test.mjs",
+  "scripts/verify-install-copy.mjs",
+  "scripts/verify-homebrew-flow.mjs",
 ]);
 
 // README's leading blockquote is the fork note: it names upstream on purpose. The
@@ -48,14 +82,23 @@ export function stripForkNote(content) {
   while (index < lines.length && lines[index].trim() === "") {
     index += 1;
   }
-  if (lines[index]?.startsWith(">")) {
-    let end = index;
-    while (end < lines.length && lines[end].startsWith(">")) {
-      end += 1;
-    }
-    return [...lines.slice(0, index), ...lines.slice(end)].join("\n");
+  if (!lines[index]?.startsWith(">")) {
+    return content;
   }
-  return content;
+  let end = index;
+  while (end < lines.length && lines[end].startsWith(">")) {
+    end += 1;
+  }
+  return [...lines.slice(0, index), ...lines.slice(end)].join("\n");
+}
+
+/** Removes every keep-name occurrence, longest first so a longer name wins. */
+export function stripKeepNames(content) {
+  let next = content;
+  for (const keep of [...KEEP_NAMES].sort((left, right) => right.length - left.length)) {
+    next = next.split(keep).join("");
+  }
+  return next;
 }
 
 function isSkipped(relativePath) {
@@ -86,8 +129,9 @@ export async function collectViolations(rootDir = repoRoot) {
     if (relativePath === "README.md") {
       content = stripForkNote(content);
     }
+    const stripped = stripKeepNames(content);
     for (const banned of BANNED_STRINGS) {
-      if (content.includes(banned)) {
+      if (stripped.includes(banned)) {
         violations.push({ file: relativePath, banned });
       }
     }

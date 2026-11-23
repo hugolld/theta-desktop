@@ -48,5 +48,9 @@ Brand names that this fork did change: the display name (Theta), the app and dat
 name, the bundle ID, installer and executable names, the update source, the workspace
 package scope (now `@theta-desktop/*`), the preload bridge global (`piApp` is now
 `thetaApp`), the `PiDesktop*` type names, the `pi-gui:` IPC channel, frame-message, and
-`pi-gui-image` scheme strings, and the `PI_APP_*`/`PI_GUI_*` environment variable names
-(now `THETA_APP_*`/`THETA_GUI_*`; the pi agent's own `PI_CODING_AGENT_DIR` keeps its name).
+`pi-gui-image` scheme strings, the `PI_APP_*`/`PI_GUI_*` environment variable names
+(now `THETA_APP_*`/`THETA_GUI_*`; the pi agent's own `PI_CODING_AGENT_DIR` keeps its name),
+the renderer's stored localStorage keys (now `theta-desktop:*` names), the `[pi-gui]` log
+prefix (now `[theta]`), the `.pi-gui` catalogs default folder (now `.theta-desktop`),
+temp-dir and fixture name prefixes, and the comments and model-facing text that named the
+old brand (now Theta).

@@ -1,0 +1,14 @@
+# Mechanical rename commits from the pi-to-Theta campaign
+# (plans/pi-to-theta-rename/plan.md). Each commit renamed names wholesale, so a
+# line's last real change sits behind one of these. GitHub blame uses this file
+# automatically; for local git blame, run:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+d39e8916 feat(desktop): brand the running app as Theta (R2)
+a78fc975 build(desktop): rename the bundle and installer identity to Theta (R3)
+be6d4466 feat(desktop): point updates and release targets at the fork (R4)
+5dfffe7d docs: present theta-desktop and guard the brand names (R5)
+b6e57060 refactor(workspace): rename the package scope to @theta-desktop/*
+793ec440 refactor(desktop): rename the bridge and the channel strings (R7)
+5c3d7dd1 refactor(desktop): rename the environment variables (R8)
+32c7bac6 refactor(desktop): rename the last two stored keys (R9)
+e4aed863 refactor: rename the last pi-gui names for this app (R10)
