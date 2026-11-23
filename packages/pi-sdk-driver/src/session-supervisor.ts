@@ -1756,7 +1756,7 @@ export class SessionSupervisor {
     }
 
     // Claim the lease before opening a writable runtime. A live foreign holder
-    // or a lease we cannot write both refuse the reopen, so two pi-gui
+    // or a lease we cannot write both refuse the reopen, so two Theta
     // processes never write the same file.
     const leasePath = await this.claimSessionLease(sessionFile);
 
@@ -2346,7 +2346,7 @@ export class SessionSupervisor {
           title,
         });
       },
-      // pi-gui does not render arbitrary TUI custom components. Throwing a
+      // Theta does not render arbitrary TUI custom components. Throwing a
       // typed unsupported-host error allows extensions to catch and degrade,
       // while uncaught command paths fail fast and are surfaced cleanly by
       // the desktop host.

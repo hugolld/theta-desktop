@@ -511,13 +511,13 @@ export class RuntimeSupervisor implements RuntimeResourceDriver {
     return this.buildSnapshot(context);
   }
 
-  /** The built-in's name when `path` is a pi-gui built-in extension, which Settings toggles app-wide. */
+  /** The built-in's name when `path` is a Theta built-in extension, which Settings toggles app-wide. */
   builtinExtensionName(path: string): string | undefined {
     return findBuiltinExtension(this.builtinExtensions, path)?.name;
   }
 
   /**
-   * Every pi-gui built-in loads ungated here so Settings can list a switched-off one with its
+   * Every Theta built-in loads ungated here so Settings can list a switched-off one with its
    * tools. pi's add-ons keep their `builtin` flag so pi's `extensions` setting still gates them.
    */
   private inventoryExtensionFactories(): InlineExtension[] {
@@ -567,7 +567,7 @@ export class RuntimeSupervisor implements RuntimeResourceDriver {
       }
 
       console.warn(
-        `[pi-gui] Falling back to runtime resource loading without npm package sources for ${workspace.path}: ${
+        `[theta] Falling back to runtime resource loading without npm package sources for ${workspace.path}: ${
           error instanceof Error ? error.message : String(error)
         }`,
       );
@@ -686,7 +686,7 @@ export class RuntimeSupervisor implements RuntimeResourceDriver {
         accepted.push(registration);
       } catch (error) {
         console.warn(
-          `[pi-gui] Extension "${extensionPath}" failed to register provider "${name}": ${
+          `[theta] Extension "${extensionPath}" failed to register provider "${name}": ${
             error instanceof Error ? error.message : String(error)
           }`,
         );
@@ -700,7 +700,7 @@ export class RuntimeSupervisor implements RuntimeResourceDriver {
         acceptedNative.push(registration);
       } catch (error) {
         console.warn(
-          `[pi-gui] Extension "${extensionPath}" failed to register native provider "${provider.id}": ${
+          `[theta] Extension "${extensionPath}" failed to register native provider "${provider.id}": ${
             error instanceof Error ? error.message : String(error)
           }`,
         );
@@ -757,7 +757,7 @@ export class RuntimeSupervisor implements RuntimeResourceDriver {
       }
 
       console.warn(
-        `[pi-gui] Falling back to runtime package resolution without npm package sources for ${context.workspace.path}: ${
+        `[theta] Falling back to runtime package resolution without npm package sources for ${context.workspace.path}: ${
           error instanceof Error ? error.message : String(error)
         }`,
       );
@@ -1288,7 +1288,7 @@ function toAuthInteraction(callbacks: RuntimeLoginCallbacks): LoginInteraction {
     ...(callbacks.signal ? { signal: callbacks.signal } : {}),
     prompt: async (prompt) => {
       if (prompt.type === "select") {
-        // pi's sign-ins open with "browser or headless"; pi-gui always runs where the browser is.
+        // pi's sign-ins open with "browser or headless"; Theta always runs where the browser is.
         const browser = prompt.options.find((option) => option.id === BROWSER_LOGIN_METHOD);
         if (browser) return browser.id;
         const defaultOption = prompt.options[0];

@@ -1,9 +1,9 @@
 ---
 name: testing-windows-desktop
-description: End-to-end test the pi-gui Electron desktop app on Windows. Use when verifying Windows compatibility (dev launcher, PATH, folder picker, integrated terminal / node-pty) or any apps/desktop change on Windows.
+description: End-to-end test the Theta Electron desktop app on Windows. Use when verifying Windows compatibility (dev launcher, PATH, folder picker, integrated terminal / node-pty) or any apps/desktop change on Windows.
 ---
 
-# Testing the pi-gui desktop app on Windows
+# Testing the Theta desktop app on Windows
 
 ## Setup
 

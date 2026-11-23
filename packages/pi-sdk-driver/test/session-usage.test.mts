@@ -39,7 +39,7 @@ const reply: StreamFunction = (model) => {
 };
 
 async function runOneTurn(t: TestContext, promptCache: Record<string, number> | undefined) {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-session-usage-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-session-usage-"));
   const agentDir = join(root, "agent");
   const cwd = join(root, "workspace");
   await mkdir(agentDir);

@@ -5,7 +5,7 @@ import path from "node:path";
 import { applyHomebrewTapUpdate, renderCask, resolveCaskPath } from "./homebrew-tap-utils.mjs";
 
 async function main() {
-  const tapDir = await mkdtemp(path.join(os.tmpdir(), "pi-gui-homebrew-tap-"));
+  const tapDir = await mkdtemp(path.join(os.tmpdir(), "theta-homebrew-tap-"));
   await mkdir(path.join(tapDir, "Casks"), { recursive: true });
 
   const caskPath = resolveCaskPath(tapDir);

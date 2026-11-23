@@ -167,7 +167,7 @@ export function Sidebar(props: SidebarProps) {
   } = props;
 
   const [sidebarWidth, setSidebarWidth] = usePersistedPaneWidth(
-    "pi-gui.sidebar-width",
+    "theta-desktop:sidebar-width",
     SIDEBAR_WIDTH_RANGE,
   );
   const sidebarWidthStyle: (CSSProperties & { "--sidebar-width": string }) | undefined =

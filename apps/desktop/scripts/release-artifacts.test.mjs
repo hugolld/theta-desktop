@@ -85,7 +85,7 @@ async function stageFixture(root, platform, override) {
 }
 
 test("stages immutable platform manifests and verifies the combined candidate", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "pi-gui-release-artifacts-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "theta-release-artifacts-"));
   const combined = path.join(root, "combined");
   await mkdir(combined);
 
@@ -107,7 +107,7 @@ test("stages immutable platform manifests and verifies the combined candidate", 
 });
 
 test("rejects bytes changed after the platform manifest was written", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "pi-gui-release-tamper-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "theta-release-tamper-"));
   const staged = await stageFixture(root, "windows");
   await writeFile(
     path.join(staged, `Theta-${VERSION}-x64-setup.exe`),
@@ -127,7 +127,7 @@ test("rejects bytes changed after the platform manifest was written", async () =
 });
 
 test("requires the Debian package when staging Linux artifacts", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "pi-gui-release-linux-missing-deb-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "theta-release-linux-missing-deb-"));
   const source = await createFixture(root, "linux");
   await unlink(path.join(source, `Theta_${VERSION}_amd64.deb`));
 
@@ -144,7 +144,7 @@ test("requires the Debian package when staging Linux artifacts", async () => {
 });
 
 test("requires latest-linux.yml to checksum the Debian package", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "pi-gui-release-linux-manifest-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "theta-release-linux-manifest-"));
   const source = await createFixture(root, "linux");
   const manifestPath = path.join(source, "latest-linux.yml");
   const manifest = parse(await readFile(manifestPath, "utf8"));
@@ -164,7 +164,7 @@ test("requires latest-linux.yml to checksum the Debian package", async () => {
 });
 
 test("rejects Debian package bytes changed after Linux staging", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "pi-gui-release-linux-tamper-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "theta-release-linux-tamper-"));
   const staged = await stageFixture(root, "linux");
   await writeFile(
     path.join(staged, `Theta_${VERSION}_amd64.deb`),
@@ -184,7 +184,7 @@ test("rejects Debian package bytes changed after Linux staging", async () => {
 });
 
 test("rejects latest.yml when it selects the portable executable", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "pi-gui-release-portable-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "theta-release-portable-"));
   const portable = `Theta-${VERSION}-x64-portable.exe`;
   const source = await createFixture(root, "windows");
   const manifestPath = path.join(source, "latest.yml");
@@ -208,7 +208,7 @@ test("rejects latest.yml when it selects the portable executable", async () => {
 });
 
 test("rejects undeclared files in the combined release candidate", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "pi-gui-release-extra-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "theta-release-extra-"));
   const combined = path.join(root, "combined");
   await mkdir(combined);
   for (const platform of ["macos", "linux", "windows"]) {
@@ -228,7 +228,7 @@ test("rejects undeclared files in the combined release candidate", async () => {
 });
 
 test("refreshes macOS metadata and blockmap from final DMG bytes", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "pi-gui-release-final-dmg-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "theta-release-final-dmg-"));
   const source = await createFixture(root, "macos");
   const manifestPath = path.join(source, "latest-mac.yml");
   const manifest = parse(await readFile(manifestPath, "utf8"));

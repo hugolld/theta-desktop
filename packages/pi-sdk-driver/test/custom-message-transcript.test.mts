@@ -38,7 +38,7 @@ function reply(model: Parameters<StreamFunction>[0], text: string) {
 
 /** Real installed Pi and a real extension; only the provider is scripted. */
 async function fixture(t: TestContext, streamFunction: StreamFunction) {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-custom-message-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-custom-message-"));
   const agentDir = join(root, "agent");
   const cwd = join(root, "workspace");
   await mkdir(agentDir);

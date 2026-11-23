@@ -922,7 +922,7 @@ function installApplicationMenu(): void {
 }
 
 // Ensure npm (and other Homebrew/npm-global binaries) are available even when
-// pi-gui is launched via Finder/Dock (which hands the process a minimal PATH).
+// Theta is launched via Finder/Dock (which hands the process a minimal PATH).
 // POSIX-only; on Windows the PATH is left untouched (see augmentPosixPath).
 // Tests that need an exact PATH (no gh, say, on a Mac runner whose Homebrew has one) opt out.
 const augmentedPath = augmentPosixPath();
@@ -1032,13 +1032,13 @@ app
         {
           name: "pi-gui-thread-orchestration",
           displayName: "Thread orchestration",
-          description: "Lets pi start, read and message other pi-gui threads",
+          description: "Lets pi start, read and message other Theta threads",
           factory: createOrchestrationRuntimeExtension(orchestrationRuntimeBridge),
         },
         {
           name: "pi-gui-scheduled-tasks",
           displayName: "Scheduled tasks",
-          description: "Lets pi create and update local pi-gui scheduled tasks",
+          description: "Lets pi create and update local Theta scheduled tasks",
           factory: createScheduledTaskRuntimeExtension(scheduledTaskRuntimeBridge, (ctx) => {
             try {
               return sessionRefFromExtensionContext(ctx).workspaceId;

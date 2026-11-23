@@ -45,7 +45,7 @@ const streamFunction: StreamFunction = (model) => {
 };
 
 async function setUp(t: TestContext, extensionFactories: ExtensionFactory[] = []) {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-queue-settle-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-queue-settle-"));
   const agentDir = join(root, "agent");
   const cwd = join(root, "workspace");
   await mkdir(agentDir);
@@ -205,7 +205,7 @@ await test("a message queued after pi settled, before the app heard, starts the 
 });
 
 await test("a message queued while pi's settle hooks run starts the next turn", async (t) => {
-  // pi stops streaming before it runs extensions' agent_settled handlers (pi-gui's own turn
+  // pi stops streaming before it runs extensions' agent_settled handlers (Theta's own turn
   // capture is one) and tells the driver only after them, so the driver still counts the run.
   let holdSettle = false;
   let releaseSettle!: () => void;

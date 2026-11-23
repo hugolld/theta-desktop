@@ -59,7 +59,7 @@ async function keepRealClock(window: Page): Promise<void> {
   });
 }
 
-const rendererBusy = "pi-gui test: renderer busy";
+const rendererBusy = "Theta test: renderer busy";
 
 /**
  * Blocks the renderer for a second and returns once that task has started, so main's flush

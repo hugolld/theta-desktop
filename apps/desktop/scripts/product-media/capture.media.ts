@@ -339,7 +339,7 @@ test("capture product media from a real run", async () => {
   });
 
   // Credentials stay outside the retained evidence tree and are deleted when the run ends.
-  const privateDir = await mkdtemp(path.join(tmpdir(), "pi-gui-media-"));
+  const privateDir = await mkdtemp(path.join(tmpdir(), "theta-media-"));
   let xvfb: ChildProcess | undefined;
   let harness: Awaited<ReturnType<typeof launchDesktop>> | undefined;
   let stopRecording: (() => Promise<void>) | undefined;

@@ -34,7 +34,7 @@ function runtime(extensions: RuntimeExtensionRecord[]): RuntimeSnapshot {
   return { extensions } as unknown as RuntimeSnapshot;
 }
 
-test("a folder's extension tools are labelled, pi-gui's own and unlabelled tools are not", () => {
+test("a folder's extension tools are labelled, Theta's own and unlabelled tools are not", () => {
   const tool = (name: string, label: string, replacesPiTool = false) => ({
     name,
     label,
@@ -55,7 +55,7 @@ test("a folder's extension tools are labelled, pi-gui's own and unlabelled tools
       extension("tickets", [tool("ticket_read", "Look up ticket")]),
     ]),
   );
-  // Replacing pi's bash keeps pi-gui's handling; a name two extensions register is ambiguous.
+  // Replacing pi's bash keeps Theta's handling; a name two extensions register is ambiguous.
   // A switched-off extension's tool does not count as a clash.
   expect([...labels]).toEqual([
     ["github_read", "Read GitHub issue or PR"],

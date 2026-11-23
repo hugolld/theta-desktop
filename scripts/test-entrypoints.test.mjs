@@ -23,7 +23,7 @@ test("root e2e delegates to the built, isolated desktop core lane", async () => 
 });
 
 test("root Playwright entrypoint preserves desktop safeguards and rejects focused tests", async () => {
-  const fixtureDir = await mkdtemp(path.join(tmpdir(), "pi-gui-entrypoint-guard-"));
+  const fixtureDir = await mkdtemp(path.join(tmpdir(), "theta-entrypoint-guard-"));
   const configPath = path.join(fixtureDir, "playwright.config.ts");
   const specPath = path.join(fixtureDir, "guard.spec.ts");
   const rootConfig = path.join(root, "playwright.config.ts");

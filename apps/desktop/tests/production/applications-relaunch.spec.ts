@@ -15,7 +15,7 @@ import {
 test("launches an installed app copy from /Applications and relaunches with persisted state", async () => {
   test.setTimeout(120_000);
 
-  const userDataDir = await makeUserDataDir("pi-gui-installed-user-data-");
+  const userDataDir = await makeUserDataDir("theta-installed-user-data-");
   const agentDir = join(userDataDir, "agent");
   await mkdir(agentDir, { recursive: true });
   await writeFile(

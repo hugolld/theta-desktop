@@ -18,7 +18,7 @@ test.skip(process.platform !== "darwin", "Finder-style packaged app coverage is 
 test("launches a packaged app under a Finder-style PATH and opens the first folder", async () => {
   test.setTimeout(120_000);
 
-  const userDataDir = await makeUserDataDir("pi-gui-finder-env-user-data-");
+  const userDataDir = await makeUserDataDir("theta-finder-env-user-data-");
   const agentDir = join(userDataDir, "agent");
   await mkdir(agentDir, { recursive: true });
   await writeFile(

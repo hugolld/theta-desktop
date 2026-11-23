@@ -7,7 +7,7 @@ import ts from "typescript";
 import { checkRendererBoundary } from "./check-renderer-boundary.mjs";
 
 function fixture(source, extra = {}) {
-  const root = mkdtempSync(path.join(os.tmpdir(), "pi-gui-boundary-"));
+  const root = mkdtempSync(path.join(os.tmpdir(), "theta-boundary-"));
   const files = {
     "apps/desktop/tsconfig.json": JSON.stringify({
       compilerOptions: {

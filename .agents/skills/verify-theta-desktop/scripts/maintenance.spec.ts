@@ -26,7 +26,7 @@ test("maintenance: skills, pin, thread list, worktree, queued follow-ups", async
   }
   const auth = JSON.parse(await readFile(join(source, "auth.json"), "utf8"));
   if (!auth[provider]) throw new Error(`BLOCKED: no saved credentials for ${provider}`);
-  const privateRoot = await mkdtemp(join(tmpdir(), "pi-gui-maintenance-private-"));
+  const privateRoot = await mkdtemp(join(tmpdir(), "theta-maintenance-private-"));
   await chmod(privateRoot, 0o700);
   const profile = join(privateRoot, "profile");
   const agentDir = join(privateRoot, "agent");

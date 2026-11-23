@@ -97,7 +97,7 @@ source instead; see [Development](#development). When the first Theta release la
 `.dmg` (macOS), `.AppImage` and `.deb` (Linux), and `.exe` (Windows) artifacts will appear on
 this repository's GitHub Releases page.
 
-Upstream pi-gui publishes its own signed builds, reachable through the upstream repository
+Upstream Theta publishes its own signed builds, reachable through the upstream repository
 linked at the top of this file. That build is upstream's app under its own name; it is not
 Theta, and this fork does not distribute or support it.
 
@@ -198,6 +198,6 @@ and the [pi](https://github.com/earendil-works/pi) runtime and ecosystem.
 
 ## License
 
-Licensing is two-tier; see [NOTICE](./NOTICE.md). Upstream pi-gui code is
+Licensing is two-tier; see [NOTICE](./NOTICE.md). Upstream Theta code is
 [MIT](./LICENSE) © Matthew Lam. Theta-authored files carry the
 [PolyForm Noncommercial License 1.0.0](./LICENSE-THETA.md) © Theta contributors.

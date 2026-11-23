@@ -178,7 +178,7 @@ if (notificationHelperPath && !existsSync(notificationHelperPath)) {
   throw new Error(`Packaged app is missing notification helper: ${notificationHelperPath}`);
 }
 
-const extractedDir = mkdtempSync(path.join(tmpdir(), "pi-gui-packaged-runtime-"));
+const extractedDir = mkdtempSync(path.join(tmpdir(), "theta-packaged-runtime-"));
 let cleanupError;
 try {
   execFileSync(pnpmBinary, ["exec", "asar", "extract", asarPath, extractedDir], {
@@ -320,7 +320,7 @@ async function verifyPackagedPiRuntime(extractedDir) {
     "index.js",
   );
   const { ModelRuntime } = await import(pathToFileURL(runtimeEntry).href);
-  const authDir = mkdtempSync(path.join(tmpdir(), "pi-gui-packaged-runtime-models-"));
+  const authDir = mkdtempSync(path.join(tmpdir(), "theta-packaged-runtime-models-"));
   const runtime = await ModelRuntime.create({
     authPath: path.join(authDir, "auth.json"),
     modelsPath: null,

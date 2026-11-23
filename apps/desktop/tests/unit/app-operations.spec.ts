@@ -19,7 +19,7 @@ const runExtensionAction = async (host: AppOperationHost, target: SessionRef, ra
 const target = { workspaceId: "workspace", sessionId: "session" };
 
 async function fixture(linkedRoot = false) {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-app-ops-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-app-ops-"));
   const checkout = join(root, "checkout");
   await mkdir(join(checkout, "src"), { recursive: true });
   await writeFile(join(checkout, "src", "a.ts"), "export const a = 1;\n");
@@ -67,7 +67,7 @@ const folder = (
   ...(rootWorkspaceId ? { rootWorkspaceId } : {}),
   sessions,
 });
-// The card's folder, one of its pi-gui worktrees, and an unrelated folder.
+// The card's folder, one of its Theta worktrees, and an unrelated folder.
 const folders = [
   folder("workspace", [thread("session"), thread("sibling"), thread("old", "2026-09-01")]),
   folder("worktree", [thread("in-worktree")], "workspace"),

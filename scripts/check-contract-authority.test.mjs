@@ -51,7 +51,7 @@ declare module "*.png" { const url: string; export default url }
 });
 
 test("repository guard rejects an untracked vendor declaration and accepts its replacement", () => {
-  const root = mkdtempSync(path.join(os.tmpdir(), "pi-gui-contract-guard-"));
+  const root = mkdtempSync(path.join(os.tmpdir(), "theta-contract-guard-"));
   execFileSync("git", ["init", "--quiet", root]);
   const file = path.join(root, "packages/driver/src/vendor.d.ts");
   mkdirSync(path.dirname(file), { recursive: true });

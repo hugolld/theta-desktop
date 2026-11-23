@@ -140,14 +140,14 @@ async function main() {
     options: {
       "cask-token": { type: "string", default: `theta-desktop-homebrew-proof-${process.pid}` },
       "keep-temp": { type: "boolean", default: false },
-      "tap-name": { type: "string", default: `codex/pi-gui-proof-${process.pid}` },
+      "tap-name": { type: "string", default: `codex/theta-proof-${process.pid}` },
       "version-a": { type: "string", default: "0.1.0-beta.9000" },
       "version-b": { type: "string", default: "0.1.0-beta.9001" },
     },
     strict: true,
   });
 
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "pi-gui-homebrew-proof-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "theta-homebrew-proof-"));
   const appDir = path.join(tempRoot, "Applications");
   const cacheDir = path.join(tempRoot, "cache");
   const releaseDirA = path.join(tempRoot, "release-a");

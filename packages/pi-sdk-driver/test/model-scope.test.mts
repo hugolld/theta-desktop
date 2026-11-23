@@ -19,7 +19,7 @@ function provider(models: readonly string[]) {
 }
 
 async function supervisorWithEnabledModels(enabledModels?: readonly string[]) {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-model-scope-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-model-scope-"));
   const agentDir = join(root, "agent");
   const workspacePath = join(root, "workspace");
   await mkdir(agentDir, { recursive: true });

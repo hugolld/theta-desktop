@@ -1,5 +1,5 @@
 /**
- * Editors pi-gui can hand a checkout to. Electron main probes this machine and
+ * Editors Theta can hand a checkout to. Electron main probes this machine and
  * reports only the editors it can actually launch, so the renderer menu is
  * never a static IDE list that fails when an editor is missing.
  */

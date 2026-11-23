@@ -224,7 +224,7 @@ export class GitWorktreeManager {
   }
 
   /**
-   * Location alone does not prove pi-gui made a checkout, so removal also needs
+   * Location alone does not prove Theta made a checkout, so removal also needs
    * the `pi/*` branch every app worktree is created on (as the startup prune does).
    */
   private async isRemovableAppWorktree(path: string): Promise<boolean> {

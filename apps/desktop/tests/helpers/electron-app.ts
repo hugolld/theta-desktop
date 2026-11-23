@@ -588,7 +588,7 @@ function isMissingPathError(error: unknown): boolean {
   return typeof error === "object" && error !== null && "code" in error && error.code === "ENOENT";
 }
 
-export async function makeUserDataDir(prefix = "pi-gui-user-data-"): Promise<string> {
+export async function makeUserDataDir(prefix = "theta-user-data-"): Promise<string> {
   return mkdtemp(join(tmpdir(), prefix));
 }
 
@@ -1058,7 +1058,7 @@ async function withAgentDirEnv<T>(agentDir: string, action: () => Promise<T>): P
 }
 
 export async function makeWorkspace(name: string): Promise<string> {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-workspace-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-workspace-"));
   const workspacePath = join(root, name);
   await mkdir(workspacePath, { recursive: true });
   await writeFile(join(workspacePath, "README.md"), `# ${name}\n`, "utf8");
@@ -1087,7 +1087,7 @@ export async function writeProjectExtension(
 export async function initGitRepo(workspacePath: string): Promise<void> {
   await execFileAsync("git", ["init", "-b", "main"], { cwd: workspacePath });
   await execFileAsync("git", ["config", "user.name", "Pi App Tests"], { cwd: workspacePath });
-  await execFileAsync("git", ["config", "user.email", "pi-gui-tests@example.com"], {
+  await execFileAsync("git", ["config", "user.email", "theta-tests@example.com"], {
     cwd: workspacePath,
   });
 }

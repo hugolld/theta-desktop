@@ -18,7 +18,7 @@ import {
 } from "../helpers/electron-app";
 
 const proofDir =
-  process.env.THETA_APP_RECENCY_PROOF_DIR ?? join(tmpdir(), "pi-gui-recency-thread-list");
+  process.env.THETA_APP_RECENCY_PROOF_DIR ?? join(tmpdir(), "theta-recency-thread-list");
 
 test("caps each time bucket at five and hides workspace headers", async () => {
   test.setTimeout(90_000);

@@ -24,7 +24,7 @@ test("a real provider records PR findings through the installed extension and pr
   if (!auth || typeof auth !== "object" || Array.isArray(auth) || !(provider in auth))
     throw new Error("The selected provider has no saved credentials.");
   // Credential copies stay outside the shareable screenshot/trace directory.
-  const privateRoot = await mkdtemp(join(tmpdir(), "pi-gui-extension-live-private-"));
+  const privateRoot = await mkdtemp(join(tmpdir(), "theta-extension-live-private-"));
   await chmod(privateRoot, 0o700);
   const agentDir = join(privateRoot, "agent");
   await mkdir(agentDir, { mode: 0o700 });

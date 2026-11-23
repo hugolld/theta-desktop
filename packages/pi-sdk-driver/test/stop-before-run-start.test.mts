@@ -45,7 +45,7 @@ const streamFunction: StreamFunction = (model, _context, options) => {
 };
 
 await test("Stop pressed while Pi is still starting a run cancels that run", async (t) => {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-stop-start-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-stop-start-"));
   const agentDir = join(root, "agent");
   const cwd = join(root, "workspace");
   await mkdir(agentDir);

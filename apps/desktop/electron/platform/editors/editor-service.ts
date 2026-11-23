@@ -28,7 +28,7 @@ export function launchEditorCommand({
   waitForExit,
 }: EditorLaunchCommand): Promise<void> {
   return new Promise((resolve, reject) => {
-    // Detached so the editor outlives pi-gui and its process group.
+    // Detached so the editor outlives Theta and its process group.
     const child = spawn(command, [...args], {
       detached: true,
       stdio: "ignore",

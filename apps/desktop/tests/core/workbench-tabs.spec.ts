@@ -559,7 +559,7 @@ test("keeps one resizable width across tools, chooser, tasks, and restart", asyn
     await window.screenshot({ path: testInfo.outputPath("narrow-workspace-chooser.png") });
     // Wait for the debounced preference write before exercising a fresh process.
     await expect
-      .poll(() => window.evaluate(() => localStorage.getItem("pi-gui.workbench-width")))
+      .poll(() => window.evaluate(() => localStorage.getItem("theta-desktop:workbench-width")))
       .toBe("340");
     await harness.close();
     harness = await launchDesktop(fixture.userDataDir, options);

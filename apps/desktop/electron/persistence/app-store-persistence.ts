@@ -38,7 +38,7 @@ export interface PersistedUiState {
   /** Flag values each thread's pi session started with, by session key. */
   readonly extensionFlagsBySession?: Record<string, ExtensionFlagValues>;
   readonly notificationPreferences?: Partial<NotificationPreferences>;
-  /** Names of pi-gui built-in extensions the user switched off. */
+  /** Names of Theta built-in extensions the user switched off. */
   readonly disabledBuiltinExtensions?: readonly string[];
   readonly integratedTerminalShell?: string;
   readonly lastViewedAtBySession?: Record<string, string>;

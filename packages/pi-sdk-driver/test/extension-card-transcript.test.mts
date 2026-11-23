@@ -157,7 +157,7 @@ await test("the session projection places cards in entry order and skips other c
   const manager = SessionManager.inMemory();
   const userId = manager.appendMessage({ role: "user", content: "run ci", timestamp: Date.now() });
   const cardId = manager.appendCustomEntry("pi-gui.card", { title: "CI passed", tone: "success" });
-  manager.appendCustomEntry("status-card", { title: "not for pi-gui" });
+  manager.appendCustomEntry("status-card", { title: "not for Theta" });
   manager.appendCustomEntry("pi-gui.card", { rows: [] });
   const transcript = transcriptFromSession(manager);
   assert.deepEqual(
@@ -298,7 +298,7 @@ await test("a pin on another branch is not shown", () => {
 });
 
 await test("a live card and the reopened transcript show the same card once", async (t) => {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-card-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-card-"));
   const agentDir = join(root, "agent");
   const cwd = join(root, "workspace");
   await mkdir(agentDir);

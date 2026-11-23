@@ -30,7 +30,7 @@ test("real conversation: stream, switch, tool, stop, archive, restart", async ()
     throw new Error(`BLOCKED: no saved credentials or models.json entry for ${provider}`);
   }
   // Keep copied credentials outside the shareable evidence directory.
-  const privateRoot = await mkdtemp(join(tmpdir(), "pi-gui-conversation-private-"));
+  const privateRoot = await mkdtemp(join(tmpdir(), "theta-conversation-private-"));
   await chmod(privateRoot, 0o700);
   const profile = join(privateRoot, "profile");
   const agentDir = join(privateRoot, "agent");

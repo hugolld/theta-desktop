@@ -64,7 +64,7 @@ async function fixture(
   extension?: ExtensionFactory,
   wrapCatalog?: (catalog: JsonCatalogStore) => SessionFileCatalogStorage,
 ) {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-boundary-lifecycle-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-boundary-lifecycle-"));
   const agentDir = join(root, "agent");
   const cwd = join(root, "workspace");
   await mkdir(agentDir);

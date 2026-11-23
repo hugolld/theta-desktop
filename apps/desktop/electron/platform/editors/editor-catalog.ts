@@ -1,5 +1,5 @@
 /**
- * Editors pi-gui knows how to open a checkout in, with the per-platform facts
+ * Editors Theta knows how to open a checkout in, with the per-platform facts
  * each probe needs. Detection lives in `detect-editors.ts`; this file is data.
  */
 

@@ -110,7 +110,7 @@ test("failed media generation preserves the published file and partial evidence"
   const { replaceFileAtomically } = await jiti.import(
     path.join(root, "apps/desktop/scripts/atomic-output.mts"),
   );
-  const fixtureDir = await mkdtemp(path.join(tmpdir(), "pi-gui-marketing-output-"));
+  const fixtureDir = await mkdtemp(path.join(tmpdir(), "theta-marketing-output-"));
   const outputPath = path.join(fixtureDir, "published.mp4");
   await writeFile(outputPath, "existing published media");
 

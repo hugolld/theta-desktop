@@ -4,7 +4,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 /**
- * Compute the PATH pi-gui should use so npm / Homebrew / npm-global /
+ * Compute the PATH Theta should use so npm / Homebrew / npm-global /
  * `~/.local/bin` binaries stay reachable when the app is launched from
  * Finder/Dock (which hands the process a minimal PATH).
  *

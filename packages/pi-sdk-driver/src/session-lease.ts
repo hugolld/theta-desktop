@@ -7,8 +7,8 @@ import { isMissingFileError } from "@theta-desktop/catalogs/node";
 /**
  * Single-writer lease convention for pi session files.
  *
- * When pi-gui binds a live runtime to a session's JSONL, it claims a sibling
- * `<sessionFile>.lease` file recording who holds it. Between pi-gui processes
+ * When Theta binds a live runtime to a session's JSONL, it claims a sibling
+ * `<sessionFile>.lease` file recording who holds it. Between Theta processes
  * the lease is exclusive: it is created with an atomic exclusive link, kept
  * fresh by a heartbeat while the holder lives, and removed only by its owner.
  * The pi CLI knows nothing about it, so its presence must never block reading

@@ -650,7 +650,7 @@ test("keeps a single subscription path when an extension creates a child session
 test("switches Theta tools off app-wide and keeps them off after a restart", async () => {
   test.setTimeout(90_000);
   const userDataDir = await makeUserDataDir();
-  const workspacePath = await makeWorkspace("pi-gui-tools-workspace");
+  const workspacePath = await makeWorkspace("theta-tools-workspace");
   const orchestrationPath = "<inline:pi-gui-thread-orchestration>";
   const orchestrationEnabled = async (window: Page) => {
     const state = await getDesktopState(window);

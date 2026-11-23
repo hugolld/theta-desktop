@@ -68,7 +68,7 @@ function expectedFor(seeded: readonly SeededUsageThread[], since: number | null)
 async function launchUsageDemo(options: { folderName?: string } = {}) {
   const userDataDir = await makeUserDataDir();
   const agentDir = join(userDataDir, "agent");
-  const workspace = await makeWorkspace(options.folderName ?? "pi-gui");
+  const workspace = await makeWorkspace(options.folderName ?? "theta");
   await seedAgentDir(agentDir, { withOpenAiAuth: false, withDefaultModel: false });
   await writeFile(
     join(agentDir, "settings.json"),

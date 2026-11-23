@@ -298,7 +298,7 @@ function resolveWindowsCommand(
 
 /**
  * Editor the OS itself would open a folder with, as a catalog id, or undefined
- * when the machine's default handler is not one of the editors pi-gui knows or
+ * when the machine's default handler is not one of the editors Theta knows or
  * that editor is not installed. Every branch maps the OS's answer back to an
  * entry that is present in `editors`, so callers never get a phantom id.
  */

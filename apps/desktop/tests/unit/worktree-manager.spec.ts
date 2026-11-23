@@ -15,7 +15,7 @@ const execFileAsync = promisify(execFile);
  * Direct unit coverage for the destructive worktree lifecycle logic — the
  * transactional-create rollback, the branch cleanup on removal, and the startup
  * GC prune. Runs in Node (no Electron surface); every git command targets a
- * throwaway repo, never pi-gui itself.
+ * throwaway repo, never Theta itself.
  */
 
 class FakeCatalog {

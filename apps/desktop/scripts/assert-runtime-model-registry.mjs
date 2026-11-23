@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ModelRuntime } from "@earendil-works/pi-coding-agent";
 
-const dir = await mkdtemp(join(tmpdir(), "pi-gui-runtime-models-"));
+const dir = await mkdtemp(join(tmpdir(), "theta-runtime-models-"));
 await writeFile(join(dir, "auth.json"), "{}\n");
 const runtime = await ModelRuntime.create({
   authPath: join(dir, "auth.json"),
@@ -103,7 +103,7 @@ console.log("Verified bundled kimi-coding models use https://api.kimi.com/coding
 // /v1/models endpoint, but upstream Pi (including 1.4.0) only bundles
 // muse-wonder-1.0. Until it does, users can add the contributor variant in
 // models.json; verify that Pi's models.json merge surfaces it.
-const overlayDir = await mkdtemp(join(tmpdir(), "pi-gui-runtime-models-overlay-"));
+const overlayDir = await mkdtemp(join(tmpdir(), "theta-runtime-models-overlay-"));
 await writeFile(join(overlayDir, "auth.json"), "{}\n");
 await writeFile(
   join(overlayDir, "models.json"),

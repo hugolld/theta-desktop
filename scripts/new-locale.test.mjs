@@ -28,7 +28,7 @@ export const LOCALES = [
 `;
 
 function fixture() {
-  const root = mkdtempSync(path.join(os.tmpdir(), "pi-gui-new-locale-"));
+  const root = mkdtempSync(path.join(os.tmpdir(), "theta-new-locale-"));
   const i18n = path.join(root, "apps", "desktop", "src", "i18n");
   mkdirSync(path.join(i18n, "messages"), { recursive: true });
   mkdirSync(path.join(root, "scripts"), { recursive: true });

@@ -293,7 +293,7 @@ export class DesktopAppStore {
   private readonly workspaceOwner: WorkspaceOwner;
   private readonly orchestrationOwner: OrchestrationOwner;
   private readonly scheduledTaskOwner: ScheduledTaskOwner;
-  /** App-wide: built-in pi-gui extensions the user switched off in Settings. */
+  /** App-wide: built-in Theta extensions the user switched off in Settings. */
   private readonly disabledBuiltinExtensions = new Set<string>();
   /** Flag values last chosen in New thread, by root workspace: the next thread's defaults. */
   private readonly extensionFlagsByWorkspace = new Map<string, ExtensionFlagValues>();
@@ -1808,7 +1808,7 @@ export class DesktopAppStore {
     );
   }
 
-  /** pi-gui owns built-in extensions, so their switch is app-wide rather than in pi's settings. */
+  /** Theta owns built-in extensions, so their switch is app-wide rather than in pi's settings. */
   private async setBuiltinExtensionEnabled(
     workspaceId: string,
     name: string,
@@ -2043,7 +2043,7 @@ export class DesktopAppStore {
         return;
       }
       console.warn(
-        `[pi-gui] Failed to refresh runtime for ${workspace?.path ?? "unknown workspace"} after custom provider update: ${
+        `[theta] Failed to refresh runtime for ${workspace?.path ?? "unknown workspace"} after custom provider update: ${
           result.reason instanceof Error ? result.reason.message : String(result.reason)
         }`,
       );
@@ -2062,7 +2062,7 @@ export class DesktopAppStore {
       }
       const workspace = this.state.workspaces[index];
       console.warn(
-        `[pi-gui] Failed to refresh session commands for ${workspace?.path ?? "unknown workspace"} after custom provider update: ${
+        `[theta] Failed to refresh session commands for ${workspace?.path ?? "unknown workspace"} after custom provider update: ${
           result.reason instanceof Error ? result.reason.message : String(result.reason)
         }`,
       );
@@ -2491,7 +2491,7 @@ export class DesktopAppStore {
         }
         const failedWorkspace = secondaryWorkspacesToLoad[index];
         console.warn(
-          `[pi-gui] Failed to preload runtime for ${failedWorkspace?.path ?? "unknown workspace"}: ${
+          `[theta] Failed to preload runtime for ${failedWorkspace?.path ?? "unknown workspace"}: ${
             result.reason instanceof Error ? result.reason.message : String(result.reason)
           }`,
         );
@@ -3822,7 +3822,7 @@ export class DesktopAppStore {
           rescoped.set(runtime, models);
         } catch (error) {
           console.warn(
-            `[pi-gui] Failed to resolve enabled models for ${workspace.path}: ${
+            `[theta] Failed to resolve enabled models for ${workspace.path}: ${
               error instanceof Error ? error.message : String(error)
             }`,
           );

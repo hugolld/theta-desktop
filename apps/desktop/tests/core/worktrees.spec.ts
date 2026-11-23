@@ -112,9 +112,9 @@ test("creates and selects a worktree-backed workspace from the desktop UI", asyn
 
 test("scopes worktree creation and startup collection to the active profile", async () => {
   test.setTimeout(180_000);
-  const profileA = await makeUserDataDir("pi-gui-profile-a-");
-  const profileB = await makeUserDataDir("pi-gui-profile-b-");
-  const fakeHome = await makeUserDataDir("pi-gui-fake-home-");
+  const profileA = await makeUserDataDir("theta-profile-a-");
+  const profileB = await makeUserDataDir("theta-profile-b-");
+  const fakeHome = await makeUserDataDir("theta-fake-home-");
   const workspacePath = await makeGitWorkspace("worktree-profile-isolation");
   const profileARoot = join(profileA, "worktrees");
   const profileBOrphan = join(profileB, "worktrees", "repo", "profile-b-orphan");

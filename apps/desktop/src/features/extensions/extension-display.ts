@@ -10,7 +10,7 @@ export function extensionSourceSummary(extension: RuntimeExtensionRecord): strin
 export const THETA_GUI_TOOLS_LABEL = "Theta tools";
 export const PI_ADDONS_LABEL = "Built into pi";
 
-/** Extensions pi-gui itself adds to every session; switched on and off app-wide. */
+/** Extensions Theta itself adds to every session; switched on and off app-wide. */
 export function isPiGuiBuiltinExtension(extension: RuntimeExtensionRecord): boolean {
   return (
     extension.sourceInfo.source === "builtin" &&

@@ -50,7 +50,7 @@ async function waitForWindowCount(harness: DesktopHarness, count: number): Promi
 }
 
 async function browserWindowIndexForPage(harness: DesktopHarness, source: Page): Promise<number> {
-  const marker = `pi-gui-window-${Date.now()}-${Math.random()}`;
+  const marker = `theta-window-${Date.now()}-${Math.random()}`;
   await source.evaluate((value) => {
     Object.assign(window, { __piGuiTestWindowMarker: value });
   }, marker);

@@ -17,7 +17,7 @@ export const sendMessageToThreadAction = "pi_gui_send_message_to_thread";
 export const archiveChildThreadsToolName = "archive_child_threads";
 export const archiveChildThreadsAction = "pi_gui_archive_child_threads";
 
-/** Every pi-gui thread tool. Their names are not file or search tools, whatever they contain. */
+/** Every Theta thread tool. Their names are not file or search tools, whatever they contain. */
 export const orchestrationToolNames: ReadonlySet<string> = new Set([
   createChildThreadToolName,
   listThreadsToolName,
@@ -142,8 +142,8 @@ function createCreateChildThreadTool(
     name: createChildThreadToolName,
     label: "Create child thread",
     description:
-      "Start a separate pi-gui child thread for a delegated investigation or implementation task.",
-    promptSnippet: "create_child_thread: start a separate pi-gui child thread for delegated work.",
+      "Start a separate Theta child thread for a delegated investigation or implementation task.",
+    promptSnippet: "create_child_thread: start a separate Theta child thread for delegated work.",
     promptGuidelines: [
       "Use create_child_thread when the user asks you to spin up, delegate to, or run a separate child thread.",
       "Keep the child prompt concrete and self-contained so the user can inspect the resulting thread.",
@@ -175,11 +175,11 @@ function createListThreadsTool(
     name: listThreadsToolName,
     label: "List threads",
     description:
-      "List pi-gui threads in the current project and parent thread, or in another project.",
+      "List Theta threads in the current project and parent thread, or in another project.",
     promptSnippet:
-      "list_threads: list pi-gui threads for the current project, another project, or every project.",
+      "list_threads: list Theta threads for the current project, another project, or every project.",
     promptGuidelines: [
-      "Use list_threads before reading or messaging another pi-gui thread when you need the exact thread id.",
+      "Use list_threads before reading or messaging another Theta thread when you need the exact thread id.",
       'Pass workspace with a project name, path or id to list that project\'s threads, or "*" for every project.',
       "Use the returned thread id with read_thread or send_message_to_thread.",
     ],
@@ -206,8 +206,8 @@ function createReadThreadTool(
   return {
     name: readThreadToolName,
     label: "Read thread",
-    description: "Read a pi-gui thread transcript or child thread summary by id.",
-    promptSnippet: "read_thread: read a pi-gui thread transcript by id.",
+    description: "Read a Theta thread transcript or child thread summary by id.",
+    promptSnippet: "read_thread: read a Theta thread transcript by id.",
     promptGuidelines: [
       "Use read_thread with a thread id returned by list_threads or create_child_thread.",
       "Prefer reading a child thread before summarizing its status back to the parent.",
@@ -246,10 +246,10 @@ function createSendMessageToThreadTool(
     name: sendMessageToThreadToolName,
     label: "Send message to thread",
     description:
-      "Send a follow-up message to an existing pi-gui thread in this project or another project.",
-    promptSnippet: "send_message_to_thread: send a follow-up to an existing pi-gui thread.",
+      "Send a follow-up message to an existing Theta thread in this project or another project.",
+    promptSnippet: "send_message_to_thread: send a follow-up to an existing Theta thread.",
     promptGuidelines: [
-      "Use send_message_to_thread to follow up with an existing child, sibling, or other-project pi-gui thread.",
+      "Use send_message_to_thread to follow up with an existing child, sibling, or other-project Theta thread.",
       "Use a thread id returned by list_threads or create_child_thread.",
     ],
     parameters: {

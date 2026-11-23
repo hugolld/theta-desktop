@@ -12,7 +12,7 @@ import { createAgentSessionRuntimeWithNpmFallback } from "../dist/npm-package-fa
 type StreamFunction = AgentSessionRuntime["session"]["agent"]["streamFunction"];
 
 await test("a card button's failing command leaves the thread's running turn alone", async (t) => {
-  const root = await mkdtemp(join(tmpdir(), "pi-gui-button-run-"));
+  const root = await mkdtemp(join(tmpdir(), "theta-button-run-"));
   const agentDir = join(root, "agent");
   const cwd = join(root, "workspace");
   await mkdir(agentDir);

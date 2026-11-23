@@ -358,7 +358,7 @@ function coordinatorForPath(filePath: string): CatalogFileCoordinator {
 }
 
 function defaultCatalogFilePath(): string {
-  return join(homedir(), ".pi-gui", "catalogs.json");
+  return join(homedir(), ".theta-desktop", "catalogs.json");
 }
 
 function compareWorkspaceEntries(

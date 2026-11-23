@@ -177,7 +177,7 @@ export class WindowOwner {
   windowForSender(sender: WebContents): BrowserWindow {
     const window = BrowserWindow.fromWebContents(sender);
     if (!window || !this.windows.has(window) || !canPublishToWindow(window)) {
-      throw new Error("IPC sender is not an active pi-gui window");
+      throw new Error("IPC sender is not an active Theta window");
     }
     return window;
   }

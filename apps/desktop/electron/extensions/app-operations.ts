@@ -79,7 +79,7 @@ export async function runExtensionAction(
 
 /**
  * The unarchived thread with this pi session id in the target's folder or one of that folder's
- * pi-gui worktrees. Extensions only ever reach threads the user sees beside their own.
+ * Theta worktrees. Extensions only ever reach threads the user sees beside their own.
  */
 function threadInFolder(
   workspaces: readonly WorkspaceRecord[],

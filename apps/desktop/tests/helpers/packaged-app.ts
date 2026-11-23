@@ -81,7 +81,7 @@ export async function extractAppBundleFromReleaseZip(
   zipPath: string,
   appName = "Theta 2.app",
 ): Promise<string> {
-  const extractionDir = await mkdtemp(join(tmpdir(), "pi-gui-release-zip-"));
+  const extractionDir = await mkdtemp(join(tmpdir(), "theta-release-zip-"));
   await execFileAsync("ditto", ["-x", "-k", zipPath, extractionDir]);
 
   const extractedAppBundle = await resolvePackagedAppBundle(extractionDir);

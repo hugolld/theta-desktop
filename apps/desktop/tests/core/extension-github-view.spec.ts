@@ -21,16 +21,16 @@ import { desktopExtensionExamplesDirectory as examples } from "../helpers/deskto
 const example = join(examples, "github");
 const piGuiResponses = join(example, "test", "fixtures", "pi-gui.json");
 
-/** A PATH whose `gh` answers from the pi-gui fixture and logs every call. */
+/** A PATH whose `gh` answers from the Theta fixture and logs every call. */
 async function fakeGhPath(): Promise<{ readonly path: string; readonly log: string }> {
-  const directory = await mkdtemp(join(tmpdir(), "pi-gui-fake-gh-"));
+  const directory = await mkdtemp(join(tmpdir(), "theta-fake-gh-"));
   await symlink(join(example, "test", "fake-gh.mjs"), join(directory, "gh"));
   return { path: `${directory}:${process.env.PATH ?? ""}`, log: join(directory, "calls.log") };
 }
 
 /** A PATH with only the tools the app needs, so no `gh` is found even where CI installs one. */
 async function pathWithoutGh(): Promise<string> {
-  const directory = await mkdtemp(join(tmpdir(), "pi-gui-no-gh-"));
+  const directory = await mkdtemp(join(tmpdir(), "theta-no-gh-"));
   const searched = (process.env.PATH ?? "").split(delimiter).filter(Boolean);
   for (const tool of ["git", "node", "sh"]) {
     for (const folder of searched) {

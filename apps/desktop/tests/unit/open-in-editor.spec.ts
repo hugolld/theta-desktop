@@ -386,7 +386,7 @@ test("an editor process succeeds once it starts, whatever it does afterwards", a
 
 test("a launch that cannot start fails", async () => {
   await expect(
-    launchEditorCommand({ command: "/nonexistent/pi-gui-editor", args: [], waitForExit: true }),
+    launchEditorCommand({ command: "/nonexistent/theta-editor", args: [], waitForExit: true }),
   ).rejects.toThrow(/ENOENT/);
 });
 
