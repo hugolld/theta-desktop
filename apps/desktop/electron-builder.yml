@@ -104,7 +104,9 @@ portable:
   artifactName: ${productName}-${version}-${arch}-portable.${ext}
 
 toolsets:
-  appimage: "1.0.2"
+  # Backported to the pinned builder from electron-builder #9673: the 1.0.2
+  # tool bundle fails on Ubuntu 26.04 runners (glibc mismatch in mksquashfs).
+  appimage: "1.0.3"
 
 dmg:
   sign: true
